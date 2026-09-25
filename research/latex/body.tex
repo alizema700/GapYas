@@ -1,0 +1,1299 @@
+\textbf{Kurzfazit.} Die stärkste neue Idee lässt sich mit der heutigen GZL sofort starten: ein \textbf{Atlas optimaler Gitter für Mehrkörper-Potenzgesetzenergien}. Die Dreikörper-Riesz-Energie eines Gitters ist exakt eine Dreiecks-Graph-Zetafunktion. Eigene Rechnungen, inzwischen mit einer von GZL unabhängigen Referenzimplementierung nachgeprüft (Abschnitt 7), zeigen: In 2D springt das Optimum bei \textbf{ν* = 3,9183649026 in einem Übergang erster Ordnung vom Hexagonal- zum Quadratgitter} und geht bei \textbf{ν₂ ≈ 8,606 kontinuierlich in ein Rechteckgitter} über. In 3D ist \textbf{BCC bei allen untersuchten ν das beste gefundene Gitter}, und FCC wird ab ν ≈ 3,752 instabil. Das ist die Gegenrichtung zum gerade beanspruchten Beweis, dass für Zweikörperenergien FCC optimal ist. Den größten wissenschaftlichen Hebel hat eine \textbf{deterministische Hochtemperaturreihe für klassische langreichweitige Ising-, O(n)- und Perkolationsmodelle}. Deren Einbettungssummen sind genau die Objekte, die GZL berechnet. Im laufenden Streit um die Sak-Grenze (σ* = 2 oder 2 − η) wäre sie die erste Stimme, die nicht auf Monte Carlo beruht. Am nächsten am Experiment liegt eine \textbf{Simulator-Material-Zwillingsstudie}: Dispersion, Gap und kritischer Punkt im thermodynamischen Limes, mit vollem van-der-Waals- bzw. Dipolschwanz, für die 256-Qubit-Simulation von TmMgGaO₄ und für NaTmSe₂. Hier ist das Scoop-Risiko hoch, weil die GZL-Autoren Rydberg-Arrays selbst als Ziel nennen. Die überraschendste Brücke: \textbf{Planare modulare Graphfunktionen der Stringtheorie sind exakt GZL-Graph-Zetas des dualen Graphen.} Das ist an der Zagier-Identität und an C₂,₂,₁ numerisch auf 10⁻¹⁴ bis 10⁻¹⁵ bestätigt (Abschnitt 7).
+
+Kennzeichnung im ganzen Bericht: \textbf{{[}belegt{]}} heißt, es steht in einer zitierten Quelle. \textbf{{[}abgeleitet{]}} ist eine Schlussfolgerung aus belegten Fakten. \textbf{{[}spekulativ{]}} muss erst geprüft werden. \textbf{{[}Pilot{]}} markiert eigene, \textbf{nicht begutachtete} Rechnungen eines Recherche-Agenten mit GZL 1.0.0 und epsteinlib 0.6.2. \textbf{{[}nachgeprüft{]}} heißt: mit zwei unabhängigen Verfahren übereinstimmend berechnet (Abschnitt 7, Skripte in \texttt{research/verification/}). Die zugehörigen Skripte liegen unter \texttt{/home/user/GapYas/research/pilots/} (\texttt{mgf\_test.py}, \texttt{mgf\_test2.py}, \texttt{opt\_test.py}, \texttt{opt2.py}, \texttt{opt3.py}). \texttt{mgf\_test2.py} lädt \texttt{mgf\_test.py} über einen relativen Pfad und muss deshalb aus diesem Verzeichnis gestartet werden.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Was GZL wirklich kann: eine Softcore-Gittersumme mit genau einem Impuls}
+
+\subsection{Fünf Sätze zur Klasse der Summen}
+
+\textbf{(1)} GZL berechnet für einen endlichen Multigraphen G mit zwei Terminals s, t die Summe ζ\textsubscript{G}(k) = Σ\_\{x\_v ∈ Λ, v ≠ p\} e\^{}\{−2πi(x\_t − x\textsubscript{s})·k\} Π\textsubscript{e} K\_e(x\textsubscript{e+} − x\textsubscript{e−}). Dabei ist ein Knoten p gepinnt, Λ = A·ℤ\textsuperscript{d} ein Bravais-Gitter mit d = 1, 2, 3, und das Ergebnis ist die Gitter-Fourier-Transformierte eines Zweipunktkorrelators \textbf{{[}belegt{]}} (\href{https://github.com/graph-zeta/gzl}{README}, \href{https://arxiv.org/abs/2609.18918}{arXiv:2609.18918}). \textbf{(2)} Die Summe ist \textbf{softcore}: Nur die beiden Endpunkte derselben Kante werden durch K\_ν(0) = 0 getrennt. Nicht benachbarte Knoten dürfen auf demselben Platz liegen. Die physikalische Hardcore-Bedingung wird in der Physik-Arbeit durch eine kombinatorische „softcore mapping'' in die Korpus-Vorfaktoren eingerechnet, die \textbf{nicht als Code in GZL 1.0.0 enthalten} ist \textbf{{[}belegt{]}} (\href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761}, \href{https://github.com/graph-zeta/gzl}{README}). \textbf{(3)} Die Kerne haben die Form K = a(x) + Σ\textsubscript{j} b\textsubscript{j} \textbar x\textbar{}\textsuperscript{−ν\_j}. Der Anteil a ist reell, gerade, kompakt getragen und darf anisotrop sein, der Potenzgesetzanteil ist isotrop. Jede Kante darf einen eigenen Kern haben, und ν = ∞ liefert den Nächste-Nachbarn-Indikator mit exakten ganzzahligen Einbettungszahlen \textbf{{[}belegt{]}} (\href{https://github.com/graph-zeta/gzl/blob/main/DOCUMENTATION.md}{DOCUMENTATION.md}). \textbf{(4)} Die Rechnung faktorisiert in Blöcke. Brücken sind geschlossene Epstein-Zetas. Einfache Zyklen bei k = 0 laufen über ein Brillouin-Zonen-Integral von Epstein-Produkten. Serien-parallele Blöcke laufen über eine semi-analytische Algebra mit Fehler \textasciitilde{} n\textsuperscript{−(d+σ+2)} und Kosten linear in \textbar V\textbar. Blöcke mit höherer Baumweite laufen über ein Torus-Tensornetz mit Kosten O(N\textsuperscript{tw}), N = n\textsuperscript{d}.~Das ganze k-Gitter kostet per FFT so viel wie ein einzelner Punkt \textbf{{[}belegt{]}} (\href{https://arxiv.org/html/2609.18918}{arXiv:2609.18918}). \textbf{(5)} GZL berechnet \textbf{nicht}: nicht-Bravais-Gitter, anisotrope Potenzgesetzschwänze, komplexe oder ungerade Kerne, oszillierende Schwänze (RKKY) oder Yukawa-Schwänze außer als abgeschnittene Tabelle, Summen mit zwei oder mehr freien Terminals, nicht-Brücken-Blöcke mit ν ≤ d und Ergebnisse jenseits doppelter Genauigkeit \textbf{{[}belegt{]}} (\href{https://github.com/graph-zeta/gzl/blob/main/DOCUMENTATION.md}{DOCUMENTATION.md}).
+
+\subsection{Grenzen und Korrekturen am Auftrag (Abschnitt 3)}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1408}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.2959}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3602}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1731}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Punkt
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Aussage im Auftrag
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Tatsächlicher Stand v1.0.0
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Status
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Summationsbereich & „Platzierungen der Knoten auf Λ'' & Softcore: Nur Kantenendpunkte sind getrennt. Hardcore→Softcore-Abbildung ist nicht mitgeliefert. & \textbf{Korrektur/Präzisierung} \\
+Exponenten nahe d & „präzise auch für ν nahe d'' & Stimmt nur für ν \textgreater{} d.~Brücken werden meromorph fortgesetzt. \textbf{Jeder andere Block mit ν ≤ d wirft \texttt{UnsupportedLatticeSumError}.} Benchmarks reichen bis σ = ν − d = 0,5. & \textbf{Einschränkung} \\
+„analytisch'' & Brücken und Zyklen analytisch & Brücken sind geschlossen. Zyklen nur bei k = 0 über \texttt{zeta\_circle}, und nur für d ≤ 3. SP-Blöcke sind semi-analytisch mit algebraischem Fehler. & Präzisierung \\
+Kosten tw ≥ 3 & „polynomial in der Gittergröße'' & O(N\textsuperscript{tw}) Operationen und O(N\textsuperscript{tw−1}) Speicher. \textbf{In d = 3 ist praktisch n\textsubscript{points} ≤ 16.} Bei n = 8 liegt der relative Fehler hoher Ordnungen um 10⁻³. & Präzisierung \\
+\texttt{slab\_zeta} & klingt nach Film-/Slab-Geometrie & \textbf{Ist keine Slab-Geometrie}, sondern eine speichersparende Engine für den Vakuumwert eines dichten Blocks & \textbf{Korrektur} \\
+Kerne & reell, gerade & Stimmt. Die Mathe-Arbeit erlaubt komplexe ℓ¹-Kerne, \textbf{die Bibliothek ist enger als die Theorie}. & Präzisierung \\
+Anisotropie & Roadmap & Stimmt. KTmSe₂ in 3D wurde mit einer experimentellen Erweiterung nur bis Ordnung 5 gerechnet. Die anisotrope Epstein-Zeta ist in EpsteinLib bereits vorhanden (\href{https://arxiv.org/abs/2609.28282}{arXiv:2609.28282}). & bestätigt \\
+Dimension & d = 1, 2, 3 & Offiziell ja. d ≥ 4 läuft teilweise (Brücken exakt), ist aber unkalibriert und nicht publikationsfähig. & Ergänzung \\
+Gittermatrix & jede Matrix A & A muss quadratisch und regulär sein, also keine eingebetteten niedrigdimensionalen Gitter & Präzisierung \\
+Impuls & e\textsuperscript{ik·(\ldots)} & Genau \textbf{ein} externer Impuls, in fraktionalen reziproken Koordinaten. Zwei oder mehr freie Terminals werden abgelehnt, 2qp-Sektoren gibt es also nicht. & \textbf{Einschränkung} \\
+Korpora & TFIM 0qp bis Ordnung 13, 1qp bis Ordnung 11 & Bestätigt: 8.403 bzw. 22.677 Graphen. Die Korpora sind dimensionsunabhängig. & bestätigt \\
+\end{longtable}
+
+Die Leistungsbehauptungen halten der Prüfung stand \textbf{{[}belegt{]}}. 114 Reihen mit 998 Koeffizienten stimmen mit publizierten MC-Daten überein: \textbf{maximal 3,1 σ\textsubscript{MC}, Median 0,12 σ\textsubscript{MC}}. Der Satz wurde in \textbf{5 Minuten auf 8 M1-Kernen} gerechnet, gegenüber etwa \textbf{3×10⁴ Kernstunden pro MC-Reihe und Impuls}. Eine 3D-Dispersion der Ordnung 10 auf 16³ Impulspunkten dauert rund 10 Minuten auf einem Kern (\href{https://arxiv.org/html/2609.18918}{arXiv:2609.18918}). Die Physik-Arbeit liefert 0qp- und 1qp-Reihen in 3D bis Ordnung 13 bzw. 11 in etwa 200 s (\href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761}).
+
+Stand der Verbreitung am 25.09.2026: 1 Stern, 0 Forks, 0 Issues, keine Nutzung außerhalb der Gruppe Buchheit/Schmidt. \textbf{Das Feld ist also offen.} Die Gruppe Sbierski/Lesanovsky ist als einzige externe Nutzerin der Vorläufer-Werkzeuge nachweisbar und wäre die wahrscheinlichste erste Konkurrenz (\href{https://arxiv.org/abs/2604.22743}{arXiv:2604.22743}).
+
+\subsection{Scoop-Landkarte: was die GZL-Autoren selbst angekündigt haben}
+
+Die Autoren beanspruchen öffentlich folgende Richtungen \textbf{{[}belegt{]}} (\href{https://arxiv.org/html/2609.18918}{arXiv:2609.18918 §10}, \href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761 §VIII}):
+
+\begin{itemize}
+\tightlist
+\item
+  anisotrope Dipolkerne, konkret LiHoF₄, Fe₈, Mn₁₂ und RE(OH)₃;
+\item
+  mehratomige Gitter und frustrierte Systeme;
+\item
+  Heisenberg- und weitere Modelle;
+\item
+  Spektralgewichte und höhere Quasiteilchensektoren;
+\item
+  endliche Temperatur, ausdrücklich mit Burkard, Schneider und Sbierski;
+\item
+  korrelierte Unordnung;
+\item
+  Rydberg-vdW-Arrays im Vergleich mit dynamischen Strukturfaktoren;
+\item
+  eine analytische Singularitätsbehandlung für die Tensornetz-Blöcke.
+\end{itemize}
+
+Wer dort ohne Kooperation arbeitet, läuft Gefahr, überholt zu werden. \textbf{Nicht genannt} sind:
+
+\begin{itemize}
+\tightlist
+\item
+  klassische Hochtemperatur- und Perkolationsreihen;
+\item
+  Gitteroptimierung;
+\item
+  modulare Graphfunktionen;
+\item
+  Gitter-Störungstheorie.
+\end{itemize}
+
+Im Umfeld der Autoren liegen allerdings ATM-Energien entlang des Bain-Pfads (\href{https://arxiv.org/abs/2504.07338}{arXiv:2504.07338}, \href{https://arxiv.org/abs/2504.11989}{arXiv:2504.11989}).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Top-5-Projektideen: Zwei Transfer-Ideen führen, zwei Physik-Ideen sind experimentnah}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0490}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.3338}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0490}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0642}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0642}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0490}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0921}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0490}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0785}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0490}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0921}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\#
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Idee
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Spur
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Neuheit
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Passung
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Hebel
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Machbarkeit
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Wow
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Anschluss
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Σ
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Scoop
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+1 & Optimale Gitter für Mehrkörper-Potenzgesetzenergien & B & 5 & 5 & 4 & 5 & 5 & 4 & \textbf{28} & mittel \\
+2 & Klassische LR-Hochtemperatur- und Perkolationsreihen gegen den Sak-Streit & B & 4 & 3 & 4 & 2 & 3 & 5 & \textbf{21} & mittel \\
+3 & Modulare Graphfunktionen als duale Graph-Zetas & B & 5 & 3 & 2 & 4 & 4 & 3 & \textbf{21} & gering \\
+4 & Simulator-Material-Zwillinge: Rydberg-vdW und Tm-Dreiecksmagnete & A & 3 & 4 & 4 & 4 & 5 & 4 & \textbf{24} & \textbf{hoch} \\
+5 & Quanten-Sak-Test und Log-Korrekturen im LRTFIM (d = 1--3) & A & 3 & 5 & 3 & 4 & 3 & 4 & \textbf{22} & mittel--hoch \\
+\end{longtable}
+
+Die Reihenfolge gewichtet die Neuheit stärker als die bloße Punktsumme, weil der Auftrag „etwas völlig Neues'' verlangt.
+
+\subsection{Idee 1: Optimale Gitter für Mehrkörper-Potenzgesetzenergien („Mehrkörper-Sarnak--Strömbergsson'')}
+
+\textbf{Pitch.} GZL als erstes Werkzeug, das die Frage „Welches Gitter minimiert eine Drei- oder Vierkörper-Potenzgesetzenergie?'' über den \emph{gesamten} Modulraum der 2D- und 3D-Gitter in Sekunden pro Punkt beantwortet. Die Pilotrechnungen deuten auf eine andere Antwort als im Zweikörperfall.
+
+\textbf{Das Problem im Zielfeld.} Die Optimierung von Gitterenergien ist in der Mathematik gerade ein heißes Thema. Luo und Wei beanspruchen einen Beweis der Sarnak--Strömbergsson-Vermutung: FCC minimiert die 3D-Epstein-Zeta für alle s \textgreater{} 3/2. Der Beweis ist zehn Tage alt und noch nicht begutachtet \textbf{{[}belegt{]}} (\href{https://arxiv.org/abs/2609.17356}{arXiv:2609.17356}). Dazu kommen Klassifikationen von Minimierern für Verhältnisse von Theta- und Epstein-Funktionen (\href{https://arxiv.org/abs/2605.07580}{arXiv:2605.07580}) und überraschende Phasenübergänge der Minimierer bei p-Normen (\href{https://arxiv.org/abs/2407.20762}{arXiv:2407.20762}). Die ganze Linie behandelt aber \textbf{Zweikörper-Energien}, also Summen über eine Kante. In der Kristallchemie ist dagegen belegt, dass Dreikörperterme (ATM) die Phasenstabilität verschieben. Starke repulsive ATM-Beiträge können BCC gegenüber FCC begünstigen, doch „the bcc phase remains susceptible to further cuboidal distortions''. Untersucht wurde dort nur der Bain-Pfad, also eine Ein-Parameter-Kurve \textbf{{[}belegt{]}} (\href{https://arxiv.org/abs/2504.07338}{arXiv:2504.07338}, \href{https://arxiv.org/abs/2504.11989}{arXiv:2504.11989}). Eine Websuche nach Dreikörper-Gitteroptimierung über alle 2D- und 3D-Gitter fand keine Arbeit aus 2025 \textbf{{[}belegt als Negativbefund{]}}. Der Grund für die Lücke ist schlicht Rechenaufwand: Eine Dreikörpersumme ist eine Doppelsumme über ein unendliches Gitter mit langsamem Abfall nahe ν = d.
+
+\textbf{Abbildung auf GZL.} Die Dreikörper-Riesz-Energie E₃(Λ) = Σ'\textsubscript{x,y} \textbar x\textbar{}\textsuperscript{\{−ν\}\textbar y\textbar{}}\{−ν\}\textbar x−y\textbar{}\textsuperscript{−ν} ist \textbf{exakt der Dreiecksgraph (3-Zyklus)}. Vierkörperenergien sind der 4-Zyklus oder K₄ (tw = 3, Tensornetz). Das Gitter A ist der freie Parameter. In 2D ist der Modulraum die Fundamentaldomäne (2 Parameter), in 3D sind es 5 Parameter (Gitter modulo Rotation und Skala) \textbf{{[}abgeleitet{]}}.
+
+\begin{verbatim}
+import numpy as np, gzl, epsteinlib
+def A2(tau):                        # 2D-Gitter mit Einheitsvolumen, tau in der Fundamentaldomäne
+    A = np.array([[1, tau.real], [0, tau.imag]]); return A/np.sqrt(tau.imag)
+E2 = lambda A, nu: epsteinlib.epstein_zeta(nu, A, np.zeros(2), np.zeros(2)).real  # Zweikörper
+E3 = lambda A, nu: gzl.zeta_circle([nu, nu, nu], A)                               # Dreieck
+K4 = np.array([[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]])
+E4 = lambda A, nu: gzl.evaluate_graph(K4, np.full(6, nu), A, n_points=48)         # Vierkörper, tw=3
+# Observable: argmin_A [c2*E2 + c3*E3 + c4*E4] über den Modulraum -> Phasendiagramm in (nu, c3/c2)
+\end{verbatim}
+
+\textbf{Pilotergebnisse {[}Pilot, inzwischen nachgeprüft und ergänzt, siehe Abschnitt 7{]}} (\texttt{opt\_test.py}, \texttt{opt2.py}, \texttt{opt3.py}; GZL \texttt{zeta\_circle}, Einheitsvolumen, gleiche ν auf allen drei Kanten; \href{https://pypi.org/project/gzl/}{gzl auf PyPI}):
+
+In 2D ist das Hexagonalgitter für ν ≲ 3,918 global optimal, darüber das Quadratgitter. \textbf{Korrektur aus der Nachprüfung:} Das Quadrat bleibt nur bis ν₂ ≈ 8,606 optimal, danach gewinnt ein Rechteckgitter (Abschnitt 7.2).
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+ν & Globales Minimum & Hexagonal & Quadrat \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+2,5 & hex & 20,6364817949 & 21,0272603756 \\
+3,0 & hex & 13,3917941102 & 13,6528937154 \\
+3,5 & hex & 9,7723761021 & 9,8932825030 \\
+3,75 & hex & 8,5685550844 & 8,6172422133 \\
+4,0 & Quadrat & 7,6061707526 & 7,5826699011 \\
+6,0 & Quadrat & 3,7457712638 & 3,2499743124 \\
+\end{longtable}
+
+Der Schnittpunkt liegt bei \textbf{ν* ≈ 3,91836} (Brent-Nullstelle). Bei ν* steigt die Energie entlang des Randbogens \textbar τ\textbar{} = 1 von 7,898512 (hex, 60°) auf etwa \textbf{7,9096 bei \textasciitilde72°} und fällt wieder auf 7,898512 (Quadrat, 90°). Es gibt also eine Barriere, und der Übergang ist \textbf{erster Ordnung}. Ein direkter Brute-Force-Vergleich auf ℤ² bei ν = 6 ergibt 3,2499743122 gegenüber 3,2499743124 aus GZL. Die Erklärung (eigene Abschätzung): Bei großem ν dominieren die kleinsten Dreiecke, und repulsive Dreikörperterme bestrafen die zwölf gleichseitigen Nächste-Nachbarn-Dreiecke des Hexagonalgitters.
+
+In 3D (nur FCC, BCC und SC verglichen, \textasciitilde28 s pro Satz) liegt \textbf{BCC bei allen getesteten ν vor FCC}:
+
+\begin{longtable}[]{@{}llll@{}}
+\toprule\noalign{}
+ν & FCC & BCC & SC \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+3,5 & 38,1993 & \textbf{38,0744} & 41,9368 \\
+4,5 & 17,9624 & \textbf{17,7406} & 21,0981 \\
+6,0 & 8,0434 & \textbf{7,7102} & 10,2962 \\
+9,0 & 2,3133 & \textbf{1,9785} & 3,2723 \\
+\end{longtable}
+
+\textbf{Was neu herauskäme.} Die erste Karte der Gitteroptima für reine Mehrkörperenergien über den gesamten Modulraum, mit drei Bausteinen:
+
+\begin{itemize}
+\tightlist
+\item
+  Phasendiagrammen in ν und im Kopplungsverhältnis Zwei- zu Dreikörper;
+\item
+  einer belastbar formulierten Vermutung „BCC minimiert die Dreiecks-Zeta in 3D'' als Mehrkörper-Gegenstück zu Sarnak--Strömbergsson;
+\item
+  dem ersten dokumentierten Hexagonal-Quadrat-Übergang erster Ordnung für eine reine Dreikörperenergie.
+\end{itemize}
+
+\textbf{{[}abgeleitet{]}} Für ganzzahlige Exponenten gibt es beweisbare Ankerpunkte. Die 2D-Energien mit Exponenten (2,2,2) und (4,4,2) reduzieren sich über die Identitäten C₁,₁,₁ = E₃ + ζ(3) und C₂,₂,₁ = (2/5)E₅ + ζ(5)/30 auf Epstein-Zetas. Diese werden bekanntlich vom Hexagonalgitter minimiert (Hintergrundwissen, in den Notizen nicht belegt). Das passt zur Pilotaussage „hex für kleine ν'' und eröffnet einen Beweisweg über modulare Graphfunktionen (Idee 3).
+
+\textbf{Erster Meilenstein (2--4 Wochen).} Die Piloten mit Konvergenzstudie reproduzieren: n\textsubscript{points} variieren, \texttt{zeta\_circle} gegen \texttt{evaluate\_graph} prüfen, Brute-Force-Vergleiche bei mehreren ν. Die 2D-Suche auf große Im τ ausdehnen und ν* samt Barriere bestätigen.
+
+\textbf{Ausbaupfad.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Monat 2--3:} globale 3D-Suche im 5-dimensionalen Modulraum, zum Beispiel über reduzierte Gram-Matrizen, auf einem ν-Gitter von 3,2 bis 12. Ergänzend 4-Zyklus und K₄.
+\item
+  \textbf{Monat 4--6:} gemischte Energien aus Zweikörper-Riesz bzw. Lennard-Jones und Dreieck mit Phasendiagramm. Damit direkt die offene Frage aus \href{https://arxiv.org/abs/2504.07338}{arXiv:2504.07338} angehen: Ist BCC gegen \emph{nicht-kuboidale} Verzerrungen stabil?
+\item
+  \textbf{Monat 6--12:} ATM über Zerlegung in Dreiecks-Zetas. Dafür ist eine \textbf{GZL-Erweiterung nötig}: meromorphe Fortsetzung für Dreiecksblöcke mit ν ≤ d, siehe Risiken. Außerdem Beweisversuche für ganzzahlige s in 2D über MGF-Laplace-Gleichungen.
+\end{itemize}
+
+\textbf{Vorwissen und Einstieg.} Gittergeometrie (Fundamentaldomäne, Reduktionstheorie), globale Optimierung, Grundlagen der Epstein-Zeta. Einstieg über \href{https://arxiv.org/abs/2609.17356}{arXiv:2609.17356}, \href{https://arxiv.org/abs/2312.01395}{arXiv:2312.01395} (Strukturübergänge auf Rechteckgittern) und \href{https://arxiv.org/abs/2504.11989}{arXiv:2504.11989}.
+
+\textbf{Risiken.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Neuheit ist nur über das Fehlen von Treffern gesichert. Die Bétermin-Gruppe (offene Fragen, zitiert in \href{https://arxiv.org/abs/2411.17199}{arXiv:2411.17199}) und der Schwerdtfeger-Buchheit-Kreis könnten Ähnliches in Arbeit haben.
+\item
+  Die 2D-Suche deckte nur Im τ ≤ 2--3 mit sechs Startpunkten ab. In 3D wurden nur drei Gitter verglichen.
+\item
+  ATM enthält pro Kante Exponenten ν ∈ \{5, 3, 1, −1\}, also ν ≤ d.~\textbf{Das lehnt GZL 1.0.0 für Nicht-Brücken ab.} Die Fortsetzung existiert für Zyklen im Buchheit-Busse-Verfahren, ist in GZL aber nicht freigelegt.
+\item
+  Die Zahlen sind inzwischen unabhängig nachgerechnet (Abschnitt 7), aber nicht begutachtet. Die 3D-Suche mit 16 Starts ist kein Beweis des globalen Minimums.
+\end{enumerate}
+
+\textbf{Scoop-Risiko: mittel.} Die GZL-Roadmap nennt Gitteroptimierung nicht, aber der Autorenkreis arbeitet an ATM-Energien auf dem Bain-Pfad. Eine frühe Kontaktaufnahme mit Buchheit und Schwerdtfeger könnte aus dem Risiko eine Kooperation machen.
+
+\textbf{Schlüsselpapers.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1032}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4037}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0593}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4037}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+arXiv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Titel / Inhalt (laut Notizen)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jahr
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevanz
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{https://arxiv.org/abs/2609.17356}{2609.17356} & Luo \& Wei, beanspruchter Beweis der 3D-Sarnak--Strömbergsson-Vermutung & 2026 & Zweikörper-Referenz: FCC optimal, Gegenpol zum BCC-Pilot \\
+\href{https://arxiv.org/abs/2504.07338}{2504.07338} & Robles-Navarro et al., LJ + ATM auf kuboidalen (Bain-)Gittern & 2025 & ATM begünstigt BCC. Offene Stabilitätsfrage außerhalb des Bain-Pfads \\
+\href{https://arxiv.org/abs/2504.11989}{2504.11989} & Buchheit \& Busse, „Epstein zeta method for many-body lattice sums'' & 2025 & Methodischer Vorläufer, ATM „from weeks to minutes'' \\
+\href{https://arxiv.org/abs/2407.20762}{2407.20762} & Bétermin \& Furlanetto, Minimierer für p-Normen & 2024 & Präzedenz für unerwartete Minimierer-Übergänge \\
+\href{https://arxiv.org/abs/2312.01395}{2312.01395} & Bétermin, Šamaj, Travěnec, Strukturübergänge auf 2D-Rechteckgittern & 2023 & Theorie von Übergängen erster und zweiter Ordnung, Vorlage für die Analyse \\
+\href{https://arxiv.org/abs/2605.07580}{2605.07580} & Luo \& Wei, Minimierer von Verhältnissen und Differenzen von Theta- und Epstein-Funktionen & 2026 & Aktuelle Technik, zentrale Rolle des Hexagonalgitters \\
+\end{longtable}
+
+\textbf{Bewertung.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1851}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1140}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6709}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Kriterium
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Punkte
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Begründung
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Neuheit & 5 & Kein Treffer für Mehrkörper-Optimierung über den ganzen Modulraum. Der Pilot liefert zwei neue qualitative Befunde. \\
+Passung & 5 & Läuft mit \texttt{zeta\_circle} und \texttt{evaluate\_graph} in v1.0.0, ν \textgreater{} d.~Nur ATM braucht eine Erweiterung. \\
+Hebel & 4 & Sekunden pro Gitterpunkt statt Doppelsummen mit langsamer Konvergenz. Globale Suche wird erst dadurch praktikabel. \\
+Machbarkeit & 5 & Die Piloten existieren, der erste Meilenstein ist in Wochen erreichbar. \\
+Wow & 5 & Heatmap über die Fundamentaldomäne, springendes Optimum, BCC schlägt FCC. \\
+Anschluss & 4 & math.MG, math-ph und Kristallchemie. Mit ATM auch materialrelevant. \\
+\end{longtable}
+
+\subsection{Idee 2: Klassische langreichweitige Hochtemperatur- und Perkolationsreihen für den Sak-Streit}
+
+\textbf{Pitch.} Die klassische Schwester der Quanten-Linked-Cluster-Entwicklung, für die GZL gebaut wurde: deterministische Hochtemperaturreihen für LR-Ising, LR-O(n) und LR-Perkolation. Sie liefern β\textsubscript{c}(σ), ρ\textsubscript{c}(σ) und χ(k) über die ganze Brillouin-Zone und geben im Sak-Streit eine Stimme, die nicht auf Monte Carlo beruht.
+
+\textbf{Das Problem im Zielfeld.} Wo die Grenze zwischen lang- und kurzreichweitiger Universalität liegt, ist 2025--2026 offen umstritten \textbf{{[}belegt{]}}:
+
+\begin{itemize}
+\tightlist
+\item
+  Die Deng-Gruppe findet mit MC bis L = 8192 \textbf{σ* = 2} für 2D LR-Ising, XY, Heisenberg und Perkolation, gegen Saks σ* = 2 − η\textsubscript{SR} = 7/4 (\href{https://arxiv.org/abs/2512.04805}{arXiv:2512.04805}, \href{https://arxiv.org/abs/2512.01956}{arXiv:2512.01956}).
+\item
+  Ein Quanten-RG-Papier beansprucht σ* = 2 auch für Quanten-O(n)-Modelle (\href{https://arxiv.org/abs/2606.22407}{arXiv:2606.22407}).
+\item
+  In der 2D-LR-Perkolation bis L = 16384 weicht η nahe σ ≈ 3/2 von 2 − σ ab. Dort sind ρ\textsubscript{c}(σ = 1) = 0,307591(4) und ρ\textsubscript{c}(σ = 1/2) = 0,26263(2) bestimmt (\href{https://arxiv.org/abs/2608.20750}{arXiv:2608.20750}).
+\item
+  Hutchcroft nennt die Berechnung von α\textsubscript{c}(d) für 2 \textless{} d \textless{} 6 „beyond the scope of current techniques'' (\href{https://arxiv.org/abs/2508.18808}{arXiv:2508.18808}).
+\end{itemize}
+
+Heute gibt es drei Zugänge: rigorose Schranken ohne Konstanten, MC auf endlichen Tori mit Minimum-Image-Abschneidung und Kontinuums-ε-Entwicklungen (\href{https://arxiv.org/abs/2602.07818}{arXiv:2602.07818}, \href{https://arxiv.org/abs/2608.15120}{arXiv:2608.15120}). \textbf{Eine Reihe mit exakten Gitterkoeffizienten für klassische LR-Modelle wurde für 2025--26 nicht gefunden} \textbf{{[}belegt als Negativbefund{]}}.
+
+\textbf{Abbildung auf GZL {[}abgeleitet{]}.} In der Free-Embedding-Linked-Cluster-Entwicklung ist der Koeffizient von βⁿ in χ(k) oder ln Z eine Summe Σ\textsubscript{G} w\textsubscript{G} · Σ\textsubscript{x} Π\textsubscript{e} J(x\_e)\textsuperscript{m\_e} e\textsuperscript{ik·Δx}, mit J(x) = \textbar x\textbar{}\textsuperscript{−(d+σ)}, J(0) = 0 und Kantenvielfachheit m\textsubscript{e}. Da J\textsuperscript{m} wieder ein Potenzgesetz mit ν = m(d+σ) \textgreater{} d ist, ist das \textbf{exakt eine Graph-Zeta mit GZLs Konvention K(0) = 0}. Die Vertexfaktoren (Kumulanten für Ising, O(n), φ⁴) bringt der Nutzer mit. Für LR-Perkolation liefert die Entwicklung 1 − e\textsuperscript{−βJ} = Σ\textsubscript{m} (−1)\textsuperscript{m+1} β\textsuperscript{m} J\textsuperscript{m}/m! pro Ordnung endliche Summen von Potenzgesetzen, also genau GZLs Kernklasse (\href{https://arxiv.org/abs/2508.18807}{arXiv:2508.18807}). Die Subgraph-Entwicklung verlangt allerdings Hardcore-Einbettungen und damit die Kontraktionsabbildung aus \href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761}, die neu implementiert werden muss.
+
+\begin{verbatim}
+# Pseudocode – Korpus und Vertexgewichte sind Eigenbau
+for n in range(1, n_max + 1):
+    for G, w_G, mult in classical_LR_corpus(model="ising", order=n):   # Graphenenumeration + Kumulanten
+        nu_e = [m * (d + sigma) for m in mult]                           # J^m bleibt ein Potenzgesetz
+        chi_k[n] += w_G * gzl.evaluate_graph(G.edges, nu_e, A, terminal=(s, t), n_points=N)  # ganze BZ per FFT
+# Analyse: Ratio/Padé für beta_c(sigma), gamma(sigma); nichtanalytischer |k|^sigma-Koeffizient von 1/chi(k)
+\end{verbatim}
+
+\textbf{Was neu herauskäme.}
+
+\begin{itemize}
+\tightlist
+\item
+  β\textsubscript{c}(σ) und ρ\textsubscript{c}(σ) als glatte Funktionen auf dichten σ-Gittern, bis nahe σ → 0, wo direkte Summation versagt.
+\item
+  γ(σ) aus Ratio- und Padé-Analyse zum Vergleich mit ε-Entwicklungen und FRG (\href{https://arxiv.org/abs/2510.02458}{arXiv:2510.02458}).
+\item
+  Die \textbf{Amplitude des \textbar k\textbar\^{}σ-Terms} von χ(k)\textsuperscript{−1}. Für σ \textless{} 2 divergiert das zweite Moment, sodass die Standard-Korrelationslänge der Hochtemperaturreihe gar nicht definiert ist. Das volle k-Gitter aus GZL ist dafür das natürliche Werkzeug \textbf{{[}abgeleitet{]}}.
+\item
+  Als spekulative Erweiterung: die Edwards-Anderson-Suszeptibilität der 1D-LR-Spinglas-Kette mit J² ∝ r\textsuperscript{−2σ}, für das offene Fenster 3/2 ≤ α ≤ 2 (\href{https://arxiv.org/abs/2604.07130}{arXiv:2604.07130}).
+\end{itemize}
+
+\textbf{Erster Meilenstein (6--10 Wochen).}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Literaturschranke:} Prüfen, ob alte LR-Reihen (Nagle--Bonner 1970, Glumac--Uzelac um 1989; beide in den Notizen \emph{nicht verifiziert}) schon hohe Ordnungen erreichten.
+\item
+  Eine eigene Graphenenumeration mit Ising-Kumulanten schreiben und χ(k = 0) für 1D bis etwa Ordnung 8 berechnen.
+\item
+  Niedrige Ordnungen gegen direkte Summen prüfen.
+\end{enumerate}
+
+\textbf{Ausbaupfad.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Monat 3--6:} 2D auf dem Quadrat- und Dreiecksgitter mit dichtem σ-Gitter, Vergleich mit den kritischen Punkten der Deng-Gruppe.
+\item
+  \textbf{Monat 6--9:} χ(k) über die ganze Brillouin-Zone und die \textbar k\textbar\^{}σ-Amplitude.
+\item
+  \textbf{Monat 9--15:} LR-Perkolation mit Hardcore-Kontraktionen, Vergleich mit ρ\textsubscript{c} = 0,307591(4). Dabei muss die Normierungskonvention angeglichen werden: Unendliches Gitter und Epstein-Zeta stehen gegen Torus mit Minimum-Image.
+\end{itemize}
+
+\textbf{Vorwissen und Einstieg.} Klassische Linked-Cluster-Technik nach Wortis, Englert, Lüscher--Weisz (Lehrbuchstoff, in den Notizen ohne arXiv-Quelle), Graphenenumeration, Reihenanalyse. Einstieg: \href{https://arxiv.org/abs/2403.00421}{arXiv:2403.00421} (MC-Einbettungs-Review, zeigt die Quanten-Pipeline), \href{https://arxiv.org/abs/2512.04805}{arXiv:2512.04805}, \href{https://arxiv.org/html/2608.20750}{arXiv:2608.20750}.
+
+\textbf{Risiken.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Die Graphenzahl bei Ordnung 15--20 wird grob auf 10⁵--10⁷ geschätzt (\emph{nicht verifiziert}). Die Baumweite hoher 1PI-Graphen kann 4--6 erreichen, und das Tensornetz kostet dann O(N\textsuperscript{tw}).
+\item
+  Nahe σ ≈ 2 machen Log-Korrekturen die Reihenanalyse unzuverlässig. GZL entfernt das Koeffizientenrauschen, nicht den Extrapolationsfehler begrenzter Ordnung.
+\item
+  Der Hardcore-Code fehlt in GZL.
+\item
+  Alte Literatur könnte die Neuheit schmälern.
+\end{enumerate}
+
+\textbf{Scoop-Risiko: mittel.} Klassische LR-Modelle nennen die Autoren nicht. „Endliche Temperatur'' mit der Gruppe Sbierski steht aber auf ihrer Roadmap, und die Sbierski-Gruppe arbeitet bereits mit Hochtemperaturentwicklungen (\href{https://arxiv.org/abs/2604.22743}{arXiv:2604.22743}).
+
+\textbf{Schlüsselpapers.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1058}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4138}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0608}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3896}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+arXiv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Titel / Inhalt
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jahr
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevanz
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{https://arxiv.org/abs/2512.04805}{2512.04805} & Xiao, Liu, Fan, Deng, 2D LR-Ising bis L = 8192, σ* = 2 & 2025 & Hauptgegenstand des Sak-Streits \\
+\href{https://arxiv.org/abs/2608.20750}{2608.20750} & Liu, Xiao, Fan, Deng, 2D LR-Perkolation bis L = 16384 & 2026 & Präzise ρ\textsubscript{c-Benchmarks} \\
+\href{https://arxiv.org/abs/2606.22407}{2606.22407} & „Perturbative Renormalization and Universality Diagram for Long-Range Quantum Criticality'' & 2026 & Quanten-Gegenstück σ* = 2 \\
+\href{https://arxiv.org/abs/2508.18808}{2508.18808} & Hutchcroft, „Critical LRP II'' & 2025 & Offene Frage α\textsubscript{c}(d), nur Aussagen bis auf Konstanten \\
+\href{https://arxiv.org/abs/2604.07130}{2604.07130} & Okuyama \& Ohzeki, 1D LR-Spinglas auf der Nishimori-Linie & 2026 & Offenes Fenster 3/2 ≤ α ≤ 2 \\
+\href{https://arxiv.org/abs/2403.00421}{2403.00421} & „Monte Carlo based techniques for quantum magnets with long-range interactions'' & 2024 & Die Pipeline, die GZL im Quantenfall ersetzt \\
+\end{longtable}
+
+\textbf{Bewertung.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1851}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1140}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6709}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Kriterium
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Punkte
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Begründung
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Neuheit & 4 & Keine aktuellen klassischen LR-Reihen gefunden. Alte Arbeiten sind ungeprüft. \\
+Passung & 3 & \texttt{evaluate\_graph} passt direkt. Korpus, Vertexgewichte und Hardcore-Abbildung sind Eigenbau. \\
+Hebel & 4 & Deterministische, nicht-universelle Größen über ganze σ-Bereiche, dazu die ganze Brillouin-Zone \\
+Machbarkeit & 2 & Graphenenumeration und Reihenanalyse sind Monate Arbeit. \\
+Wow & 3 & β\textsubscript{c}(σ)-Kurven gegen MC-Punkte, aber abstrakt \\
+Anschluss & 5 & Mitten in einem aktiven Streit zwischen drei Communities \\
+\end{longtable}
+
+\subsection{Idee 3: Modulare Graphfunktionen als duale Graph-Zetas, GZL als Numerik-Labor der Stringtheorie}
+
+\textbf{Pitch.} Modulare Graphfunktionen (MGFs) aus Genus-1-Stringamplituden sind für planare Graphen exakt GZL-Graph-Zetas des dualen Graphen auf dem Impulsgitter Λ\_τ = ℤ + τℤ. Die Physik der langreichweitigen Quantenmagnete und die Welt der Stringamplituden teilen damit dasselbe numerische Objekt.
+
+\textbf{Das Problem im Zielfeld.} MGFs sind „non-holomorphic modular functions associated with Feynman graphs for a conformal scalar field theory on a two-dimensional torus'' \textbf{{[}belegt{]}} (\href{https://arxiv.org/abs/1512.06779}{arXiv:1512.06779}). Der Stand der Werkzeuge:
+
+\begin{itemize}
+\tightlist
+\item
+  Alle Identitäten bis Gewicht 6 und alle dihedralen Identitäten bei Gewicht 7 sind bewiesen (\href{https://arxiv.org/abs/1608.04393}{arXiv:1608.04393}).
+\item
+  Ein Mathematica-Paket überführt MGFs in iterierte Eisenstein-Integrale, deckt aber nur Topologien \textbf{bis vier Vertices} ab (\href{https://arxiv.org/abs/2502.05531}{arXiv:2502.05531}).
+\item
+  Elliptische MGFs werden über äquivariante iterierte Integrale gelöst (\href{https://arxiv.org/abs/2511.15883}{arXiv:2511.15883}).
+\item
+  Objekte mit komplexen Indizes tauchen neu auf (\href{https://arxiv.org/abs/2512.21413}{arXiv:2512.21413}).
+\end{itemize}
+
+Numerische Werte bei beliebigem innerem τ für größere planare Graphen und für nicht-ganzzahlige Exponenten gibt es als Werkzeug nicht allgemein.
+
+\textbf{Abbildung auf GZL {[}abgeleitet, numerisch gestützt{]}.} Ein MGF ist C\_Γ(τ) = Σ\_\{p\_e ∈ Λ\_τ∖0\} Π\textsubscript{v} δ(Σ ±p\_e) Π\textsubscript{e} (τ₂/(π\textbar p\_e\textbar²))\textsuperscript{a\_e}. Das Impulserhaltungsgitter ist das Zyklengitter von Γ. Nach Whitney lässt es sich genau dann als Differenzen von Vertexvariablen schreiben, wenn Γ planar ist, und diese Vertices sind die Flächen von Γ, also die Knoten des Duals Γ*. Daraus folgt:
+
+C\_Γ(τ) = (τ₂/π)\textsuperscript{Σa\_e} · ζ\_\{Λ\_τ, Γ*\}(k = 0) mit ν\textsubscript{e} = 2a\_e.
+
+Die Zuordnung im Einzelnen:
+
+\begin{itemize}
+\tightlist
+\item
+  Dihedrale („Banana''-)MGFs werden zu Kreis-Zetas (\texttt{zeta\_circle}).
+\item
+  Trihedrale werden zu Theta-artigen SP-Graphen.
+\item
+  Der selbstduale Tetraeder K₄ läuft über das Tensornetz.
+\item
+  Die Kante mit Impuls, Z\textsubscript{Λ\_τ,2a}(k), ist der Baustein aus Green-Funktion bzw. Kronecker-Eisenstein-Reihe.
+\item
+  GZLs externes k entspräche dem Torus-Punkt z elliptischer MGFs \textbf{{[}spekulativ, nur im dihedralen Fall plausibilisiert{]}}.
+\end{itemize}
+
+\begin{verbatim}
+A = np.array([[1, tau.real], [0, tau.imag]])                 # |A(m,n)| = |m + n*tau|
+C_abc = (tau.imag/np.pi)**(a+b+c) * gzl.zeta_circle([2*a, 2*b, 2*c], A)   # dihedral, 2 Vertices
+C_K4  = (tau.imag/np.pi)**12 * gzl.evaluate_graph(K4, np.full(6, 4.0), A, n_points=64)  # tetraedrisch
+\end{verbatim}
+
+\textbf{Pilotergebnisse {[}Pilot{]}} (\texttt{mgf\_test.py}, \texttt{mgf\_test2.py}). Die Nachprüfung ohne GZL bestätigt beide Identitäten auf 10⁻¹⁴ bis 10⁻¹⁵ (Abschnitt 7.4):
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{C₂,₂,₁₊ε/₂ → (2/5)E₅ + ζ(5)/30.} Nach Richardson-Extrapolation in ε liegt der relative Fehler bei \textbf{1,1--1,2×10⁻⁸} an allen vier getesteten τ (i, e\textsuperscript{iπ/3}, 0,21 + 1,37i, −0,4 + 0,95i).
+\item
+  Die \textbf{Zagier-Identität C₁,₁,₁ = E₃ + ζ(3)} ist auf etwa 9×10⁻⁷ reproduziert.
+\item
+  Jede Kreis-Auswertung braucht \textasciitilde0,1 s.
+\item
+  Die tetraedrische MGF (alle ν = 4) bei τ = i konvergiert mit n\textsubscript{points} = 32/48/64 gegen 2,29641310909 / \ldots926 / \ldots927, in 0,1--0,3 s.
+\item
+  Die Zuschreibung von C₂,₂,₁ an D'Hoker--Green--Vanhove ist \emph{nicht verifiziert}.
+\end{itemize}
+
+\textbf{Was neu herauskäme.}
+
+\begin{itemize}
+\tightlist
+\item
+  Double-Precision-Werte planarer MGFs mit \textbf{≥ 5 Vertices} an beliebigem innerem τ, jenseits des 4-Vertex-Pakets.
+\item
+  \textbf{Verallgemeinerte MGFs mit reellen Exponenten} C\textsubscript{s₁,s₂,s₃}(τ).
+\item
+  Elliptische MGFs auf einem vollen z-Gitter per FFT (spekulativ).
+\item
+  Ein neuer Satz über modulare Funktionen: Mit dem Wörterbuch aus Idee 1 wandert \textbf{das Minimum von C\textsubscript{s,s,s}(τ) über der Fundamentaldomäne bei s* = 1,95918 vom hexagonalen zum quadratischen Punkt und für s \textgreater{} 4,303 zu einem Rechteckpunkt} {[}nachgeprüft, Abschnitt 7{]}. Nach den Notizen hat diese Frage noch niemand gestellt.
+\end{itemize}
+
+\textbf{Erster Meilenstein (3--5 Wochen).} Die dihedralen, trihedralen und tetraedrischen Identitäten an vielen τ systematisch reproduzieren. Die inhomogenen Laplace-Gleichungen numerisch per finiter Differenzen in τ prüfen.
+
+\textbf{Ausbaupfad.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Monat 2--4:} Tabellen von 5- und 6-Vertex-MGFs. Der Vergleich mit \href{https://arxiv.org/abs/2502.05531}{arXiv:2502.05531} ist nur bis 4 Vertices möglich.
+\item
+  \textbf{Monat 4--6:} C\textsubscript{s,s,s} für reelle s, Minimierungsstudie und Anschluss an Idee 1.
+\item
+  \textbf{Monat 6--12:} elliptische MGFs gegen publizierte Werte prüfen. Optional eine Multiprecision-Portierung (mpmath oder Arb) der Kreis-Zeta für PSLQ.
+\end{itemize}
+
+\textbf{Vorwissen und Einstieg.} Modulformen, Eisenstein-Reihen, Grundlagen der Genus-1-Stringamplituden, Planarität und Dualität von Graphen. Einstieg: \href{https://arxiv.org/abs/1512.06779}{arXiv:1512.06779}, \href{https://arxiv.org/abs/1608.04393}{arXiv:1608.04393}, \href{https://arxiv.org/abs/2502.05531}{arXiv:2502.05531}.
+
+\textbf{Risiken.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Die MGF-Community hat exakte Methoden. GZL erschließt dort \textbf{kein blockiertes Problem}, sondern liefert Kreuzchecks und Erweiterungen.
+\item
+  Die meisten stringrelevanten MGFs haben Kanten mit a\textsubscript{e} = 1, also ν = d = 2. Das liegt außerhalb der GZL-Domäne und ist nur per ε-Extrapolation mit \textasciitilde10⁻⁸ erreichbar.
+\item
+  Nicht-planare MGFs (K₃,₃-Topologien) sind keine GZL-Objekte.
+\item
+  Modulare Graph\emph{formen} mit a ≠ b brauchen anisotrope Kerne.
+\item
+  Mit doppelter Genauigkeit ist PSLQ nur für winzige Basen möglich.
+\end{enumerate}
+
+\textbf{Scoop-Risiko: gering.} Kein Bezug zur Roadmap der Autoren.
+
+\textbf{Schlüsselpapers.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1032}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4037}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0593}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4037}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+arXiv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Titel / Inhalt
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jahr
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevanz
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{https://arxiv.org/abs/1512.06779}{1512.06779} & Modulare Graphfunktionen und single-valued elliptische Polylogarithmen & 2015 & Definition. Impuls an nur zwei Vertices entspricht GZLs Zweiterminal-Struktur \\
+\href{https://arxiv.org/abs/1608.04393}{1608.04393} & D'Hoker \& Kaidi, alle Identitäten bis Gewicht 6 & 2016 & Prüfstein für die Numerik \\
+\href{https://arxiv.org/abs/2502.05531}{2502.05531} & Claasen \& Doroudiani, iterierte Eisenstein-Integrale, Paket bis 4 Vertices & 2025 & Stand der Technik, Grenze bei 4 Vertices \\
+\href{https://arxiv.org/abs/2511.15883}{2511.15883} & Schlotterer, Sohnle, Tao, elliptische MGFs über äquivariante iterierte Integrale & 2025 & Ziel für k-aufgelöste GZL-Werte \\
+\href{https://arxiv.org/abs/2603.20550}{2603.20550} & Dobrowolski, symmetrisierte Mordell--Tornheim-Zeta & 2026 & 1D-Kreis-Zeta = ζ̄\_n, Validierungsbank \\
+\href{https://arxiv.org/abs/2512.21413}{2512.21413} & Fedosova \& Klinger-Logan, Divisor-Summen mit komplexen Indizes & 2025 & Motivation für nicht-ganzzahlige Exponenten \\
+\end{longtable}
+
+\textbf{Bewertung.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1851}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1140}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6709}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Kriterium
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Punkte
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Begründung
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Neuheit & 5 & Das Wörterbuch MGF ↔ duale Graph-Zeta ist in den Quellen nirgends ausgesprochen. \\
+Passung & 3 & Planar und ν \textgreater{} d funktioniert. Die typischen a = 1-Kanten sind Grenzfälle. \\
+Hebel & 2 & Exakte Konkurrenzmethoden existieren. \\
+Machbarkeit & 4 & Die Piloten laufen, das Wörterbuch ist einfach. \\
+Wow & 4 & „Magnetismus-Software berechnet Stringamplituden'' ist eine starke Geschichte. \\
+Anschluss & 3 & Interesse als Kreuzcheck. Neue s*-Aussage für math.NT \\
+\end{longtable}
+
+\subsection{Idee 4: Simulator-Material-Zwillinge mit vollem Schwanz -- Rydberg-vdW-Arrays und Tm-Dreiecksmagnete}
+
+\textbf{Pitch.} Eine Referenz im thermodynamischen Limes für Rydberg-Quantenprozessoren mit 256 Qubits: volle 1qp-Dispersion, Gap und kritischer Punkt mit dem \emph{kompletten} 1/r⁶-Schwanz. Dazu wird exakt beziffert, wie stark der Schwanz die Abbildung „Simulator ↔ Material'' für TmMgGaO₄ und NaTmSe₂ verschiebt.
+
+\textbf{Das Problem im Zielfeld {[}belegt{]}.}
+
+\begin{itemize}
+\tightlist
+\item
+  Pasqal fährt das 2D-TFIM auf 16×16 Atomen mit U(R/r)⁶. Den kritischen Punkt h*/J ≈ 2,6 für L = 16 übernimmt die Arbeit aus QMC. Tensornetze verlieren bei tJ ≳ 1 die Kontrolle, und Spektren werden nicht gezeigt (\href{https://arxiv.org/abs/2608.07178}{arXiv:2608.07178}).
+\item
+  Die „one-to-one''-Simulation von TmMgGaO₄ auf einem Dreiecks-Rhombus mit 256 Qubits bildet ein J₁--J₂-Modell mit J₂ ≈ 0,05 J₁ ab. Sie behauptet nur „almost the same neighbour dependence''. Die MPS-Vergleichsrechnungen dauerten etwa zwei Wochen gegenüber etwa einem Tag auf dem QPU (\href{https://arxiv.org/abs/2603.20372}{arXiv:2603.20372}).
+\item
+  NaTmSe₂ realisiert das TFIM mit quantitativ bestimmten Austauschparametern und Neutronendaten (\href{https://arxiv.org/abs/2505.09884}{arXiv:2505.09884}).
+\item
+  Für KTmSe₂ zeigte die GZL-Physik-Arbeit, dass „J₁ + voller Dipol'' die INS-Dispersion am besten beschreibt (\href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761}, Daten aus \href{https://arxiv.org/abs/2306.03544}{arXiv:2306.03544}).
+\item
+  Keines dieser Experimente wird mit einer konvergierten Rechnung im thermodynamischen Limes über die volle Brillouin-Zone mit komplettem Schwanz verglichen.
+\end{itemize}
+
+\textbf{Abbildung auf GZL {[}abgeleitet{]}.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Gitter:} \texttt{triangular} (auch \texttt{square} und \texttt{chain}).
+\item
+  \textbf{Korpus:} \texttt{tfim1qp} bzw. \texttt{tfim0qp}, AFM-Vorzeichen.
+\item
+  \textbf{Kern:} Interaction = a(x) + C₆\textbar x\textbar{}\textsuperscript{−6} für Rydberg. Für Tm-Materialien mit Momenten ∥ c ist die Dipol-zz-Kopplung in der Ebene exakt isotrop, also a(x) = J₁, J₂ kompakt plus D\textbar x\textbar{}\textsuperscript{−3}.
+\item
+  \textbf{Observablen:} 1qp-Dispersion ω(k) über die ganze Brillouin-Zone, Gap am K-Punkt, λ\textsubscript{c} und zν per DlogPadé.
+\item
+  Der vdW-Schwanz liefert auf dem Dreiecksgitter J₂/J₁ = 1/27 ≈ 0,037 und J₃/J₁ = 1/64. Das Material hat J₂ ≈ 0,05 J₁ und kein J₃. Die Differenz lässt sich genau als kompakte Korrektur a(x) einspeisen.
+\end{itemize}
+
+\begin{verbatim}
+# Rydberg-Referenz (Z2-symmetrische Detuning-Linie), Pseudokonfiguration
+gzl series --corpus tfim1qp --A triangular --nu 6 --n-points 48 --order-max 11
+# Materialvariante: Interaction.from_shells(...)  (J1, Delta J2 kompakt) + b*|x|^-3 bzw. |x|^-6
+\end{verbatim}
+
+\textbf{Was neu herauskäme.}
+
+\begin{itemize}
+\tightlist
+\item
+  Die ersten Spektren im thermodynamischen Limes mit vollem vdW-Schwanz für die Gitter der 256-Qubit-Maschinen.
+\item
+  Eine quantifizierte „Schwanzkorrektur'' der TmMgGaO₄-Abbildung: Um wie viel verschieben 1/27 statt 0,05 und der J₃-Schwanz Gap und kritisches Feld?
+\item
+  Eine Modellwahl J₁--J₂ gegen J₁ + Dipol für NaTmSe₂ nach dem KTmSe₂-Muster, samt Abstand zum Quantenkritischen Punkt.
+\end{itemize}
+
+\textbf{Erster Meilenstein (3--6 Wochen).}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Das 2D-KTmSe₂-Ergebnis aus \href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761} reproduzieren (Validierung).
+\item
+  Reines vdW-Modell gegen J₁--J₂-Modell auf dem Dreiecksgitter vergleichen: Dispersion, Gap und λ\textsubscript{c}.
+\end{enumerate}
+
+\textbf{Ausbaupfad.}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Monat 2--4:} Vergleich mit Pasqal (h*/J ≈ 2,6) nach Klärung der Vorzeichen- und Untergitter-Konvention. Die Notizen markieren diesen Punkt als \emph{nicht verifiziert}.
+\item
+  \textbf{Monat 4--6:} NaTmSe₂ und 1D-Rydberg-Ketten für die Caltech-Messungen des dynamischen Strukturfaktors (\href{https://arxiv.org/abs/2601.16275}{arXiv:2601.16275}).
+\item
+  \textbf{Später:} 3D-Stapelung und Spektralgewichte, sobald die Roadmap-Features vorliegen.
+\end{itemize}
+
+\textbf{Vorwissen und Einstieg.} pCUT und Linked-Cluster-Grundlagen, DlogPadé, Rydberg-Hamiltonian, Kristallfeld-Physik nicht-Kramers-Ionen. Einstieg: \href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761}, \href{https://arxiv.org/abs/2603.20372}{arXiv:2603.20372}.
+
+\textbf{Risiken.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Der mitgelieferte Korpus gilt nur auf der \textbf{Z₂-symmetrischen Linie} δ = Σ\textsubscript{j} U\textsubscript{ij}/2. Ein Longitudinalfeld, also das volle (Ω, δ)-Diagramm, braucht einen neuen Korpus.
+\item
+  pCUT aus dem Transversalfeld-Limes gilt nur in der paramagnetischen Phase. TmMgGaO₄ ordnet bei tiefer Temperatur.
+\item
+  Ordnung 11 begrenzt die Präzision nahe λ\textsubscript{c}.
+\item
+  Die Stapelung in 3D braucht anisotrope Dipolkerne.
+\end{enumerate}
+
+\textbf{Scoop-Risiko: hoch.} Die Autoren nennen Rydberg-vdW-LRTFIM und DSF-Vergleiche ausdrücklich als nächstes Ziel und haben KTmSe₂ selbst bearbeitet. Empfehlung: Kooperation suchen oder sich auf das konkrete Paar TmMgGaO₄-Simulator und NaTmSe₂ konzentrieren.
+
+\textbf{Schlüsselpapers.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1147}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4486}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0659}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3408}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+arXiv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Titel / Inhalt
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jahr
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevanz
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{https://arxiv.org/abs/2603.20372}{2603.20372} & 256-Qubit-„one-to-one''-Simulation von TmMgGaO₄ & 2026 & Zielexperiment für die Schwanzkorrektur \\
+\href{https://arxiv.org/abs/2608.07178}{2608.07178} & Pasqal/Browaeys, 2D-TFIM auf 16×16 mit vdW & 2026 & Kritischer Punkt aus QMC bei L = 16 \\
+\href{https://arxiv.org/abs/2505.09884}{2505.09884} & NaTmSe₂ als TFIM-Realisierung & 2025 & Nächstes Material nach KTmSe₂ \\
+\href{https://arxiv.org/abs/2306.03544}{2306.03544} & KTmSe₂-INS, dispersiver Kristallfeldzweig & 2023 & Validierungsdaten \\
+\href{https://arxiv.org/abs/2609.18761}{2609.18761} & Duft et al., „Exact and fast series expansions for quantum models with long-range interactions'' & 2026 & Methode und KTmSe₂-Präzedenz \\
+\href{https://arxiv.org/abs/2601.16275}{2601.16275} & Caltech, DSF einer Rydberg-Kette am kritischen Punkt & 2026 & 1D-Vergleichsziel \\
+\end{longtable}
+
+\textbf{Bewertung.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1851}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1140}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6709}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Kriterium
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Punkte
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Begründung
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Neuheit & 3 & Neue Systeme, aber dieselbe Methode wie bei den Autoren \\
+Passung & 4 & Läuft heute, auf der Z₂-Linie und im 2D-Dipolmodell \\
+Hebel & 4 & Voller Schwanz und volle Brillouin-Zone im thermodynamischen Limes statt DMRG/QMC bei L = 16 \\
+Machbarkeit & 4 & Mitgelieferte Korpora, das Kern-API reicht aus. \\
+Wow & 5 & Direkter Vergleich mit Experiment und Material \\
+Anschluss & 4 & Relevant für Rydberg- und Neutronen-Community. Kooperation ist naheliegend. \\
+\end{longtable}
+
+\subsection{Idee 5: Quanten-Sak-Test und Log-Korrekturen im LRTFIM für d = 1, 2, 3}
+
+\textbf{Pitch.} Mit rauschfreien Reihen auf einem sehr dichten σ-Gitter prüfen, ob die Exponenten des LRTFIM ihren kurzreichweitigen Wert bei σ = 2 − η\textsubscript{SR} (Sak) oder erst bei σ = 2 erreichen, wie es das RG-Papier von 2026 behauptet. Dazu die multiplikativen Logarithmen an der oberen kritischen Grenze σ\textsubscript{uc} = 2d/3 und im 3D-Kubikgitter vermessen.
+
+\textbf{Das Problem im Zielfeld {[}belegt{]}.} \href{https://arxiv.org/abs/2606.22407}{arXiv:2606.22407} schlägt ein (d, σ)-Universalitätsdiagramm für Quanten-O(n) vor, mit σ* = 2 und Vorhersagen für ν, η\_ω und η\textsubscript{k}. Klassisch behauptet die Deng-Gruppe dasselbe per MC (\href{https://arxiv.org/abs/2512.04805}{arXiv:2512.04805}). Für die antiferromagnetische LR-Ising-Kette weichen Korrelationsexponent und zentrale Ladung laut NQS bei kleinem Zerfallsexponenten ab, und der Zusammenbruch der konformen Invarianz ist „yet to be determined'' (\href{https://arxiv.org/abs/2308.09709}{arXiv:2308.09709}). Frühere pCUT+MC-Reihen waren verrauscht und nur dünn in σ abgetastet (\href{https://arxiv.org/abs/1802.06684}{arXiv:1802.06684}, \href{https://arxiv.org/abs/2203.08081}{arXiv:2203.08081}).
+
+\textbf{Abbildung auf GZL.} Direkt mit den mitgelieferten Korpora \textbf{{[}belegt{]}}: ν = d + σ auf dem Gitter \texttt{chain}, \texttt{square}, \texttt{triangular} oder \texttt{cubic}, FM- und AFM-Vorzeichen, 1qp-Gap als Observable. Die Reihenanalyse umfasst DlogPadé und Ratio-Methoden mit Log-Termen.
+
+\begin{verbatim}
+for sigma in $(seq 1.50 0.005 2.20); do
+  gzl series --corpus tfim1qp --A chain --nu $(echo "1+$sigma" | bc) --order-max 11 ...
+done   # -> z*nu(sigma); d=1: Sak 7/4 vs 2; d=2: ~1,96 vs 2
+\end{verbatim}
+
+\textbf{Was neu herauskäme.}
+
+\begin{itemize}
+\tightlist
+\item
+  Deterministische Kurven zν(σ) in d = 1, 2, 3, direkt gegen die Vorhersagen aus \href{https://arxiv.org/abs/2606.22407}{arXiv:2606.22407} gestellt.
+\item
+  Die erste quantitative Extraktion multiplikativer Log-Exponenten aus exakten Koeffizienten in d = 2 und 3. In d = 3 gehört die kurzreichweitige Klasse zu 4D-Ising und trägt Logarithmen im gesamten SR-Regime \textbf{{[}abgeleitet{]}}.
+\end{itemize}
+
+\textbf{Erster Meilenstein (2--4 Wochen).} Zuerst den Crossover-Abschnitt von \href{https://arxiv.org/html/2609.18761}{arXiv:2609.18761} lesen. Die Notizen konnten dessen Zahlen nicht extrahieren, und davon hängt die Neuheit ab. Danach zν(σ) für die FM-Kette auf dem Gitter σ ∈ {[}1,5; 2,2{]} mit Schrittweite 0,005 berechnen.
+
+\textbf{Ausbaupfad.} Zuerst d = 2 (Quadrat, Dreieck AFM), dann das 3D-Kubikgitter, dann Log-bewusste Extrapolation. Langfristig O(2) und O(3) über XXZ-Korpora, die heute fehlen.
+
+\textbf{Vorwissen und Einstieg.} Kritische Phänomene langreichweitiger Modelle, Reihenanalyse. Einstieg: \href{https://arxiv.org/abs/2203.08081}{arXiv:2203.08081}, \href{https://arxiv.org/abs/2606.22407}{arXiv:2606.22407}.
+
+\textbf{Risiken.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  In d = 2 liegen die beiden Kandidaten nur \textbf{\textasciitilde0,04} auseinander. Bei Ordnung 11 und langsamen Crossovers begrenzt der Extrapolationsfehler, nicht das Rauschen.
+\item
+  Die Autoren haben σ bereits dicht gescannt. Die Neuheit muss aus der expliziten Konfrontation mit RG und MC und aus der Log-Analyse kommen.
+\end{enumerate}
+
+\textbf{Scoop-Risiko: mittel--hoch.} Die GZL-Arbeit charakterisiert „the crossover between universality regimes'' bereits.
+
+\textbf{Schlüsselpapers.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1139}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.4454}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0654}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.3453}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+arXiv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Titel / Inhalt
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jahr
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Relevanz
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{https://arxiv.org/abs/2606.22407}{2606.22407} & „Perturbative Renormalization and Universality Diagram for Long-Range Quantum Criticality'' & 2026 & Zu prüfende Vorhersage σ* = 2 \\
+\href{https://arxiv.org/abs/2203.08081}{2203.08081} & „Scaling at quantum phase transitions above the upper critical dimension'' & 2022 & Anker für Exponenten und Log-Korrekturen \\
+\href{https://arxiv.org/abs/1802.06684}{1802.06684} & „Quantum criticality of two-dimensional quantum magnets with long-range interactions'' & 2019 & MC-basierte Vorgängerreihen \\
+\href{https://arxiv.org/abs/2512.04805}{2512.04805} & Klassisch σ* = 2 per MC & 2025 & Klassisches Gegenstück \\
+\href{https://arxiv.org/abs/2308.09709}{2308.09709} & NQS für die AF-LR-Ising-Kette & 2023 & Dokumentierte Uneinigkeit \\
+\href{https://arxiv.org/abs/2609.18761}{2609.18761} & GZL-Physik-Arbeit & 2026 & Ausgangspunkt, Überlappung prüfen \\
+\end{longtable}
+
+\textbf{Bewertung.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1851}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1140}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6709}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Kriterium
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Punkte
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Begründung
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Neuheit & 3 & Die Überlappung mit dem σ-Scan der Autoren ist wahrscheinlich. \\
+Passung & 5 & Nur mitgelieferte Korpora \\
+Hebel & 3 & Das Rauschen verschwindet, das Ordnungslimit bleibt. \\
+Machbarkeit & 4 & Rechenzeit in Minuten, die Analyse ist die Arbeit. \\
+Wow & 3 & Exponentenkurven \\
+Anschluss & 4 & Aktiver Streit \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Weitere Ideen: vierzehn Kandidaten mit ehrlichem Erweiterungsbedarf}
+
+N = Neuheit, P = Passung, H = Hebel, M = Machbarkeit, W = Wow, A = Anschlussfähigkeit (je 1--5).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2311}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2311}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.2311}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0339}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 20\tabcolsep) * \real{0.0393}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Idee
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Spur
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kern der Abbildung
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Was fehlt
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+N
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+P
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+H
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+M
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+W
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+A
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Scoop
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+ATM-Elastizitätskonstanten, Cauchy-Verletzung C₁₂ − C₄₄, Phonon-Zweitmoment Tr D(q) mit Dreikörperkräften (\href{https://arxiv.org/abs/2504.07338}{2504.07338}, \href{https://arxiv.org/abs/2012.05413}{2012.05413}) & B & Summe von Dreiecks-Zetas, Ableitung nach A, Bloch-Phase auf einer Kante & Fortsetzung für ν ≤ d in Dreiecksblöcken, nur Bravais (kein hcp) & 4 & 2 & 4 & 3 & 3 & 4 & mittel \\
+Vierkörper-Dispersion (Dipolring) & B & 4-Zyklus bzw. K₄ & Diagonalen mit positiven Potenzen, anisotrope Kontraktion & 4 & 1 & 3 & 2 & 3 & 3 & mittel \\
+1D-Rydberg-Kette am Ising-Punkt für Caltech-CFT-Spektren (\href{https://arxiv.org/abs/2601.16275}{2601.16275}) & A & \texttt{chain}, ν = 6, AFM & nichts auf der Z₂-Linie; tricritisch und E8 brauchen neue Korpora & 3 & 4 & 3 & 4 & 4 & 4 & hoch \\
+Langreichweitiger Benchmark für NLCE+QA auf Ionen-QPUs (\href{https://arxiv.org/abs/2605.28599}{2605.28599}) & A & LR-Referenzdispersion für α = 1--3 & nichts & 3 & 5 & 3 & 5 & 2 & 3 & mittel \\
+Bilayer- und Dimer-Kerne (r² + d²)\textsuperscript{−α/2} als asymptotische Potenzreihe plus a(x) (\href{https://arxiv.org/abs/2408.13145}{2408.13145}, \href{https://arxiv.org/abs/2605.13969}{2605.13969}) & A & Kerntrick ohne mehratomige Basis & Dimer-Korpus, Konvergenzprüfung & 4 & 3 & 3 & 3 & 2 & 4 & hoch \\
+α\textsubscript{c} der LR-XY-Kette (LSW 3,0 gegen ≈ 2,7) und der Spin-1-Kette (QMC 2,49(1)) (\href{https://arxiv.org/abs/2601.20058}{2601.20058}, \href{https://arxiv.org/abs/2604.20831}{2604.20831}, \href{https://arxiv.org/abs/2604.12754}{2604.12754}) & A & Reihen über α & XXZ- und Spin-1-Korpora, gestaffelte Vorzeichen nicht als Kern darstellbar & 2 & 2 & 4 & 2 & 3 & 4 & hoch \\
+Dipolares XY/XXZ auf dem Quadratgitter, AFM-Dämpfungsrätsel (\href{https://arxiv.org/abs/2311.11726}{2311.11726}, \href{https://arxiv.org/abs/2605.07685}{2605.07685}) & A & Isotropes 1/r³ bei senkrechter Quantisierungsachse & XXZ-Korpus, gapped Entwicklungslimes & 3 & 2 & 4 & 2 & 4 & 4 & hoch \\
+1/S-Spinwellen-Schleifen als Brillouin-Zonen-Faltungen über die Zeta-Algebra & A/B & \texttt{graph\_convolve}-Algebra auf J(k) & Methodenentwicklung {[}spekulativ{]} & 4 & 2 & 3 & 2 & 3 & 3 & gering \\
+Magnon-Bindungszustände im 2D-LRTFIM (\href{https://arxiv.org/abs/2512.09037}{2512.09037}) & A & 2qp-Sektor & zwei Impulse, nicht in v1.0.0 & 3 & 1 & 4 & 1 & 4 & 4 & hoch \\
+EA-Hochtemperaturreihe des 1D/2D-LR-Spinglases (\href{https://arxiv.org/abs/2604.07130}{2604.07130}) & B & gerade Graphen mit J² ∝ r\textsuperscript{−2σ} & eigener Korpus {[}spekulativ{]} & 4 & 3 & 3 & 2 & 2 & 3 & gering \\
+Lévy-Flug-Konstanten: P\textsubscript{n}(0) = Kreis-Zeta/Zⁿ, Torus-Plateaus für FSS oberhalb d\textsubscript{c} (\href{https://arxiv.org/abs/2412.08814}{2412.08814}) & B & Kreis-Zeta bzw. D̂(k) auf dem Gitter & singuläres BZ-Integral, meist genügt EpsteinLib & 2 & 3 & 2 & 4 & 2 & 2 & gering \\
+Multipräzisions-Graph-Zeta für PSLQ & B & Port des BZ-Integrals nach mpmath/Arb & Neuimplementierung & 4 & 1 & 3 & 2 & 3 & 3 & gering \\
+3D-skalare Gitterstörungstheorie, Vakuumgraphen & B & kompakter Kern plus Potenzschwanz wie bei Lüscher--Weisz & anisotrope Subleading-Terme, IR-Regulator (ν = 1 \textless{} d) & 3 & 1 & 2 & 1 & 2 & 2 & gering \\
+Log-Korrekturen im Dicke-Ising-Kontext (\href{https://arxiv.org/abs/2605.27484}{2605.27484}) & A & nur der LR-Ising-Anteil & Photonmode ist all-to-all und keine Gittersumme & 2 & 2 & 2 & 3 & 2 & 3 & hoch \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Überraschende Zusammenhänge: eine Zahl, drei Communities}
+
+Der auffälligste Befund dieser Recherche ist eine \textbf{Drei-Welten-Identität} \textbf{{[}abgeleitet, durch Pilot gestützt{]}}. Dieselbe Zahl, die Dreiecks-Graph-Zeta auf einem 2D-Gitter mit Einheitsvolumen, erscheint an drei Stellen:
+
+\begin{itemize}
+\tightlist
+\item
+  als \textbf{Dreikörper-Riesz-Energie} in der Kristallchemie;
+\item
+  als \textbf{zweischleifige dihedrale MGF} π\textsuperscript{3s}·C\textsubscript{s,s,s}(τ) in der Stringtheorie;
+\item
+  als \textbf{Einbettungssumme der Zyklen dritter Ordnung} in der Linked-Cluster-Reihe eines langreichweitigen Quantenmagneten.
+\end{itemize}
+
+Dahinter steckt eine strukturelle Übereinstimmung: GZLs Darstellung der Kreis-Zeta als Brillouin-Zonen-Integral über Produkte von Epstein-Zetas ist genau die „position-space''-Darstellung von MGFs. Die Torus-Green-Funktion G\textsubscript{a}(z\textbar τ) ist eine Epstein-Zeta am Wellenvektor z (\href{https://arxiv.org/abs/2609.18918}{arXiv:2609.18918}, \href{https://arxiv.org/abs/1512.06779}{arXiv:1512.06779}). In 1D wird dasselbe Objekt zur symmetrisierten Mordell--Tornheim-Zeta aus der Zahlentheorie (\href{https://arxiv.org/abs/2603.20550}{arXiv:2603.20550}). Diese Brücke ist exakt, aber wenig ergiebig, weil 1D bereits über MZVs verstanden ist.
+
+Der \textbf{Sak-Streit wird gleichzeitig in vier Communities ausgetragen}, und keine nutzt Reihen mit exakten Gitterkoeffizienten:
+
+\begin{itemize}
+\tightlist
+\item
+  klassisches MC (\href{https://arxiv.org/abs/2512.04805}{arXiv:2512.04805});
+\item
+  Perkolation (\href{https://arxiv.org/abs/2608.20750}{arXiv:2608.20750});
+\item
+  Kontinuums-ε-Entwicklungen (\href{https://arxiv.org/abs/2602.07818}{arXiv:2602.07818}, \href{https://arxiv.org/abs/2608.15120}{arXiv:2608.15120});
+\item
+  Quanten-RG (\href{https://arxiv.org/abs/2606.22407}{arXiv:2606.22407}).
+\end{itemize}
+
+Klassische Hochtemperaturreihe und Quanten-Linked-Cluster-Entwicklung teilen dieselben Gittersummen. GZL ist deshalb der gemeinsame Nenner, der die klassische und die Quantenseite mit \emph{einem} Werkzeug prüfen könnte (Ideen 2 und 5).
+
+Zwei weniger offensichtliche Identitäten gelten exakt \textbf{{[}abgeleitet{]}}. Erstens ist die Rückkehrwahrscheinlichkeit eines Lévy-Flugs auf dem Gitter nach n Schritten P\textsubscript{n}(0) = ζ\textsuperscript{(n)}\emph{Λ(ν,\ldots,ν)/Z}\{Λ,ν\}(0)ⁿ, also eine Kreis-Zeta. Zweitens ist das phononische Zweitmoment Tr D(q) eines Bravais-Kristalls mit ATM-Kräften eine Summe von Dreiecks-Zetas mit Bloch-Phase auf einer Kante. Das ist genau GZLs Modus mit externem Impuls, und damit wird die Gitterdynamik der Kristallchemie zu einem Anwendungsfall der „ganzen Brillouin-Zone per FFT''. Spekulativ ist die Verbindung zu Feynman-Perioden: Das Residuum einer Graph-Zeta am Gesamtpol ν\textbar E\textbar{} = d(\textbar V\textbar−1) sollte die Ortsraum-Periode sein. Das verlangt allerdings ν \textless{} d pro Kante und liegt damit außerhalb von GZL.
+
+Zwei aktuelle Arbeiten liefern schließlich die \textbf{Theorie dafür, warum der volle Schwanz zählt}, und damit ein Verkaufsargument für alle Ideen der Spur A. Das Abschneiden eines r\textsuperscript{−p}-Schwanzes bei Reichweite R verschiebt lokale Observablen um O(R\textsuperscript{−(p−d)}), und diese Schranke ist optimal (\href{https://arxiv.org/abs/2608.15576}{arXiv:2608.15576}). Surrogate aus Exponentialsummen in iMPS verzerren kritische Diagnosen (\href{https://arxiv.org/abs/2606.20522}{arXiv:2606.20522}). Die DMRG-Studie dipolarer XY-Modelle schneidet bei R\textsubscript{max} = W/2 ab (\href{https://arxiv.org/html/2605.07685}{arXiv:2605.07685}).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Verworfene Ideen: wo die Brücke nur mit Gewalt hält}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4850}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 2\tabcolsep) * \real{0.4850}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Idee
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Warum sie nicht trägt
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Photonik, Atomarrays, kollektive Lamb-Verschiebung (\href{https://arxiv.org/abs/2512.24596}{2512.24596}, \href{https://arxiv.org/abs/2609.17313}{2609.17313}) & Der Kern ist die komplexe, oszillierende dyadische Green-Funktion e\textsuperscript{ik₀r}/r. GZLs k ist nur eine Bloch-Phase auf einem reellen geraden Kern. Die Bandstruktur ist ohnehin eine Einfachsumme. \\
+Lüscher-Zeta und ihre LR-Modifikation (\href{https://arxiv.org/abs/2507.18399}{2507.18399}) & Polkern 1/(p² − q²) mit winkelabhängigen Vertexgewichten, kein Differenzkern \\
+QED\_L-Koeffizienten, Madelung-Konstanten (\href{https://arxiv.org/abs/1702.01296}{1702.01296}, \href{https://arxiv.org/abs/2608.10041}{2608.10041}, \href{https://arxiv.org/abs/2503.00977}{2503.00977}) & Einfachsummen. Mehrschleifen-Punktladungssummen faktorisieren. Das richtige Werkzeug ist EpsteinLib, nicht GZL. \\
+Ortsraum-Photonpropagator in Gitter-QCD+QED (\href{https://arxiv.org/abs/2603.13086}{2603.13086}) & Die Vertexfunktionen sind MC-Korrelatordaten, keine analytischen Kerne. Außerdem d = 4. \\
+Langreichweitige ML-Potenziale (\href{https://arxiv.org/abs/2606.06617}{2606.06617}, \href{https://arxiv.org/abs/2512.18029}{2512.18029}) & Nur Zweikörper-Ewald-Summen. Kein ML-Ansatz braucht nicht-baumartige Graphsummen. \\
+Many-Body-Dispersion (MBD, \href{https://arxiv.org/abs/2308.03140}{2308.03140}) & Auf Bravais-Gittern ein 3×3-T(k) pro k: anisotrope \emph{Einfach}summen. Reale Systeme sind mehratomig. \\
+LR-Kitaev-Ketten (\href{https://arxiv.org/abs/2412.01076}{2412.01076}, \href{https://arxiv.org/abs/2609.28735}{2609.28735}) & Freie Fermionen, nur eindimensionale Polylog-Transformierte \\
+Perkolations-Dreiecksdiagramm nahe s ≈ d & Der Kern wäre das unbekannte kritische τ(x) ≍ ‖x‖\textsuperscript{−d+α}, das kein Eingabekern und nicht in ℓ¹ ist (\href{https://arxiv.org/abs/2404.07276}{2404.07276}). \\
+k-Punkt-Baumsummen der Hochdimensions-Perkolation (\href{https://arxiv.org/abs/2607.22387}{2607.22387}) & Die Green-Funktions-Kerne sind nicht summierbar. \\
+Feynman-Perioden (\href{https://arxiv.org/abs/2607.25595}{2607.25595}) & ν \textless{} d pro Kante. Graphical functions und HyperInt sind weit überlegen. \\
+Epidemien, Ausbreitungskerne & Nur Normierungen niedriger Ordnung, per FFT oder im Kontinuum billig. 2025--26 wurde kein Engpass gefunden. \\
+Ionen mit modenbasierten Kopplungen (\href{https://arxiv.org/abs/2606.13499}{2606.13499}) & J\textsubscript{ij} ∝ b\textsubscript{ik} b\textsubscript{jk} ist kein Potenzgesetz. \\
+1D-Tornheim- und MZV-Summen & Theoretisch bereits exakt bekannt, GZL taugt nur als Prüfbank. \\
+PSLQ-Entdeckungen mit GZL, wie es heute ist & Doppelte Genauigkeit reicht nur für winzige Basen. \\
+LiHoF₄, Pyrochlor-Spin-Eis, NaGdS₂ & Nicht-Bravais \textbf{und} anisotroper Dipol \textbf{und} ausdrücklich Ziel der Autoren. Erst nach der Roadmap. \\
+Finanzen (Ising-Marktmodelle) & In der Recherche fand sich keine Quelle, die eine Gittersumme mit Potenzgesetz als Engpass zeigt. Nicht weiterverfolgt. \\
+\end{longtable}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Empfehlung: morgen mit Idee 1 anfangen}
+
+\textbf{Starte mit „Optimale Gitter für Mehrkörper-Potenzgesetzenergien''.} Die Idee hat die beste Kombination aus Neuheit und sofortiger Machbarkeit:
+
+\begin{itemize}
+\tightlist
+\item
+  Sie läuft mit GZL 1.0.0 ohne jede Erweiterung.
+\item
+  Die Piloten liegen schon vor.
+\item
+  Sie verbindet drei Welten (Gitteroptimierung, Kristallchemie, modulare Graphfunktionen).
+\item
+  Das Ergebnis ist ein zeigbares Phasendiagramm.
+\item
+  Sie berührt die Roadmap der Autoren nur am Rand.
+\end{itemize}
+
+Idee 2 ist der natürliche zweite, langfristige Strang mit dem größten Hebel. Die Infrastruktur für Graphenenumeration und Reihenanalyse, die man dafür baut, nützt später auch den Ideen 4 und 5.
+
+\textbf{Schritt 1: Piloten härten (Woche 1--2). Erledigt, siehe Abschnitt 7.} In \texttt{/home/user/GapYas/research/pilots/} \texttt{opt\_test.py}, \texttt{opt2.py} und \texttt{opt3.py} erneut laufen lassen (\texttt{mgf\_test2.py} nur aus diesem Verzeichnis). Dann ν* ≈ 3,91836 und die Barriere bei \textasciitilde72° mit variiertem n\textsubscript{points}, mit \texttt{evaluate\_graph} statt \texttt{zeta\_circle} und mit Brute-Force-Summen bei drei ν-Werten absichern. Die Fundamentaldomäne bis Im τ ≈ 5 und mit dichteren Starts absuchen. Ergebnis: eine belastbare 2D-Karte E₃(τ; ν).
+
+\textbf{Schritt 2: globale 3D-Suche (Woche 3--8).} Die 3D-Gitter mit Einheitsvolumen über reduzierte Gram-Matrizen parametrisieren (5 Parameter) und die Dreiecks-Zeta für ν ∈ {[}3,2; 12{]} global minimieren. Ziel ist, festzustellen, ob BCC das globale Minimum ist oder ob ein anderes Gitter gewinnt. Parallel C\textsubscript{s,s,s}(τ) für reelle s gegen die Laplace-Gleichungen der ganzzahligen Fälle prüfen (Brücke zu Idee 3).
+
+\textbf{Schritt 3: Neuheit sichern und Kontakt aufnehmen (parallel, ab Woche 2).} Die offenen Fragen von Bétermin und die Arbeiten von Luo und Wei auf Mehrkörperaussagen durchsehen. Danach Buchheit bzw. den Schwerdtfeger-Kreis kontaktieren: GZL kommt von ihnen, und die offene BCC-Stabilitätsfrage aus \href{https://arxiv.org/abs/2504.07338}{arXiv:2504.07338} ist ihr Thema. So wird das Scoop-Risiko zur Kooperation, und die für ATM nötige Fortsetzung für ν ≤ d kann gemeinsam in GZL einfließen.
+
+\textbf{Schluss.} Durch die Recherche verschiebt sich der Blick: Das eigentliche Potenzial von GZL liegt weniger in „mehr Quantenmagnetismus'' als darin, dass GZL als \textbf{erstes allgemeines Werkzeug für Graph-strukturierte Potenzgesetzsummen} Gebiete verbindet, die dieselben Zahlen unter verschiedenen Namen berechnen. In Spur A haben die Autoren fast jede naheliegende Richtung öffentlich beansprucht. Neuheit entsteht dort nur über konkrete Experimentpaare oder Kooperation. In Spur B ist das Feld leer: Seit dem Release am 25.09.2026 gibt es keine externe Nutzung, und klassische LR-Reihen, Mehrkörper-Gitteroptimierung und das MGF-Wörterbuch tauchen in keiner Roadmap auf. Die kritischste Erweiterung für den Transfer ist dabei nicht die Anisotropie, sondern die \textbf{meromorphe Fortsetzung für Nicht-Brücken-Blöcke mit ν ≤ d}. Sie würde ATM-Kristallphysik und stringrelevante MGFs mit a = 1-Kanten zugleich erschließen.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Nachprüfung der Pilotrechnungen: bestätigt, präzisiert und um eine zweite Phase ergänzt}
+
+Die Pilotrechnungen aus den Ideen 1 und 3 wurden nachträglich unabhängig nachgerechnet. Alle Skripte, Rohdaten und Logs liegen in \texttt{research/verification/} und laufen mit \texttt{gzl\ 1.0.0} und \texttt{epsteinlib}. Die Kennzeichnung \textbf{{[}nachgeprüft{]}} heißt: mit zwei unabhängigen Verfahren übereinstimmend berechnet. Das ersetzt keine Begutachtung.
+
+\textbf{Methode.} Als Referenz dient eine eigene Implementierung ohne GZL-Code (\texttt{lattice\_sums.py}). Die Dreieckssumme T\_ν(Λ) = Σ'\textsubscript{x,y} \textbar x\textbar{}\textsuperscript{\{−ν\}\textbar y\textbar{}}\{−ν\}\textbar x−y\textbar{}\textsuperscript{−ν} wird direkt über alle Gitterpunkte in einem Würfel {[}−R, R{]}\textsuperscript{d} summiert. Die innere Faltung läuft per FFT. Danach wird in R extrapoliert (Richardson mit dem bekannten Abschneidefehler \textasciitilde R\textsuperscript{d−2ν}). Die FFT-Version stimmt mit einer naiven Doppelschleife auf Maschinengenauigkeit überein. Für 2D-Gitter ist die Referenz sogar schneller als GZL (0,04 s gegenüber 0,1 s pro Gitter).
+
+\subsection{GZL ist korrekt (V1)}
+
+In 55 Testfällen wurde \texttt{gzl.zeta\_circle} mit der Referenz verglichen: fünf 2D-Gitter und vier 3D-Gitter (FCC, BCC, SC, triklin), mit ν von 2,5 bis 9 und mit ungleichen Exponenten. \textbf{Die größte relative Abweichung beträgt 1,9·10⁻¹⁰, typisch sind 10⁻¹⁵} \textbf{{[}nachgeprüft{]}}. Die größeren Abweichungen treten nur nahe ν = d auf, wo die Extrapolation der Referenz schwieriger wird. \texttt{evaluate\_graph} liefert für das Dreieck dasselbe wie \texttt{zeta\_circle}, bis auf 3·10⁻¹⁶. In 3D braucht GZL 1--160 s pro Gitter, die FFT-Referenz etwa 1 s. Für die globale Suche wurde deshalb die Referenz verwendet und GZL als Kontrolle.
+
+\subsection{2D: drei Phasen statt zwei (V2)}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.0801}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.5457}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1721}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 6\tabcolsep) * \real{0.1721}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ν
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+globales Minimum (Suche über die ganze Fundamentaldomäne)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+T hexagonal
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+T Quadrat
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+2,2 & hexagonal & 29,7948755694 & 30,2601286381 \\
+3,0 & hexagonal & 13,3917941103 & 13,6528937154 \\
+3,9 & hexagonal & 7,9670208300 & 7,9723204026 \\
+3,95 & Quadrat & 7,7829092994 & 7,7737904082 \\
+6,0 & Quadrat & 3,7457712638 & 3,2499743124 \\
+8,0 & Quadrat & 2,2280735200 & 1,5524012126 \\
+10 & \textbf{Rechteck, b/a = 1,0998} (T = 0,7597084) & 1,4063994404 & 0,7622381339 \\
+20 & \textbf{Rechteck, b/a = 1,1941} (T = 0,0212133) & 0,1603699 & 0,0234490 \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Übergang hexagonal → Quadrat bei ν* = 3,9183649026} \textbf{{[}nachgeprüft{]}}. Referenz und GZL liefern denselben Wert auf zehn Stellen. Das bestätigt den Pilotwert 3,91836.
+\item
+  \textbf{Der Übergang ist erster Ordnung} \textbf{{[}nachgeprüft{]}}. Die Hesse-Matrix zeigt: Das Quadratgitter ist ab ν = 3,8063 ein lokales Minimum, das Hexagonalgitter nur bis ν = 4,2784. Dazwischen sind beide lokal stabil. Bei ν* liegt auf dem Randbogen \textbar τ\textbar{} = 1 eine Barriere von 7,89851 auf 7,90956 bei arg τ ≈ 72°, also 0,14 \%.
+\item
+  \textbf{Neu gegenüber dem Pilot: Ein zweiter, kontinuierlicher Übergang bei ν₂ = 8,606} \textbf{{[}nachgeprüft{]}}. Dort wird das Quadratgitter in Streckrichtung instabil, und ein Rechteckgitter τ = i·y übernimmt. Sein Seitenverhältnis wächst stetig: 1,056 (ν = 9), 1,100 (10), 1,141 (12), 1,170 (15), 1,194 (20), 1,215 (30). Die Pilotaussage „Quadrat für alle ν \textgreater{} 3,918`` ist damit \textbf{falsch} für ν \textgreater{} 8,606. Der Pilot hatte nur bis ν = 6 gerechnet.
+\item
+  \textbf{Grenzfall ν → ∞ {[}abgeleitet, nicht bewiesen{]}:} Für große ν zählt nur das kleinste Dreieck. Im Rechteckgitter konkurrieren das rechtwinklige Dreieck (Produkt √(y + 1/y)) und das kollineare Dreieck (Produkt 2y\textsuperscript{−3/2}). Gleichsetzen ergibt y⁴ + y² = 4, also \textbf{y∞ = √((√17 − 1)/2) ≈ 1,2496}. Die numerische Folge läuft darauf zu. Für ν ≥ 50 ist die FFT-Summe wegen des Dynamikumfangs nicht mehr genau genug; diese Werte sind verworfen.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{../verification/figures/fig_2d_energy_difference.pdf}
+\caption{Energieunterschied Quadrat bzw. bestes Rechteck zum Hexagonalgitter. Die Nulldurchgänge markieren die beiden Übergänge.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../verification/figures/fig_2d_stability.pdf}
+\caption{Kleinster Hesse-Eigenwert von Hexagonal- und Quadratgitter. Grau: Bereich, in dem beide lokal stabil sind (Koexistenz, Übergang erster Ordnung). Rechts: Instabilität des Quadrats bei ν₂ = 8,606.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../verification/figures/fig_2d_landscape.pdf}
+\caption{Energielandschaft log₁₀(T/T\_min − 1) über der Fundamentaldomäne bei vier Exponenten. Kreis: Hexagonalgitter, Quadrat: Quadratgitter. Bei ν = 10 liegt das Minimum auf der imaginären Achse oberhalb von τ = i (Rechteckgitter).}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../verification/figures/fig_2d_rect_ratio.pdf}
+\caption{Seitenverhältnis des optimalen Gitters für ν \textgreater{} ν₂.}
+\end{figure}
+
+\subsection{3D: BCC ist das beste gefundene Gitter, FCC wird instabil (V3, V5)}
+
+Die globale Suche lief über alle 3D-Bravais-Gitter mit Einheitsvolumen, also einen 5-dimensionalen Formraum. Pro ν gab es 16 Startpunkte (FCC, BCC, SC und 13 zufällige), jeweils mit Nelder-Mead und LLL-Reduktion.
+
+\begin{longtable}[]{@{}lllll@{}}
+\toprule\noalign{}
+ν & FCC & BCC & SC & bestes gefundenes Gitter \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+3,2 & 52,0983519937 & \textbf{52,0006824132} & 56,0330699444 & BCC \\
+3,5 & 38,1993132080 & \textbf{38,0743775719} & 41,9368217767 & BCC \\
+4,0 & 25,2265705426 & \textbf{25,0532095478} & 28,6610705747 & BCC \\
+4,5 & 17,9623763656 & \textbf{17,7406073980} & 21,0980682627 & BCC \\
+5,0 & 13,3808991194 & \textbf{13,1146038631} & 16,2165790058 & BCC \\
+6,0 & 8,0433635309 & \textbf{7,7101880730} & 10,2962433924 & BCC \\
+7,0 & 5,1456778058 & \textbf{4,7819587144} & 6,8781813217 & BCC \\
+9,0 & 2,3132634600 & \textbf{1,9784839245} & 3,2722630842 & BCC \\
+12,0 & 0,7708588009 & \textbf{0,5646023215} & 1,1328205539 & BCC \\
+\end{longtable}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{BCC ist bei allen neun Exponenten das beste gefundene Gitter} \textbf{{[}nachgeprüft, numerisch{]}}. Alle Startpunkte, die tief genug kamen, liefen nach BCC. Die Werte bei ν = 3,5 bis 9 stimmen mit GZL auf 10⁻¹⁰ bis 10⁻¹⁵ überein (V1).
+\item
+  \textbf{BCC ist ein lokales Minimum} gegenüber \emph{allen} volumenerhaltenden Verzerrungen: Alle fünf Hesse-Eigenwerte sind positiv, geprüft bei ν = 3,5; 4,5; 6; 9. Auf dem Bain-Pfad (tetragonale Verzerrung) liegt das Minimum bei c/a = 1, also genau bei BCC. Das betrifft direkt die offene Stabilitätsfrage aus \href{https://arxiv.org/abs/2504.07338}{arXiv:2504.07338}, dort allerdings für Lennard-Jones plus ATM und nicht für die reine Dreieckssumme.
+\item
+  \textbf{Neu: FCC verliert bei ν = 3,752 seine lokale Stabilität} \textbf{{[}nachgeprüft{]}}. Der kleinste Hesse-Eigenwert ist 2,02 bei ν = 3,5, 0,013 bei 3,75 und −5,97 bei 4,0. Oberhalb davon ist FCC ein Sattelpunkt.
+\item
+  \textbf{Einschränkung:} Eine Suche mit 16 Starts ist kein Beweis des globalen Minimums. Unterhalb von ν = 3,2 wurde nicht gerechnet.
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics{../verification/figures/fig_3d_lattices.pdf}
+\caption{Abstand von FCC und SC zu BCC in Prozent.}
+\end{figure}
+
+\subsection{Modulare Graphfunktionen: Identitäten auf Maschinengenauigkeit (V4)}
+
+Beide Identitäten wurden mit der Referenzsumme im Impulsraum geprüft, ohne GZL und an fünf τ-Werten:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{C₂,₂,₁ = (2/5)E₅ + ζ(5)/30} gilt bis auf \textbf{10⁻¹⁵} relativ \textbf{{[}nachgeprüft{]}}. Der Pilot kam über die ε-Extrapolation in GZL nur auf 10⁻⁸.
+\item
+  \textbf{C₁,₁,₁ = E₃ + ζ(3)} gilt bis auf \textbf{10⁻¹⁴} \textbf{{[}nachgeprüft{]}}. Das gelingt aber nur, wenn man in der Extrapolation die Terme R\textsuperscript{−2} log R berücksichtigt. Mit reinen Potenzen bleibt ein systematischer Fehler von 10⁻⁶. Der Grund: Alle drei Kanten liegen bei ν = d, dadurch divergiert die Nachbarsumme logarithmisch.
+\item
+  Für C₂,₂,₂, wo alle ν \textgreater{} d sind, stimmen GZL und Referenz auf 10⁻¹⁵ überein. Das Wörterbuch „planare MGF = GZL-Zeta des dualen Graphen`` ist damit am Dreieck/Theta-Graph bestätigt.
+\item
+  \textbf{Folgerung für Idee 1:} Wegen T\textsubscript{2s}(Λ\_τ) = π\textsuperscript{3s} C\textsubscript{s,s,s}(τ) übersetzen sich die 2D-Ergebnisse direkt. Das Minimum von C\textsubscript{s,s,s} über der Fundamentaldomäne springt bei \textbf{s* = 1,95918} von e\textsuperscript{iπ/3} nach i und wird für \textbf{s \textgreater{} 4,303} zu einem Rechteckpunkt.
+\end{itemize}
+
+\subsection{Was sich am Bericht ändert}
+
+\begin{itemize}
+\tightlist
+\item
+  Idee 1 ist bestätigt und wird stärker. Das 2D-Phasendiagramm hat \textbf{drei} Phasen (hexagonal → Quadrat → Rechteck), mit Übergängen erster und zweiter Ordnung. Dazu kommt in 3D ein klares Bild: BCC ist das beste Gitter, FCC wird ab ν = 3,752 instabil.
+\item
+  Die Pilotaussage „Quadrat für ν \textgreater{} 3,918`` ist für ν \textgreater{} 8,606 korrigiert.
+\item
+  Die Präzisionsangabe für die MGF-Identitäten steigt von 10⁻⁸ auf 10⁻¹⁴ bis 10⁻¹⁵. Diese Präzision stammt aber aus der eigenen Referenzsumme und nicht aus GZL. Die Aussage in Idee 3, dass GZL für a = 1-Kanten eine Erweiterung braucht, bleibt richtig.
+\end{itemize}
+
+\subsection{Neuheitsprüfung}
+
+NOVELTY\_PLACEHOLDER
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Quellenliste}
+
+\textbf{Software und Dokumentation}: \href{https://github.com/graph-zeta/gzl}{GZL GitHub (README)}, \href{https://github.com/graph-zeta/gzl/blob/main/DOCUMENTATION.md}{DOCUMENTATION.md}, \href{https://pypi.org/project/gzl/}{gzl auf PyPI}, \href{https://pypi.org/project/epsteinlib/}{epsteinlib auf PyPI}.
+
+\textbf{Eigene Pilotrechnungen (nicht begutachtet)}: \texttt{/home/user/GapYas/research/pilots/}:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{mgf\_test.py}: C₂,₂,₁- und Zagier-Test mit ε-Verschiebung;
+\item
+  \texttt{mgf\_test2.py}: Richardson-Extrapolation und tetraedrische K₄-MGF;
+\item
+  \texttt{opt\_test.py}: 2D-Gitterscan und 3D FCC/BCC/SC;
+\item
+  \texttt{opt2.py}: Nelder-Mead und Brute-Force-Check;
+\item
+  \texttt{opt3.py}: Brent-Wurzel ν* und Barriere entlang des Bogens.
+\end{itemize}
+
+\textbf{Nachprüfung (unabhängige Referenz, Abschnitt 7)}: \texttt{research/verification/}:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{lattice\_sums.py}: Referenzimplementierung der Dreieckssumme ohne GZL-Code;
+\item
+  \texttt{v1\_gzl\_vs\_reference.py}: GZL gegen Referenz, 55 Fälle;
+\item
+  \texttt{v2\_2d\_landscape.py}, \texttt{v2b\_high\_nu.py}, \texttt{v2c\_large\_nu.py}: 2D-Phasendiagramm, Stabilität, zweiter Übergang;
+\item
+  \texttt{v3\_3d\_lattices.py}, \texttt{v5\_3d\_bain\_stability.py}, \texttt{v5b\_fcc\_threshold.py}: globale 3D-Suche, Bain-Pfad, Hesse-Matrizen;
+\item
+  \texttt{v4\_modular\_graph\_functions.py}, \texttt{v4b\_c111\_log\_fit.py}: MGF-Identitäten;
+\item
+  \texttt{make\_figures.py}: Abbildungen; Rohdaten und Logs in \texttt{results/}.
+\end{itemize}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1768}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.6916}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1016}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+arXiv
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Kurzangabe (laut Notizen)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Jahr
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+\href{https://arxiv.org/abs/2609.18918}{2609.18918} & Buchheit \& Rupp, Methode der Graph-Zetafunktionen & 2026 \\
+\href{https://arxiv.org/abs/2609.18761}{2609.18761} & Duft, Adelhardt, Koziol, Buchheit, Schmidt, „Exact and fast series expansions for quantum models with long-range interactions'' & 2026 \\
+\href{https://arxiv.org/abs/2609.28282}{2609.28282} & Buchheit \& Busse, anisotrope singuläre Summen aus Ableitungen der Epstein-Zeta & 2026 \\
+\href{https://arxiv.org/abs/2504.11989}{2504.11989} & Buchheit \& Busse, „Epstein zeta method for many-body lattice sums'' & 2025 \\
+\href{https://arxiv.org/abs/2412.16317}{2412.16317} & Buchheit, Busse, Gutendorf, EpsteinLib & 2024 \\
+\href{https://arxiv.org/abs/2504.07338}{2504.07338} & Robles-Navarro et al., LJ + ATM auf kuboidalen Gittern & 2025 \\
+\href{https://arxiv.org/abs/2012.05413}{2012.05413} & Analytische LJ-Schwingungseffekte, Einstein-Modell & 2020 \\
+\href{https://arxiv.org/abs/2403.00421}{2403.00421} & Adelhardt, Koziol, Langheld, Schmidt, MC-Techniken für LR-Quantenmagnete & 2024 \\
+\href{https://arxiv.org/abs/1802.06684}{1802.06684} & Fey, Kapfer, Schmidt, 2D-LR-Quantenmagnete & 2018 \\
+\href{https://arxiv.org/abs/2203.08081}{2203.08081} & Langheld et al., Skalierung oberhalb der oberen kritischen Dimension & 2022 \\
+\href{https://arxiv.org/abs/2408.13145}{2408.13145} & Adelhardt, Duft, Schmidt, LR-XXZ-Bilayer & 2024 \\
+\href{https://arxiv.org/abs/2604.12754}{2604.12754} & Adelhardt, Muleady, Schmidt, Gorshkov, LR-Spin-1-Kette & 2026 \\
+\href{https://arxiv.org/abs/2604.20831}{2604.20831} & LR-Spin-1-Kette, QMC α\textsubscript{c} = 2,49(1) & 2026 \\
+\href{https://arxiv.org/abs/2601.20058}{2601.20058} & LR-XY-Kette, α\textsubscript{c} ≈ 2,7 & 2026 \\
+\href{https://arxiv.org/abs/2606.22407}{2606.22407} & Li, Fan, Chen, Deng, Universalitätsdiagramm LR-Quantenkritikalität & 2026 \\
+\href{https://arxiv.org/abs/2512.04805}{2512.04805} & Xiao, Liu, Fan, Deng, 2D LR-Ising σ* = 2 & 2025 \\
+\href{https://arxiv.org/abs/2512.01956}{2512.01956} & Xiao et al., 2D LR-Heisenberg & 2025 \\
+\href{https://arxiv.org/abs/2608.20750}{2608.20750} & Liu, Xiao, Fan, Deng, 2D LR-Perkolation & 2026 \\
+\href{https://arxiv.org/abs/2508.18807}{2508.18807} & Hutchcroft, Critical LRP I & 2025 \\
+\href{https://arxiv.org/abs/2508.18808}{2508.18808} & Hutchcroft, Critical LRP II & 2025 \\
+\href{https://arxiv.org/abs/2404.07276}{2404.07276} & Hutchcroft, Dreiecksbedingung LRP & 2024 \\
+\href{https://arxiv.org/abs/2607.22387}{2607.22387} & Blanc-Renaudie \& Hutchcroft, k-Punkt-Funktion & 2026 \\
+\href{https://arxiv.org/abs/2602.07818}{2602.07818} & Zweischleifen-ε-Entwicklung LR-O(n) & 2026 \\
+\href{https://arxiv.org/abs/2608.15120}{2608.15120} & 6 − ε für LR-Perkolation & 2026 \\
+\href{https://arxiv.org/abs/2510.02458}{2510.02458} & Pagni et al., FRG für die 1D-LR-Ising-Kette & 2025 \\
+\href{https://arxiv.org/abs/2604.07130}{2604.07130} & Okuyama \& Ohzeki, 1D-LR-Spinglas & 2026 \\
+\href{https://arxiv.org/abs/2412.08814}{2412.08814} & Liu, Park, Slade, FSS oberhalb d\textsubscript{c} & 2024 \\
+\href{https://arxiv.org/abs/2308.09709}{2308.09709} & NQS für die AF-LR-Ising-Kette & 2023 \\
+\href{https://arxiv.org/abs/2609.17356}{2609.17356} & Luo \& Wei, Sarnak--Strömbergsson & 2026 \\
+\href{https://arxiv.org/abs/2605.07580}{2605.07580} & Luo \& Wei, Minimierer von Theta- und Epstein-Verhältnissen & 2026 \\
+\href{https://arxiv.org/abs/2411.17199}{2411.17199} & Deng \& Luo, hexagonale Optimalität & 2024 \\
+\href{https://arxiv.org/abs/2407.20762}{2407.20762} & Bétermin \& Furlanetto, p-Normen & 2024 \\
+\href{https://arxiv.org/abs/2312.01395}{2312.01395} & Bétermin, Šamaj, Travěnec, Strukturübergänge & 2023 \\
+\href{https://arxiv.org/abs/1512.06779}{1512.06779} & MGFs und elliptische Polylogarithmen & 2015 \\
+\href{https://arxiv.org/abs/1608.04393}{1608.04393} & D'Hoker \& Kaidi, MGF-Identitäten & 2016 \\
+\href{https://arxiv.org/abs/2502.05531}{2502.05531} & Claasen \& Doroudiani, iterierte Eisenstein-Integrale & 2025 \\
+\href{https://arxiv.org/abs/2511.15883}{2511.15883} & Schlotterer, Sohnle, Tao, elliptische MGFs & 2025 \\
+\href{https://arxiv.org/abs/2512.21413}{2512.21413} & Fedosova \& Klinger-Logan, Konvolutionsidentitäten & 2025 \\
+\href{https://arxiv.org/abs/2603.20550}{2603.20550} & Dobrowolski, Mordell--Tornheim & 2026 \\
+\href{https://arxiv.org/abs/2607.25595}{2607.25595} & Portner, Feynman-Perioden und svMZVs & 2026 \\
+\href{https://arxiv.org/abs/2603.20372}{2603.20372} & 256-Qubit-Simulation TmMgGaO₄ & 2026 \\
+\href{https://arxiv.org/abs/2608.07178}{2608.07178} & Pasqal/Browaeys, 2D-TFIM mit 256 Qubits & 2026 \\
+\href{https://arxiv.org/abs/2601.16275}{2601.16275} & Caltech, DSF einer Rydberg-Kette & 2026 \\
+\href{https://arxiv.org/abs/2505.09884}{2505.09884} & NaTmSe₂ als TFIM & 2025 \\
+\href{https://arxiv.org/abs/2306.03544}{2306.03544} & KTmSe₂-INS & 2023 \\
+\href{https://arxiv.org/abs/2311.11726}{2311.11726} & Chen et al., Quench-Spektroskopie dipolar XY & 2023 \\
+\href{https://arxiv.org/abs/2605.07685}{2605.07685} & DMRG dipolares XY auf Archimedischen Gittern & 2026 \\
+\href{https://arxiv.org/abs/2605.28599}{2605.28599} & NLCE+QA auf Ionen-QPU & 2026 \\
+\href{https://arxiv.org/abs/2512.09037}{2512.09037} & Magnon-Bindungszustände im 2D-LRTFIM & 2025 \\
+\href{https://arxiv.org/abs/2605.13969}{2605.13969} & Squeezing-Übergang in Potenzgesetz-Bilayern & 2026 \\
+\href{https://arxiv.org/abs/2605.27484}{2605.27484} & Koziol, ferromagnetisches Dicke-Ising-Modell & 2026 \\
+\href{https://arxiv.org/abs/2604.22743}{2604.22743} & Fitzner, Lesanovsky, Sbierski, Thermometrie Kagome-Rydberg & 2026 \\
+\href{https://arxiv.org/abs/2608.15576}{2608.15576} & Optimale Abschneideschranke O(R\textsuperscript{−(p−d)}) & 2026 \\
+\href{https://arxiv.org/abs/2606.20522}{2606.20522} & iMPS ohne Surrogat für algebraische Schwänze & 2026 \\
+\href{https://arxiv.org/abs/2512.24596}{2512.24596} & Xie \& Schotland, Photonbandstruktur atomarer Gitter & 2025 \\
+\href{https://arxiv.org/abs/2609.17313}{2609.17313} & Exzeptionelle Topologie in 2D-Atomarrays & 2026 \\
+\href{https://arxiv.org/abs/2507.18399}{2507.18399} & Modifizierte Lüscher-Zeta mit langreichweitiger Kraft & 2025 \\
+\href{https://arxiv.org/abs/1702.01296}{1702.01296} & Matzelle \& Tiburzi, QED-Finite-Volume-Summen & 2017 \\
+\href{https://arxiv.org/abs/2608.10041}{2608.10041} & He \& Hu, Madelung-Randterm & 2026 \\
+\href{https://arxiv.org/abs/2503.00977}{2503.00977} & Calara \& Miller, Madelung per Multipolsummation & 2025 \\
+\href{https://arxiv.org/abs/2603.13086}{2603.13086} & Erb, Meyer, Ottnad, Photonpropagator Gitter-QCD & 2026 \\
+\href{https://arxiv.org/abs/2606.06617}{2606.06617} & PSWF-LR, langreichweitige ML-Potenziale & 2026 \\
+\href{https://arxiv.org/abs/2512.18029}{2512.18029} & Latent Ewald & 2025 \\
+\href{https://arxiv.org/abs/2308.03140}{2308.03140} & libMBD & 2023 \\
+\href{https://arxiv.org/abs/2412.01076}{2412.01076} & LR-Kitaev-Ketten nach Quench & 2024 \\
+\href{https://arxiv.org/abs/2609.28735}{2609.28735} & Erweiterte LR-Kitaev-Modelle & 2026 \\
+\href{https://arxiv.org/abs/2606.13499}{2606.13499} & 2D-LR-XY mit 200 Ionen & 2026 \\
+\end{longtable}

@@ -11,6 +11,9 @@
 \usepackage{xcolor}
 \definecolor{linkblue}{HTML}{0B5CAD}
 \usepackage{graphicx}
+\setkeys{Gin}{width=0.8\linewidth,keepaspectratio}
+\usepackage{float}
+\floatplacement{figure}{H}
 \usepackage{longtable,booktabs,array,calc}
 \usepackage{fvextra}
 \DefineVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\footnotesize,frame=leftline,framerule=0.6pt,rulecolor=\color{black!30},xleftmargin=4pt}
@@ -26,6 +29,12 @@
 \automark{section}
 \setkomafont{disposition}{\normalfont\bfseries\sffamily}
 \setcounter{secnumdepth}{2}
+\usepackage{newunicodechar}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
+\newunicodechar{≳}{\ensuremath{\gtrsim}}
+\newunicodechar{≲}{\ensuremath{\lesssim}}
+\newunicodechar{≍}{\ensuremath{\asymp}}
+\newunicodechar{∖}{\ensuremath{\setminus}}
 \providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \providecommand{\real}[1]{#1}
 % tables: small font, a bit less padding

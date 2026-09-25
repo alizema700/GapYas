@@ -1,1 +1,8 @@
 nu=3.5 Bain path: min at c/a=1.000 (BCC c/a=1, FCC c/a=1.414) T=38.0743775719; value at FCC 38.1993132080
+nu=4.5 Bain path: min at c/a=1.000 (BCC c/a=1, FCC c/a=1.414) T=17.7406073980; value at FCC 17.9623763656
+nu=6.0 Bain path: min at c/a=1.000 (BCC c/a=1, FCC c/a=1.414) T=7.7101880730; value at FCC 8.0433635309
+nu=9.0 Bain path: min at c/a=1.000 (BCC c/a=1, FCC c/a=1.414) T=1.9784839245; value at FCC 2.3132634600
+nu=3.5 Hessian eigenvalues BCC [ 18.9908  56.9797 171.7057 171.7057 171.7057] | FCC [  2.018    6.0693 192.4352 192.4355 192.4358]
+nu=4.5 Hessian eigenvalues BCC [ 24.205   72.6175 146.7407 146.7407 146.7407] | FCC [-17.7367  -5.9189 184.1474 184.1474 184.1474]
+nu=6.0 Hessian eigenvalues BCC [ 30.2704  90.8081 114.1713 114.1713 114.1713] | FCC [-45.2142 -15.0789 173.5185 173.5185 173.5185]
+nu=9.0 Hessian eigenvalues BCC [28.371  65.7009 65.7009 65.7009 85.1081] | FCC [-53.0431 -17.6869 137.2309 137.2309 137.2309]

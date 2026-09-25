@@ -19,3 +19,29 @@ nu= 12.0  rect optimum y=1.140547 (side ratio b/a=1.140547) T=3.719422e-01 | squ
 nu= 15.0  rect optimum y=1.170171 (side ratio b/a=1.170171) T=1.271960e-01 | square 1.329503e-01 | hex 4.720458e-01 | global 1.271960e-01 at tau=0.00000+1.17017i | 15s
 nu= 20.0  rect optimum y=1.194148 (side ratio b/a=1.194148) T=2.121333e-02 | square 2.344895e-02 | hex 1.603699e-01 | global 2.121333e-02 at tau=0.00000+1.19415i | 16s
 nu= 30.0  rect optimum y=1.234372 (side ratio b/a=1.234372) T=4.328259e-04 | square 7.324193e-04 | hex 1.853785e-02 | global -2.234558e-04 at tau=0.01984+1.27379i | 56s
+nu= 50.0  rect optimum y=1.716334 (side ratio b/a=1.716334) T=-2.219600e+26 | square -3.572028e+08 | hex 1.084454e+07 | global -1.148714e+20 at tau=0.01575+1.41847i | 77s
+Traceback (most recent call last):
+  File "/home/user/GapYas/research/verification/v2b_high_nu.py", line 48, in <module>
+    r = minimize_scalar(lambda y: T(1j * y, nu), bounds=(1.0, 2.0), method="bounded", options=dict(xatol=1e-9))
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-GapYas/76d3ef7a-1fe3-5a67-bc9e-3f6706c7d572/scratchpad/v/lib/python3.11/site-packages/scipy/optimize/_minimize.py", line 1027, in minimize_scalar
+    res = _minimize_scalar_bounded(fun, bounds, args, **options)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-GapYas/76d3ef7a-1fe3-5a67-bc9e-3f6706c7d572/scratchpad/v/lib/python3.11/site-packages/scipy/optimize/_optimize.py", line 2336, in _minimize_scalar_bounded
+    fx = func(x, *args)
+         ^^^^^^^^^^^^^^
+  File "/home/user/GapYas/research/verification/v2b_high_nu.py", line 48, in <lambda>
+    r = minimize_scalar(lambda y: T(1j * y, nu), bounds=(1.0, 2.0), method="bounded", options=dict(xatol=1e-9))
+                                  ^^^^^^^^^^^^^
+  File "/home/user/GapYas/research/verification/v2b_high_nu.py", line 10, in T
+    return triangle_sum(A_tau(tau), (nu,) * 3, Rs=(48, 64, 96, 128))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/user/GapYas/research/verification/lattice_sums.py", line 65, in triangle_sum
+    coef = np.linalg.solve(M, vals)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-GapYas/76d3ef7a-1fe3-5a67-bc9e-3f6706c7d572/scratchpad/v/lib/python3.11/site-packages/numpy/linalg/_linalg.py", line 451, in solve
+    r = gufunc(a, b, signature=signature)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/tmp/claude-0/-home-user-GapYas/76d3ef7a-1fe3-5a67-bc9e-3f6706c7d572/scratchpad/v/lib/python3.11/site-packages/numpy/linalg/_linalg.py", line 144, in _raise_linalgerror_singular
+    raise LinAlgError("Singular matrix")
+numpy.linalg.LinAlgError: Singular matrix

@@ -25,15 +25,20 @@ def hessian(A, nu, h=2e-3):
                                  - T(deform(A, h * (-I[i] + I[j])), nu) + T(deform(A, -h * (I[i] + I[j])), nu)) / (4 * h * h)
     return np.linalg.eigvalsh(H)
 
-out = {"bain": {}, "hessian": {}}
-rs = np.linspace(0.8, 1.6, 33)
-for nu in [3.5, 4.5, 6.0, 9.0]:
-    vals = [T(bct(r), nu) for r in rs]
-    out["bain"][nu] = list(zip(rs.tolist(), vals))
-    i = int(np.argmin(vals))
-    print("nu=%.1f Bain path: min at c/a=%.3f (BCC c/a=1, FCC c/a=1.414) T=%.10f; value at FCC %.10f" % (nu, rs[i], vals[i], T(bct(np.sqrt(2)), nu)), flush=True)
-for nu in [3.5, 4.5, 6.0, 9.0]:
-    hb = hessian(unit_covolume(BCC), nu); hf = hessian(unit_covolume(FCC), nu)
-    out["hessian"][nu] = dict(BCC=hb.tolist(), FCC=hf.tolist())
-    print("nu=%.1f Hessian eigenvalues BCC %s | FCC %s" % (nu, np.round(hb, 4), np.round(hf, 4)), flush=True)
-json.dump(out, open("results/v5_bain_stability.json", "w"), indent=1, default=float)
+def main():
+    out = {"bain": {}, "hessian": {}}
+    rs = np.linspace(0.8, 1.6, 33)
+    for nu in [3.5, 4.5, 6.0, 9.0]:
+        vals = [T(bct(r), nu) for r in rs]
+        out["bain"][nu] = list(zip(rs.tolist(), vals))
+        i = int(np.argmin(vals))
+        print("nu=%.1f Bain path: min at c/a=%.3f (BCC c/a=1, FCC c/a=1.414) T=%.10f; value at FCC %.10f" % (nu, rs[i], vals[i], T(bct(np.sqrt(2)), nu)), flush=True)
+    for nu in [3.5, 4.5, 6.0, 9.0]:
+        hb = hessian(unit_covolume(BCC), nu); hf = hessian(unit_covolume(FCC), nu)
+        out["hessian"][nu] = dict(BCC=hb.tolist(), FCC=hf.tolist())
+        print("nu=%.1f Hessian eigenvalues BCC %s | FCC %s" % (nu, np.round(hb, 4), np.round(hf, 4)), flush=True)
+    json.dump(out, open("results/v5_bain_stability.json", "w"), indent=1, default=float)
+
+
+if __name__ == '__main__':
+    main()

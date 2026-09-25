@@ -1,0 +1,6 @@
+nu=3.50  min Hessian eigenvalue FCC 2.01804
+nu=3.75  min Hessian eigenvalue FCC 0.01308
+nu=4.00  min Hessian eigenvalue FCC -5.97186
+nu=4.25  min Hessian eigenvalue FCC -11.93293
+nu=4.50  min Hessian eigenvalue FCC -17.73668
+FCC loses local stability at nu = [3.7516234472150667]
