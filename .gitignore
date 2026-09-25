@@ -1,7 +1,7 @@
 __pycache__/
-*.aux
-*.log
-*.out
-*.toc
-*.fls
-*.fdb_latexmk
+research/latex/*.aux
+research/latex/*.log
+research/latex/*.out
+research/latex/*.toc
+research/latex/*.fls
+research/latex/*.fdb_latexmk

@@ -1,0 +1,5 @@
+tau=1j                     E3 lib/direct rel 4.2e-15 | C111 vs E3+z3 rel 2.9e-07 | C221 vs 2/5E5+z5/30 rel 8.7e-16 | C222 ref vs GZL rel 1.3e-15
+tau=(0.5+0.8660254037844386j) E3 lib/direct rel 6.6e-15 | C111 vs E3+z3 rel 3.2e-07 | C221 vs 2/5E5+z5/30 rel 1.8e-16 | C222 ref vs GZL rel 8.8e-16
+tau=(0.21+1.37j)           E3 lib/direct rel 3.7e-15 | C111 vs E3+z3 rel 3.0e-07 | C221 vs 2/5E5+z5/30 rel 1.2e-15 | C222 ref vs GZL rel 3.7e-16
+tau=(-0.4+0.95j)           E3 lib/direct rel 6.3e-15 | C111 vs E3+z3 rel 3.1e-07 | C221 vs 2/5E5+z5/30 rel 9.0e-16 | C222 ref vs GZL rel 1.3e-15
+tau=(0.1+2j)               E3 lib/direct rel 2.2e-15 | C111 vs E3+z3 rel 3.0e-07 | C221 vs 2/5E5+z5/30 rel 2.3e-16 | C222 ref vs GZL rel 2.9e-14

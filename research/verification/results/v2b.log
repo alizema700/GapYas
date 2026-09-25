@@ -1,0 +1,21 @@
+nu=7.60  d2T/dx2 (shear) 11.399538   d2T/dy2 (stretch) 1.735660
+nu=7.80  d2T/dx2 (shear) 11.550247   d2T/dy2 (stretch) 1.306369
+nu=8.00  d2T/dx2 (shear) 11.661457   d2T/dy2 (stretch) 0.921964
+nu=8.20  d2T/dx2 (shear) 11.735465   d2T/dy2 (stretch) 0.579371
+nu=8.40  d2T/dx2 (shear) 11.774616   d2T/dy2 (stretch) 0.275572
+nu=8.60  d2T/dx2 (shear) 11.781270   d2T/dy2 (stretch) 0.007633
+nu=8.80  d2T/dx2 (shear) 11.757779   d2T/dy2 (stretch) -0.227275
+nu=9.00  d2T/dx2 (shear) 11.706464   d2T/dy2 (stretch) -0.431867
+nu=9.20  d2T/dx2 (shear) 11.629601   d2T/dy2 (stretch) -0.608726
+nu=9.40  d2T/dx2 (shear) 11.529400   d2T/dy2 (stretch) -0.760303
+nu=9.60  d2T/dx2 (shear) 11.408001   d2T/dy2 (stretch) -0.888909
+square lattice loses stability towards rectangular at nu = [8.606095223361184]
+nu=  8.0  rect optimum y=1.000000 (side ratio b/a=1.000000) T=1.552401e+00 | square 1.552401e+00 | hex 2.228074e+00 | global 1.552401e+00 at tau=0.00000+1.00000i | 14s
+nu=  8.5  rect optimum y=1.000001 (side ratio b/a=1.000001) T=1.297538e+00 | square 1.297538e+00 | hex 1.979569e+00 | global 1.297538e+00 at tau=0.00000+1.00000i | 18s
+nu=  9.0  rect optimum y=1.055972 (side ratio b/a=1.055972) T=1.085461e+00 | square 1.085784e+00 | hex 1.763262e+00 | global 1.085461e+00 at tau=0.00000+1.05597i | 19s
+nu=  9.5  rect optimum y=1.082144 (side ratio b/a=1.082144) T=9.080995e-01 | square 9.094130e-01 | hex 1.573612e+00 | global 9.080995e-01 at tau=0.00000+1.08214i | 16s
+nu= 10.0  rect optimum y=1.099801 (side ratio b/a=1.099801) T=7.597084e-01 | square 7.622381e-01 | hex 1.406399e+00 | global 7.597084e-01 at tau=0.00000+1.09980i | 23s
+nu= 12.0  rect optimum y=1.140547 (side ratio b/a=1.140547) T=3.719422e-01 | square 3.779799e-01 | hex 9.050560e-01 | global 3.719422e-01 at tau=0.00000+1.14055i | 16s
+nu= 15.0  rect optimum y=1.170171 (side ratio b/a=1.170171) T=1.271960e-01 | square 1.329503e-01 | hex 4.720458e-01 | global 1.271960e-01 at tau=0.00000+1.17017i | 15s
+nu= 20.0  rect optimum y=1.194148 (side ratio b/a=1.194148) T=2.121333e-02 | square 2.344895e-02 | hex 1.603699e-01 | global 2.121333e-02 at tau=0.00000+1.19415i | 16s
+nu= 30.0  rect optimum y=1.234372 (side ratio b/a=1.234372) T=4.328259e-04 | square 7.324193e-04 | hex 1.853785e-02 | global -2.234558e-04 at tau=0.01984+1.27379i | 56s
