@@ -13,15 +13,13 @@ Hackathon-Projekt beim ETHack. Es verbindet zwei Welten, die vorher niemand verb
 und liefert ein Ergebnis, das es vorher nicht gab: eine neue Zahl, eine neue Kurve, ein neues
 Phasendiagramm oder einen Vergleich mit einem Experiment.
 
-## 2. Wer das Projekt umsetzt
+## 2. Rahmen des Projekts
 
-- Student(in) Mathe/Physik, programmiert Python.
-- Vorwissen soll **selbst erlernbar** sein (Lineare Algebra, Analysis, Grundlagen QM/Statistische
-  Physik); keine jahrelange Spezialisierung vorausgesetzt.
-- Rahmen: Sideproject neben dem Studium bzw. Hackathon (48 h für einen ersten Prototyp,
-  danach über Wochen ausbaubar).
-- Wunsch: etwas, das Forschern auffällt (Blogpost, GitHub, evtl. Kontakt zum GZL-Autor,
-  im besten Fall ein kleines Paper oder eine Abschlussarbeit).
+- **Langfristiges Forschungsprojekt**, kein Wochenend-Hack. Einarbeitungsaufwand ist kein
+  Ausschlusskriterium; entscheidend sind Neuheit, wissenschaftlicher Hebel und Passung zu GZL.
+- Ideen dürfen auch eigene Erweiterungen von GZL erfordern (neue Korpora, neue Kerne,
+  eigene Graphen-Enumeration), solange der Aufwand ehrlich benannt wird.
+- Ziel: ein Ergebnis, das Forschenden auffällt (Paper, Kooperation, Abschlussarbeit, Open-Source-Beitrag).
 
 ## 3. Was GZL kann (Fakten, bitte gegen die Quellen prüfen)
 
@@ -145,7 +143,7 @@ Prüfe mindestens diese Felder, und ergänze eigene:
      Impulsauflösung)?
    - **Neuheitscheck:** Hat schon jemand GZL oder die Methode aus arXiv:2609.18918 darauf angewandt?
      Zitierende Arbeiten prüfen (arXiv-Listing, Google Scholar, Semantic Scholar).
-   - Machbarkeit für die Person aus Abschnitt 2.
+   - Aufwand und nötige Erweiterungen (siehe Abschnitt 2).
 4. **Querverbindungen suchen:** Gibt es Paare von Feldern, die dieselbe Summe benutzen, ohne
    voneinander zu wissen? Das sind die wertvollsten Funde.
 
@@ -154,7 +152,7 @@ Prüfe mindestens diese Felder, und ergänze eigene:
 - **Neuheit:** Hat das so noch niemand gemacht?
 - **Passung zu GZL:** Funktioniert es mit der heutigen Version, oder braucht es Features der Roadmap?
 - **Hebel:** Wie viel besser als der Status quo (Genauigkeit, Geschwindigkeit, volle Brillouin-Zone)?
-- **Machbarkeit:** 48-h-Prototyp möglich? Vorwissen erlernbar?
+- **Machbarkeit:** Aufwand bis zum ersten belastbaren Ergebnis, und welche Erweiterungen nötig sind.
 - **Wow-Faktor:** Lässt sich das Ergebnis zeigen (Plot, interaktive Demo, Vergleich mit Experiment)?
 - **Anschlussfähigkeit:** Interessiert das Forschende (Paper, Abschlussarbeit, Kooperation)?
 
@@ -167,8 +165,8 @@ Prüfe mindestens diese Felder, und ergänze eigene:
    - Das Problem im Zielfeld und warum es heute schwer ist
    - Die konkrete Abbildung auf GZL (Graph, Gitter, Kern, Observable), gerne als Pseudocode
    - Was neu herauskäme
-   - 48-h-MVP und Ausbaupfad über mehrere Wochen
-   - Nötiges Vorwissen und die besten Lernquellen
+   - Erster Meilenstein (Minimalergebnis) und Ausbaupfad über Monate
+   - Nötiges Vorwissen und die besten Einstiegsquellen
    - Risiken und was schiefgehen kann
    - 3–6 Schlüsselpapers (arXiv-ID, Titel, Jahr, Link, ein Satz Relevanz)
    - Bewertung nach Abschnitt 7
