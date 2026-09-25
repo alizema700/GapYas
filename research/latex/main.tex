@@ -1,0 +1,51 @@
+\documentclass[11pt,a4paper,parskip=half,toc=sectionentrywithdots]{scrartcl}
+\usepackage[ngerman]{babel}
+\usepackage{fontspec}
+\usepackage{unicode-math}
+\setmainfont{DejaVu Serif}[Scale=0.92]
+\setsansfont{DejaVu Sans}[Scale=0.92]
+\setmonofont{DejaVu Sans Mono}[Scale=0.80]
+\setmathfont{TeX Gyre DejaVu Math}[Scale=0.92]
+\usepackage[a4paper,margin=2.3cm]{geometry}
+\usepackage{microtype}
+\usepackage{xcolor}
+\definecolor{linkblue}{HTML}{0B5CAD}
+\usepackage{graphicx}
+\usepackage{longtable,booktabs,array,calc}
+\usepackage{fvextra}
+\DefineVerbatimEnvironment{verbatim}{Verbatim}{breaklines,breakanywhere,fontsize=\footnotesize,frame=leftline,framerule=0.6pt,rulecolor=\color{black!30},xleftmargin=4pt}
+\usepackage{caption}
+\captionsetup{font=small,labelfont=bf}
+\usepackage[hidelinks=false,colorlinks=true,linkcolor=linkblue,urlcolor=linkblue,citecolor=linkblue,pdfusetitle,unicode]{hyperref}
+\usepackage{xurl}
+\usepackage{scrlayer-scrpage}
+\pagestyle{scrheadings}
+\clearpairofpagestyles
+\ohead{\small\headmark}
+\cfoot{\small\pagemark}
+\automark{section}
+\setkomafont{disposition}{\normalfont\bfseries\sffamily}
+\setcounter{secnumdepth}{2}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\providecommand{\real}[1]{#1}
+% tables: small font, a bit less padding
+\AtBeginEnvironment{longtable}{\footnotesize\setlength{\tabcolsep}{4pt}\renewcommand{\arraystretch}{1.15}}
+\setlength{\LTpre}{6pt}\setlength{\LTpost}{6pt}
+\setlength{\emergencystretch}{3em}
+\sloppy
+
+\title{Neue Anwendungsfelder für die Graph Zeta Library}
+\subtitle{Recherchebericht mit numerischer Nachprüfung der Pilotrechnungen}
+\author{Projekt \texttt{GapYas}\thanks{Recherche, Auswertung und Rechnungen erstellt mit Claude Code. Alle Rechnungen sind im Repository reproduzierbar (\texttt{research/verification/}).}}
+\date{25.~September 2026}
+
+\begin{document}
+\maketitle
+\begin{abstract}
+\noindent
+\input{abstract}
+\end{abstract}
+\tableofcontents
+\clearpage
+\input{body}
+\end{document}
