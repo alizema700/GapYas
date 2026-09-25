@@ -1,4 +1,4 @@
-\textbf{Kurzfazit.} Die stärkste neue Idee lässt sich mit der heutigen GZL sofort starten: ein \textbf{Atlas optimaler Gitter für Mehrkörper-Potenzgesetzenergien}. Die Dreikörper-Riesz-Energie eines Gitters ist exakt eine Dreiecks-Graph-Zetafunktion. Eigene Rechnungen, inzwischen mit einer von GZL unabhängigen Referenzimplementierung nachgeprüft (Abschnitt 7), zeigen: In 2D springt das Optimum bei \textbf{ν* = 3,9183649026 in einem Übergang erster Ordnung vom Hexagonal- zum Quadratgitter} und geht bei \textbf{ν₂ ≈ 8,606 kontinuierlich in ein Rechteckgitter} über. In 3D ist \textbf{BCC bei allen untersuchten ν das beste gefundene Gitter}, und FCC wird ab ν ≈ 3,752 instabil. Das ist die Gegenrichtung zum gerade beanspruchten Beweis, dass für Zweikörperenergien FCC optimal ist. Den größten wissenschaftlichen Hebel hat eine \textbf{deterministische Hochtemperaturreihe für klassische langreichweitige Ising-, O(n)- und Perkolationsmodelle}. Deren Einbettungssummen sind genau die Objekte, die GZL berechnet. Im laufenden Streit um die Sak-Grenze (σ* = 2 oder 2 − η) wäre sie die erste Stimme, die nicht auf Monte Carlo beruht. Am nächsten am Experiment liegt eine \textbf{Simulator-Material-Zwillingsstudie}: Dispersion, Gap und kritischer Punkt im thermodynamischen Limes, mit vollem van-der-Waals- bzw. Dipolschwanz, für die 256-Qubit-Simulation von TmMgGaO₄ und für NaTmSe₂. Hier ist das Scoop-Risiko hoch, weil die GZL-Autoren Rydberg-Arrays selbst als Ziel nennen. Die überraschendste Brücke: \textbf{Planare modulare Graphfunktionen der Stringtheorie sind exakt GZL-Graph-Zetas des dualen Graphen.} Das ist an der Zagier-Identität und an C₂,₂,₁ numerisch auf 10⁻¹⁴ bis 10⁻¹⁵ bestätigt (Abschnitt 7).
+\textbf{Kurzfazit.} Die stärkste neue Idee lässt sich mit der heutigen GZL sofort starten: ein \textbf{Atlas optimaler Gitter für Mehrkörper-Potenzgesetzenergien}. Die Dreikörper-Riesz-Energie eines Gitters ist exakt eine Dreiecks-Graph-Zetafunktion. Eigene Rechnungen, inzwischen mit einer von GZL unabhängigen Referenzimplementierung nachgeprüft (Abschnitt 7), zeigen: In 2D springt das Optimum bei \textbf{ν* = 3,9183649026 in einem Übergang erster Ordnung vom Hexagonal- zum Quadratgitter} und geht bei \textbf{ν₂ ≈ 8,606 kontinuierlich in ein Rechteckgitter} über. In 3D ist \textbf{BCC bei allen untersuchten ν das beste gefundene Gitter}, und FCC wird ab ν ≈ 3,752 instabil. Eine gezielte Literaturprüfung hat für den 2D-Phasenverlauf, die Minima der zugehörigen modularen Graphfunktionen und das globale 3D-Ergebnis \textbf{keine Vorarbeit gefunden} (Abschnitt 7.6). Das ist die Gegenrichtung zum gerade beanspruchten Beweis, dass für Zweikörperenergien FCC optimal ist. Den größten wissenschaftlichen Hebel hat eine \textbf{deterministische Hochtemperaturreihe für klassische langreichweitige Ising-, O(n)- und Perkolationsmodelle}. Deren Einbettungssummen sind genau die Objekte, die GZL berechnet. Im laufenden Streit um die Sak-Grenze (σ* = 2 oder 2 − η) wäre sie die erste Stimme, die nicht auf Monte Carlo beruht. Am nächsten am Experiment liegt eine \textbf{Simulator-Material-Zwillingsstudie}: Dispersion, Gap und kritischer Punkt im thermodynamischen Limes, mit vollem van-der-Waals- bzw. Dipolschwanz, für die 256-Qubit-Simulation von TmMgGaO₄ und für NaTmSe₂. Hier ist das Scoop-Risiko hoch, weil die GZL-Autoren Rydberg-Arrays selbst als Ziel nennen. Die überraschendste Brücke: \textbf{Planare modulare Graphfunktionen der Stringtheorie sind exakt GZL-Graph-Zetas des dualen Graphen.} Das ist an der Zagier-Identität und an C₂,₂,₁ numerisch auf 10⁻¹⁴ bis 10⁻¹⁵ bestätigt (Abschnitt 7).
 
 Kennzeichnung im ganzen Bericht: \textbf{{[}belegt{]}} heißt, es steht in einer zitierten Quelle. \textbf{{[}abgeleitet{]}} ist eine Schlussfolgerung aus belegten Fakten. \textbf{{[}spekulativ{]}} muss erst geprüft werden. \textbf{{[}Pilot{]}} markiert eigene, \textbf{nicht begutachtete} Rechnungen eines Recherche-Agenten mit GZL 1.0.0 und epsteinlib 0.6.2. \textbf{{[}nachgeprüft{]}} heißt: mit zwei unabhängigen Verfahren übereinstimmend berechnet (Abschnitt 7, Skripte in \texttt{research/verification/}). Die zugehörigen Skripte liegen unter \texttt{/home/user/GapYas/research/pilots/} (\texttt{mgf\_test.py}, \texttt{mgf\_test2.py}, \texttt{opt\_test.py}, \texttt{opt2.py}, \texttt{opt3.py}). \texttt{mgf\_test2.py} lädt \texttt{mgf\_test.py} über einen relativen Pfad und muss deshalb aus diesem Verzeichnis gestartet werden.
 
@@ -1091,7 +1091,7 @@ T Quadrat
 
 \begin{figure}
 \centering
-\includegraphics{../verification/figures/fig_2d_landscape.pdf}
+\includegraphics[width=1\textwidth,height=\textheight]{../verification/figures/fig_2d_landscape.pdf}
 \caption{Energielandschaft log₁₀(T/T\_min − 1) über der Fundamentaldomäne bei vier Exponenten. Kreis: Hexagonalgitter, Quadrat: Quadratgitter. Bei ν = 10 liegt das Minimum auf der imaginären Achse oberhalb von τ = i (Rechteckgitter).}
 \end{figure}
 
@@ -1171,7 +1171,62 @@ Beide Identitäten wurden mit der Referenzsumme im Impulsraum geprüft, ohne GZL
 
 \subsection{Neuheitsprüfung}
 
-NOVELTY\_PLACEHOLDER
+Zwei unabhängige Such-Agenten haben die Mathematik- und die Physik/Chemie-Literatur gezielt nach diesen Ergebnissen durchsucht. Die Notizen stehen in \texttt{research\_notes/…/07\_novelty\_math.md} und \texttt{08\_novelty\_physics.md}. Eine Einschränkung vorweg: Semantic Scholar, die arXiv-API und Google Scholar waren nicht oder nur eingeschränkt erreichbar. Gesucht wurde deshalb über die arXiv-Suche, eine Websuche und Volltext-Durchsicht der Schlüsselarbeiten.
+
+\textbf{Nächste Vorarbeit.} Robles-Navarro, Cooper, Buchheit, Busse, Burrows, Smits und Schwerdtfeger (\href{https://arxiv.org/abs/2504.07338}{arXiv:2504.07338}, J. Chem. Phys. 163, 094104, 2025) definieren genau diese Summe als „three-body zeta function`` ζ⁽³⁾(ν₁,ν₂,ν₃). Sie verwenden sie aber nur bei \textbf{ν = 3}, als Radialteil der ATM-Energie und zusammen mit Lennard-Jones. In 2D vergleichen sie nur Quadrat und Hexagon; in 3D untersuchen sie nur den Bain-Pfad und zeigen dort (Anhang H), dass BCC für beliebige Exponenten stationär ist. \textbf{Externe Kontrolle {[}nachgeprüft{]}:} Deren veröffentlichte ν = 3-Werte, auf Einheitsdichte umgerechnet (2D: hex 13,39179, Quadrat 13,65289; 3D: BCC ≈ 66,714, FCC ≈ 66,794), stimmen mit unserer Referenz auf alle angegebenen Stellen überein (13,3917941102; 13,6528937154; 66,7135509; 66,7943555; \texttt{results/v6\_external\_check\_nu3.log}).
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3996}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.3996}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 4\tabcolsep) * \real{0.1708}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Ergebnis
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Urteil der Neuheitsprüfung
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Sicherheit
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+2D: Sprung hexagonal → Quadrat bei ν* = 3,9184, erster Ordnung, Koexistenzbereich 3,806--4,278 & \textbf{keine Vorarbeit gefunden} (nur ν = 3-Daten mit anderer Normierung und Energie) & mittel--hoch (\textasciitilde85 \%) \\
+2D: kontinuierlicher Übergang Quadrat → Rechteck bei ν₂ = 8,606, Seitenverhältnis → \textasciitilde1,25 & \textbf{keine Vorarbeit gefunden}. Verwandt: Übergänge Quadrat → Rechteck für \emph{Paar}potentiale (\href{https://arxiv.org/abs/2312.01395}{arXiv:2312.01395}) und eine Rechteckverzerrung durch \emph{anderen} Mechanismus in 2504.07338 & mittel--hoch (\textasciitilde85 \%) \\
+Minimum von C\textsubscript{s,s,s}(τ): springt bei s* = 1,959, Rechteckpunkt für s \textgreater{} 4,303. Damit liegt das Minimum von C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ bei τ = i und für s ≥ 5 bei τ = iy, y \textgreater{} 1 & \textbf{keine Vorarbeit gefunden} (Volltexte der MGF-Hauptarbeiten durchgesehen). Nur s = 1 ist klassisch (über C₁,₁,₁ = E₃ + ζ(3)) & mittel (\textasciitilde75 \%) \\
+3D: BCC stationär und Minimum auf dem Bain-Pfad & \textbf{bekannt} (2504.07338, Anhang H) & hoch \\
+3D: BCC bestes Gitter über \emph{alle} Bravais-Gitter für ν = 3,2--12; FCC ab ν = 3,752 instabil (Sattel) & \textbf{keine Vorarbeit gefunden} & mittel (\textasciitilde65 \%) \\
+Planare MGF = Graph-Zeta des dualen Graphen & im Kern \textbf{per Konstruktion bekannt} (dieselbe Gittersumme, andere Normierung). Neu ist nur die Nutzung als Rechenwerkzeug & -- \\
+\end{longtable}
+
+\textbf{Verwandte, aber andere Arbeiten.}
+
+\begin{itemize}
+\tightlist
+\item
+  Für \textbf{Paar}energien gilt das Gegenteil: FCC ist optimal (\href{https://arxiv.org/abs/2609.17356}{arXiv:2609.17356}).
+\item
+  Paar-Analoga mit Phasenfolgen hexagonal → rhombisch → Quadrat → Rechteck gibt es von Luo und Wei. Unsere Dreikörperenergie springt dagegen direkt von hexagonal zu Quadrat.
+\item
+  Dreikörper-Kristallisation mit \textbf{Winkel}potentialen (Stefanelli, Friedrich, Kreutz u. a.) und Embedded-Atom-Modelle (Bétermin, Friedrich, Stefanelli, arXiv:2101.05602) behandeln andere Energien.
+\item
+  Gaußsche Dreikörper-Abstoßung in 2D (Sellin \& Babaev, arXiv:1308.2109) erzeugt Streifenphasen, kein Quadratgitter.
+\end{itemize}
+
+\textbf{Fazit.} Soweit sich das mit einer Literatursuche feststellen lässt, sind \textbf{der 2D-Phasenverlauf hexagonal → Quadrat → Rechteck für die reine Dreikörper-Potenzgesetzenergie, die Aussagen über die Minima von C\textsubscript{s,s,s} und das globale 3D-Ergebnis neu}. Die Neuheit muss man eng formulieren: reine Produktform, feste Dichte, alle Bravais-Gitter, allgemeines ν. Das größte Risiko ist nicht eine existierende Arbeit, sondern die Gruppe Buchheit/Schwerdtfeger. Zwei ihrer Arbeiten (\href{https://arxiv.org/abs/2504.11989}{arXiv:2504.11989}, \href{https://arxiv.org/abs/2609.18918}{arXiv:2609.18918}) kündigen eine „ongoing investigation into the influence of many-body interactions on the stability of crystal lattices`` an. Eine frühe Kontaktaufnahme ist deshalb der wichtigste nächste Schritt.
+
+\textbf{Offene Punkte.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Die Summe konvergiert schon für ν \textgreater{} 2d/3, nicht erst für ν \textgreater{} d; die Grenze ν \textgreater{} d stammt aus der GZL-Implementierung. Bei ν = 2 folgt das hexagonale Optimum exakt aus C₁,₁,₁ = E₃ + ζ(3). Der Bereich 4/3 \textless{} ν \textless{} 2 ist nicht gerechnet, weil dort die Abschneidefehler der Referenz sehr langsam abfallen.
+\item
+  Die Klassiker zu Edelgaskristallen mit ATM (Jansen \& Lombardi 1966 u. a.) wurden nur über Metadaten geprüft.
+\item
+  Die 3D-Aussage beruht auf 16 Starts pro ν und ist kein Beweis.
+\end{enumerate}
 
 \begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
 
