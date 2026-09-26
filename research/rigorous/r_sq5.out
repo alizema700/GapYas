@@ -3,3 +3,4 @@ nu=5 square: T(tau0) in [[4.8380268465923384362849246631554933629 +/- 3.51e-38],
   local lemma (direct, exact symmetry) holds for max(|A|,|B|) <= r_loc = 0.00691
   large-y cut: T >= y^7.5000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.540741
   boxes 100, queue 5, 421s
+  boxes 200, queue 5, 812s
