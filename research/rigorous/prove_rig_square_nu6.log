@@ -4,3 +4,5 @@ nu=6 square: T(tau0) in [[3.2499743124272328816522182812209784686 +/- 1.81e-38],
   large-y cut: T >= y^9.0000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.482403
   boxes 100, queue 5, 476s
   boxes 200, queue 5, 872s
+  boxes 300, queue 5, 1244s
+DONE nu=6: all 307 boxes certified in 1252s (rigorous arithmetic) -> square lattice is the unique global minimiser

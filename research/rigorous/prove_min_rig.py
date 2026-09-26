@@ -116,4 +116,4 @@ while queue:
     else: queue += [(x0, x1, y0, ym), (x0, x1, ym, y1)]
     if n % 100 == 0: say("  boxes %d, queue %d, %.0fs" % (n, len(queue), time.time() - t0))
 say("DONE nu=%g: all %d boxes certified in %.0fs (rigorous arithmetic) -> %s lattice is the unique global minimiser" % (nu, n, time.time() - t0, POINT))
-json.dump(dict(point=POINT, nu=nu, T0=[T0.lower(), T0.upper()], r_loc=rloc, Y0=Yc, boxes=n), open("prove_rig_%s_nu%g.json" % (POINT, nu), "w"), indent=1)
+json.dump(dict(point=POINT, nu=nu, T0=[str(T0.lower()), str(T0.upper())], r_loc=rloc, Y0=Yc, boxes=n), open("prove_rig_%s_nu%g.json" % (POINT, nu), "w"), indent=1)
