@@ -132,7 +132,17 @@ E_λ = Z_ν + λ · T_ν mit der Paarenergie Z_ν = Σ'|x|^{−ν} (gleicher Abf
 
 ## 8. Ungleiche Exponenten C_{a,a,b}
 
-Gesucht wurde der globale Minimierer von Σ' |x|^{−ν}|y|^{−ν}|x−y|^{−μ} über der ganzen Fundamentaldomäne, auf einem Gitter ν, μ ∈ [2,5; 12]. Das ist bis auf Normierung C_{ν/2, ν/2, μ/2}. Ergebnisse und Phasenkarte stehen in Abschnitt 9.
+Gesucht wurde der globale Minimierer von Σ' |x|^{−ν}|y|^{−ν}|x−y|^{−μ} über der ganzen Fundamentaldomäne, auf einem Gitter ν, μ ∈ [2,5; 12] mit Schrittweite 0,5. Das ist bis auf Normierung C_{ν/2, ν/2, μ/2}. Aus der Kurve im Fall gleicher Exponenten wird damit eine Phasenfläche:
+- **Hexagonal** ist optimal, wenn alle Exponenten klein sind (ν ≲ 3,5) oder wenn einer deutlich kleiner ist als die anderen.
+- **Quadrat** ist in einem breiten Band um die Diagonale optimal. Für 4 ≤ ν ≤ 5,5 kehrt bei großem μ das **Hexagon zurück**; das Quadratfenster schließt sich also nach oben.
+- **Rechteck** tritt nur für ν ≳ 9 in einem Fenster 8,5 ≲ μ ≲ 11 auf. Diese Phase gehört zum Übergang bei ν₂ auf der Diagonale.
+- Andere Gittertypen (rhombisch, schief) wurden nirgends gefunden.
+
+Die Auflösung ist 0,5 in beiden Richtungen; die Grenzen sind entsprechend grob.
+
+![Optimales Gitter für die Exponenten (ν, ν, μ). Gestrichelt: gleiche Exponenten.](../extended/figures/fig_e3_phase_map.png)
+
+![Kritisches Verhältnis λ_c = c₃/c₂ für Paar- plus Dreikörperenergie.](../extended/figures/fig_e4_lambda_c.png)
 
 ## 9. Ergänzende Läufe
 
