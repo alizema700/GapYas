@@ -1,0 +1,4 @@
+3D nu=3.5  pure T: fcc 38.19931495 hcp(best) 38.21065587 bcc 38.07437956 | phase sequence in lambda: [(0.0, 'hcp', np.float64(1.625)), (0.0562, 'bct', np.float64(1.0))]
+3D nu=4.5  pure T: fcc 17.96237637 hcp(best) 17.97237939 bcc 17.74060741 | phase sequence in lambda: [(0.0, 'fcc', None), (0.0708, 'bct', np.float64(1.0))]
+3D nu=6.0  pure T: fcc 8.04336353 hcp(best) 8.04996664 bcc 7.71018807 | phase sequence in lambda: [(0.0, 'fcc', None), (0.1122, 'bcc', None)]
+3D nu=9.0  pure T: fcc 2.31326346 hcp(best) 2.31509666 bcc 1.97848392 | phase sequence in lambda: [(0.0, 'fcc', None), (0.3162, 'bcc', None)]

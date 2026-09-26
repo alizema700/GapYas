@@ -1,0 +1,4 @@
+2D nu=3.0 phase sequence in lambda: [(0.0, 'hex', np.float64(0.5), np.float64(0.866))]
+2D nu=4.5 phase sequence in lambda: [(0.0, 'hex', np.float64(0.5), np.float64(0.866)), (1.9953, 'square', np.float64(0.0), np.float64(1.0))]
+2D nu=6.0 phase sequence in lambda: [(0.0, 'hex', np.float64(0.5), np.float64(0.866)), (1.122, 'square', np.float64(0.0), np.float64(1.0))]
+2D nu=9.0 phase sequence in lambda: [(0.0, 'hex', np.float64(0.5), np.float64(0.866)), (1.5849, 'square', np.float64(0.0), np.float64(1.0)), (199.5262, 'rect', np.float64(0.0), np.float64(1.014))]

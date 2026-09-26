@@ -1,0 +1,4 @@
+index check: direct-convolution sum 9.04743075139473 vs brute force 9.04743075139473
+nu=3.918364  T(square) in [7.898514735068, 7.898514751946]  T(hex) in [7.898514474694, 7.898514499443]  D = T(sq)-T(hex) in [2.356e-07, 2.773e-07]  (tails 1.1e-09, 9.0e-09)
+nu=3.918366  T(square) in [7.898506753956, 7.898506770834]  T(hex) in [7.898507070504, 7.898507095252]  D = T(sq)-T(hex) in [-3.413e-07, -2.997e-07]  (tails 1.1e-09, 9.0e-09)
+CERTIFIED: hex and square exchange order at some nu in (3.918364, 3.918366): True

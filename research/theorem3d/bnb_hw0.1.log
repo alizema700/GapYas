@@ -1,0 +1,10 @@
+processed 435035 boxes, open 92832, queue chunks 6, 8s
+processed 627761 boxes, open 61254, queue chunks 8, 11s
+processed 1211549 boxes, open 31718, queue chunks 7, 21s
+processed 1400069 boxes, open 21922, queue chunks 9, 25s
+processed 3224679 boxes, open 92872, queue chunks 5, 67s
+processed 3600753 boxes, open 2578, queue chunks 6, 75s
+processed 4017279 boxes, open 54076, queue chunks 4, 84s
+processed 4800965 boxes, open 28976, queue chunks 3, 99s
+processed 5004463 boxes, open 26330, queue chunks 1, 104s
+DONE: all boxes certified, processed 5780087 boxes in 120s
