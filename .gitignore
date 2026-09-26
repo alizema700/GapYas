@@ -10,3 +10,8 @@ research/note/*.log
 research/note/*.out
 research/note/*.fls
 research/note/*.fdb_latexmk
+research/paper/*.aux
+research/paper/*.log
+research/paper/*.out
+research/paper/*.fls
+research/paper/*.fdb_latexmk
