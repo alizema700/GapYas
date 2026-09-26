@@ -167,21 +167,17 @@ def fig_unequal():
 
 # ---------------------------------------------------------------- Fig. 6 mixed energies
 def fig_mixed():
-    d3 = json.load(open(os.path.join(E, "e4_3d_3.5_4.5_6.0_9.0.json"))); d2 = json.load(open(os.path.join(E, "e4_2d_3.0_4.5_6.0_9.0.json")))
-    x3, y3 = [], []
-    for nu, v in d3.items():
-        f, b = v["table"]["fcc"][0], v["table"]["bcc"][0]; x3.append(float(nu)); y3.append((b["Z"] - f["Z"]) / (f["T"] - b["T"]))
-    x2, y2 = [], []
-    for nu, v in d2.items():
-        pts = v["points"]
-        hx = min(pts, key=lambda p: (p["x"] - .5) ** 2 + (p["y"] - np.sqrt(3) / 2) ** 2); sq = min(pts, key=lambda p: p["x"] ** 2 + (p["y"] - 1) ** 2)
-        if hx["T"] > sq["T"]: x2.append(float(nu)); y2.append((sq["Z"] - hx["Z"]) / (hx["T"] - sq["T"]))
-    fig, ax = plt.subplots(figsize=(COL, 2.2))
-    ax.plot(x3, y3, "-o", color=BLUE, ms=4, mec="white", mew=0.6)
-    ax.plot(x2, y2, "-s", color=ORANGE, ms=4, mec="white", mew=0.6)
-    ax.text(x3[-1] + 0.15, y3[-1], r"$d=3$: FCC$\,\to\,$BCC", color=BLUE, fontsize=7, va="center")
-    ax.text(x2[-1] + 0.15, y2[-1], r"$d=2$: hex$\,\to\,$square", color=ORANGE, fontsize=7, va="center")
-    ax.set_yscale("log"); ax.set_xlim(3.2, 11.8)
+    d = json.load(open(os.path.join(E, "e8_lambda_c_dense.json")))
+    x2 = [r["nu"] for r in d["2d"] if r["lam_c"] is not None]; y2 = [r["lam_c"] for r in d["2d"] if r["lam_c"] is not None]
+    x3 = [r["nu"] for r in d["3d"]]; y3 = [r["lam_c"] for r in d["3d"]]
+    fig, ax = plt.subplots(figsize=(COL, 2.3))
+    ax.plot(x3, y3, "-o", color=BLUE, ms=3, mec="white", mew=0.5)
+    ax.plot(x2, y2, "-s", color=ORANGE, ms=3, mec="white", mew=0.5)
+    ax.axvline(NUSTAR, color=MUTED, lw=0.6, ls=(0, (2, 2)))
+    ax.text(NUSTAR - 0.08, 12, r"$\nu^*$", color=INK2, fontsize=7, va="top", ha="right")
+    ax.text(6.0, 0.42, r"$d=3$: FCC$\,\to\,$BCC", color=BLUE, fontsize=7, va="center", ha="left")
+    ax.text(12.1, y2[-1] * 1.35, r"$d=2$: hex$\,\to\,$square", color=ORANGE, fontsize=7, va="bottom", ha="right")
+    ax.set_yscale("log"); ax.set_xlim(3.3, 12.2); ax.set_ylim(0.04, 15)
     ax.set_xlabel(r"exponent $\nu$"); ax.set_ylabel(r"critical ratio $\lambda_c=c_3/c_2$")
     save(fig, "fig_e4_lambda_c")
 

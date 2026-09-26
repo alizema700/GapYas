@@ -4,3 +4,4 @@ nu=3.5 hex: T(tau0) in [[9.7722872380953180737606089678592979908 +/- 1.06e-39], 
   large-y cut: T >= y^5.2500000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.726381
   boxes 200, queue 13, 890s
   boxes 300, queue 3, 1223s
+DONE nu=3.5: all 373 boxes certified in 1500s (rigorous arithmetic) -> hex lattice is the unique global minimiser
