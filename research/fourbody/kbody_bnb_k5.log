@@ -1,0 +1,4 @@
+active sets at the centre: 23, distinct gradients 4, origin inside hull: True, margin c = 0.900000
+local lemma: on |dx|,|dy| <= r = 0.02000, ||Hess h|| <= M = 5.6807, and sqrt(2) r < 2c/M = 0.31686  => Q < Q* there except at the centre
+k = 5, Q* = 12.6491106407, large-y cut Y0 = 1.86839
+DONE k=5: all 263 boxes certified, Q < Q* away from the centre (3s)

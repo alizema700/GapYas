@@ -1,5 +1,6 @@
-"""Computer-assisted proof: for every planar lattice of unit covolume, the smallest product of the six mutual
-distances of four distinct lattice points satisfies Q(L) <= 8/3, with equality only for the hexagonal lattice.
+"""Computer-assisted proof (k-body version, k = 4 or 5): for every planar lattice of unit covolume the smallest
+product of the k(k-1)/2 mutual distances of k distinct lattice points satisfies Q(L) <= Q*, with equality only for
+the hexagonal lattice (k = 4, Q* = 8/3) resp. the square lattice (k = 5, Q* = 4 sqrt(10)).  Usage: kbody_bnb.py k
 Chart tau = x + i y, lattice (Z + tau Z)/sqrt(y); region x in [0, 1/2], x^2 + y^2 >= 1 (fundamental domain half).
 All bounds use outward-rounded interval arithmetic (../rigorous/iv.py).
  (1) large y: the collinear quadruple {0, u, 2u, 3u}, u = 1/sqrt(y), has product 12 y^-3 < 8/3 for y > Y0 = 4.5^(1/3);
@@ -8,20 +9,25 @@ All bounds use outward-rounded interval arithmetic (../rigorous/iv.py).
      interval upper bound of the product is < 8/3."""
 import itertools, sys, json, time
 import numpy as np
+K_BODY = int(sys.argv[1]) if len(sys.argv) > 1 else 4
 sys.path.insert(0, "../rigorous")
 from iv import IV, up, down
 from scipy.optimize import linprog
 
 LAB = [(m, n) for m in range(-3, 4) for n in range(-3, 4) if (m, n) != (0, 0)]
 LAB.sort(key=lambda p: (p[0] + 0.5 * p[1]) ** 2 + 0.75 * p[1] ** 2)
-SHORT = LAB[:14]
-SETS = [s for s in itertools.combinations(SHORT, 3)]
+SHORT = LAB[:14] if K_BODY < 6 else LAB[:13]
+SETS = [s for s in itertools.combinations(SHORT, K_BODY - 1)]
 PAIRS = []
 for s in SETS:
     pts = [(0, 0)] + list(s)
-    PAIRS.append([(pts[a][0] - pts[b][0], pts[a][1] - pts[b][1]) for a, b in itertools.combinations(range(4), 2)])
-PAIRS = np.array(PAIRS)            # (nsets, 6, 2)
-TARGET2 = 64.0 / 9.0               # (8/3)^2
+    PAIRS.append([(pts[a][0] - pts[b][0], pts[a][1] - pts[b][1]) for a, b in itertools.combinations(range(K_BODY), 2)])
+PAIRS = np.array(PAIRS)            # (nsets, k(k-1)/2, 2)
+if K_BODY == 4: x_r, y_r, QSTAR = 0.5, np.sqrt(3) / 2, 8 / 3
+elif K_BODY == 5: x_r, y_r, QSTAR = 0.0, 1.0, 4 * np.sqrt(10)
+elif K_BODY == 6: x_r, y_r, QSTAR = 0.5, np.sqrt(3) / 2, 2 ** 9.5 / 3 ** 1.75      # exact value, see center_exact.py
+TARGET2 = down(QSTAR ** 2 * (1 - 1e-12))   # boxes are certified only if their upper bound is below this lower bound of Q*^2
+COLL = np.prod([j - i for i, j in itertools.combinations(range(K_BODY), 2)])   # collinear k consecutive points
 
 def q_iv(m, n, X, Y):
     """interval of |m + n tau|^2 / y over the box (vectorised over boxes)"""
@@ -43,7 +49,6 @@ def upper_prod2(x0, x1, y0, y1):
     return best
 
 # ---------------- local lemma at rho ----------------
-x_r, y_r = 0.5, np.sqrt(3) / 2
 def h_grad_hess(S, x, y):
     g = np.zeros(2); H = np.zeros((2, 2)); val = 0.0
     for (m, n) in S:
@@ -53,15 +58,15 @@ def h_grad_hess(S, x, y):
         val += np.log(q); g += gq / q; H += Hq / q - np.outer(gq, gq) / q ** 2
     return val / 2, g / 2, H / 2
 vals = np.array([h_grad_hess(S, x_r, y_r)[0] for S in PAIRS])
-hstar = np.log(8 / 3)
+hstar = np.log(QSTAR)
 active = [i for i, v in enumerate(vals) if abs(v - hstar) < 1e-9]
 G = np.array([h_grad_hess(PAIRS[i], x_r, y_r)[1] for i in active])
 U = np.unique(np.round(G, 9), axis=0)
 # hull margin c = min over edges of the distance from 0 (2D, points in convex position around 0)
 ang = np.arctan2(U[:, 1], U[:, 0]); U = U[np.argsort(ang)]
-c = min(abs(np.cross(U[i], U[(i + 1) % len(U)])) / np.linalg.norm(U[(i + 1) % len(U)] - U[i]) for i in range(len(U)))
-inside = all(np.cross(U[i], U[(i + 1) % len(U)]) > 0 for i in range(len(U)))
-print("active 4-sets at rho: %d, distinct gradients %d, origin inside hull: %s, margin c = %.6f" % (len(active), len(U), inside, c))
+c = min(abs((U[i][0] * U[(i + 1) % len(U)][1] - U[i][1] * U[(i + 1) % len(U)][0])) / np.linalg.norm(U[(i + 1) % len(U)] - U[i]) for i in range(len(U)))
+inside = all((U[i][0] * U[(i + 1) % len(U)][1] - U[i][1] * U[(i + 1) % len(U)][0]) > 0 for i in range(len(U)))
+print("active sets at the centre: %d, distinct gradients %d, origin inside hull: %s, margin c = %.6f" % (len(active), len(U), inside, c))
 assert inside
 def hess_bound(r):
     """interval bound of ||Hess h_S||_F over |x - x_r|, |y - y_r| <= r for active S"""
@@ -85,11 +90,12 @@ while True:
     M = hess_bound(r)
     if np.sqrt(2) * r < 2 * c / M * 0.999: break
     r *= 0.8
-print("local lemma: on |dx|,|dy| <= r = %.5f, ||Hess h|| <= M = %.4f, and sqrt(2) r < 2c/M = %.5f  => Q < 8/3 there except at rho" % (r, M, 2 * c / M))
+print("local lemma: on |dx|,|dy| <= r = %.5f, ||Hess h|| <= M = %.4f, and sqrt(2) r < 2c/M = %.5f  => Q < Q* there except at the centre" % (r, M, 2 * c / M))
 # (the margin c is computed in floating point from the three exact gradient directions; see the exact check below)
 
 # ---------------- branch and bound ----------------
-Y0 = up(4.5 ** (1 / 3))
+Y0 = up(float(COLL / QSTAR) ** (4 / (K_BODY * (K_BODY - 1))))     # COLL * y^(-k(k-1)/4) < Q* for y > Y0
+print("k = %d, Q* = %.10f, large-y cut Y0 = %.5f" % (K_BODY, QSTAR, Y0))
 queue = [(0.0, 0.5, down(np.sqrt(3) / 2) - 0.01, Y0)]; n = 0; t0 = time.time()
 hl = 0.99 * r
 while queue:
@@ -102,5 +108,5 @@ while queue:
     if x1 - x0 >= y1 - y0: queue += [(x0, xm, y0, y1), (xm, x1, y0, y1)]
     else: queue += [(x0, x1, y0, ym), (x0, x1, ym, y1)]
     if n % 20000 == 0: print("  boxes %d, queue %d, %.0fs" % (n, len(queue), time.time() - t0), flush=True)
-print("DONE: all %d boxes certified, Q < 8/3 away from rho (%.0fs)" % (n, time.time() - t0))
-json.dump(dict(boxes=n, r_loc=r, M=M, c=c, n_active=len(active)), open("fourbody_bnb.json", "w"), indent=1)
+print("DONE k=%d: all %d boxes certified, Q < Q* away from the centre (%.0fs)" % (K_BODY, n, time.time() - t0))
+json.dump(dict(k=K_BODY, boxes=n, r_loc=r, M=M, c=c, n_active=len(active)), open("kbody_bnb_k%d.json" % K_BODY, "w"), indent=1)
