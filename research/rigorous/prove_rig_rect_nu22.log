@@ -5,3 +5,4 @@ nu=22 rect: T(tau0) in [[0.010357285335564338741169454109021172417 +/- 4.18e-40]
   boxes 100, queue 5, 348s
   boxes 200, queue 5, 702s
   boxes 300, queue 5, 1042s
+  boxes 400, queue 3, 1382s

@@ -18,7 +18,7 @@ def q_scalar_iv(m, n, x, y):
     return v.lo[0], v.hi[0]
 
 # ---------- (1) lower bound of Q(tau0)^2 by exhaustive enumeration ----------
-R = 12
+R = int(sys.argv[5]) if len(sys.argv) > 5 else 12
 QL = {p: q_scalar_iv(p[0], p[1], x0c, y0c) for p in itertools.product(range(-2 * R, 2 * R + 1), repeat=2) if p != (0, 0)}
 pts_all = sorted([(m, n) for m in range(-R, R + 1) for n in range(-R, R + 1) if (m, n) != (0, 0)], key=lambda p: QL[p][0])
 lam2 = QL[pts_all[0]][0]
