@@ -7,3 +7,6 @@ nu=4  T(i) in [7.582669772074, 7.582670024708]
   c20 >= 0.436880  c02 >= 9.757837  |c21| <= 8.8841  |c03| <= 9.7579
   local lemma holds for max(|A|,|B|) <= r_loc = 0.00309
   large-y cut: T(tau) >= y^6 * 0.385044 > T(i) for y > Y0 = 1.64331
+  boxes 200, queue 5, 191s
+  boxes 400, queue 7, 379s
+DONE nu=4: all 531 boxes certified in 491s -> square lattice is the unique global minimiser
