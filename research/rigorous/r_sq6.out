@@ -2,4 +2,3 @@ nu=6 square: T(tau0) in [[3.2499743124272328816522182812209784686 +/- 1.81e-38],
   coefficients: c20=[4.271940176 +/- 1.13e-10] c02=[3.570917177 +/- 7.00e-10] c21=[-4.97296318 +/- 5.55e-9] c03=[-3.57091718 +/- 4.19e-9] (symmetric ones contain 0)
   local lemma (direct, exact symmetry) holds for max(|A|,|B|) <= r_loc = 0.00766
   large-y cut: T >= y^9.0000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.482403
-  boxes 100, queue 5, 314s
