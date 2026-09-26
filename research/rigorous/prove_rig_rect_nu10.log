@@ -2,3 +2,7 @@ nu=10 rect: T(tau0) in [[0.75970842765752922664317602595429601564 +/- 9.21e-40],
   coefficients: c20=[5.2299046306 +/- 8.82e-11] c02=[1.184902087 +/- 4.59e-10] c21=[-16.37907559 +/- 2.36e-9] c03=[12.72508387 +/- 2.30e-9] (symmetric ones contain 0)
   local lemma (strong convexity + small gradient, |c01| = 2.494e-09) holds for max(|A|,|B|) <= r_loc = 0.00129
   large-y cut: T >= y^15.000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.383095
+  boxes 200, queue 5, 855s
+  boxes 300, queue 5, 1242s
+  boxes 400, queue 5, 1610s
+DONE nu=10: all 471 boxes certified in 1867s (rigorous arithmetic) -> the unique global minimiser is rectangular, tau = i y with |y - 1.0998011146| <= r_loc y0
