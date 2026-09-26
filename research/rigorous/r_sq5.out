@@ -4,3 +4,22 @@ nu=5 square: T(tau0) in [[4.8380268465923384362849246631554933629 +/- 3.51e-38],
   large-y cut: T >= y^7.5000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.540741
   boxes 100, queue 5, 421s
   boxes 200, queue 5, 812s
+DONE nu=5: all 303 boxes certified in 1177s (rigorous arithmetic) -> square lattice is the unique global minimiser
+Traceback (most recent call last):
+  File "/home/user/GapYas/research/rigorous/prove_min_rig.py", line 119, in <module>
+    json.dump(dict(point=POINT, nu=nu, T0=[str(T0.lower()), str(T0.upper())], r_loc=rloc, Y0=Yc, boxes=n), open("prove_rig_%s_nu%g.json" % (POINT, nu), "w"), indent=1)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/__init__.py", line 179, in dump
+    for chunk in iterable:
+  File "/usr/lib/python3.11/json/encoder.py", line 432, in _iterencode
+    yield from _iterencode_dict(o, _current_indent_level)
+  File "/usr/lib/python3.11/json/encoder.py", line 406, in _iterencode_dict
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 326, in _iterencode_list
+    yield from chunks
+  File "/usr/lib/python3.11/json/encoder.py", line 439, in _iterencode
+    o = _default(o)
+        ^^^^^^^^^^^
+  File "/usr/lib/python3.11/json/encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type arb is not JSON serializable
