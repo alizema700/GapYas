@@ -1,3 +1,31 @@
 20:37 start rect 22 1.2000361127730184
 20:37 start rect 24 1.2047735082571798
 20:37 start rect 26 1.2086726272201058
+21:12 end rect 22 1.2000361127730184: DONE nu=22: all 603 boxes certified in 2033s (rigorous arithmetic) -> the unique
+21:12 start rect 28 1.2119406042184335
+21:13 end rect 24 1.2047735082571798: DONE nu=24: all 637 boxes certified in 2140s (rigorous arithmetic) -> the unique
+21:13 start rect 30 1.2147207950982053
+21:14 end rect 26 1.2086726272201058: DONE nu=26: all 653 boxes certified in 2194s (rigorous arithmetic) -> the unique
+21:14 start square 4.5
+21:34 end square 4.5: DONE nu=4.5: all 339 boxes certified in 1176s (rigorous arithmetic) -> square la
+21:34 start square 5.5
+21:51 end square 5.5: DONE nu=5.5: all 281 boxes certified in 987s (rigorous arithmetic) -> square lat
+21:51 start square 6.5
+21:51 end rect 28 1.2119406042184335: DONE nu=28: all 715 boxes certified in 2378s (rigorous arithmetic) -> the unique
+21:51 start square 7.5
+21:57 end rect 30 1.2147207950982053: DONE nu=30: all 789 boxes certified in 2636s (rigorous arithmetic) -> the unique
+21:57 start square 4.25
+22:08 end square 6.5: DONE nu=6.5: all 303 boxes certified in 1040s (rigorous arithmetic) -> square la
+22:08 start square 4.75
+22:11 end square 7.5: DONE nu=7.5: all 333 boxes certified in 1167s (rigorous arithmetic) -> square la
+22:11 start square 8.25
+22:20 end square 4.25: DONE nu=4.25: all 411 boxes certified in 1342s (rigorous arithmetic) -> square l
+22:20 start square 8.5
+22:26 end square 4.75: DONE nu=4.75: all 317 boxes certified in 1054s (rigorous arithmetic) -> square l
+22:26 start hex 3.25
+22:35 end square 8.25: DONE nu=8.25: all 417 boxes certified in 1418s (rigorous arithmetic) -> square l
+22:35 start hex 3.75
+22:45 end hex 3.25: DONE nu=3.25: all 351 boxes certified in 1129s (rigorous arithmetic) -> hex latt
+22:45 start rect 9 1.0559715996536272
+22:49 end square 8.5: DONE nu=8.5: all 499 boxes certified in 1708s (rigorous arithmetic) -> square la
+22:49 start rect 9.5 1.0821441273716073

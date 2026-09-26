@@ -1,0 +1,6 @@
+nu=3.25 hex: T(tau0) in [[11.321625165721773242921699420548975468 +/- 3.19e-37], [11.322575792568816410721410647965967655 +/- 1.82e-37]]   tail bound [0.00047531337243668562767812704309504948395 +/- 3.27e-42]
+  coefficients: c20=[2.8 +/- 0.0373] c02=[2.8 +/- 0.0396] c21=[-2.2e+1 +/- 0.530] c03=[3.7 +/- 0.0610] (symmetric ones contain 0)
+  local lemma (convexity) holds for max(|A|,|B|) <= r_loc = 0.00212
+  large-y cut: T >= y^4.8750000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.784908
+  boxes 200, queue 11, 670s
+DONE nu=3.25: all 351 boxes certified in 1129s (rigorous arithmetic) -> hex lattice is the unique global minimiser

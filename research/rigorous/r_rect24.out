@@ -5,3 +5,4 @@ nu=24 rect: T(tau0) in [[0.0050560590759609429522461500203711279311 +/- 4.15e-42
   boxes 100, queue 7, 346s
   boxes 300, queue 7, 1040s
   boxes 400, queue 7, 1373s
+DONE nu=24: all 637 boxes certified in 2140s (rigorous arithmetic) -> the unique global minimiser is rectangular, tau = i y with |y - 1.2047735083| <= r_loc y0

@@ -1,0 +1,7 @@
+nu=4.5 square: T(tau0) in [[5.9990530513263509958254982024072887725 +/- 1.97e-38], [5.9990530582687392781304769329153714352 +/- 2.88e-38]]   tail bound [3.4449033055083244195535806586517863514e-9 +/- 2.79e-48]
+  coefficients: c20=[1.546255 +/- 3.82e-7] c02=[7.960704 +/- 2.87e-7] c21=[4.86819 +/- 4.79e-6] c03=[-7.960704 +/- 8.21e-7] (symmetric ones contain 0)
+  local lemma (direct, exact symmetry) holds for max(|A|,|B|) <= r_loc = 0.00561
+  large-y cut: T >= y^6.7500000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.583852
+  boxes 100, queue 7, 374s
+  boxes 200, queue 5, 722s
+DONE nu=4.5: all 339 boxes certified in 1176s (rigorous arithmetic) -> square lattice is the unique global minimiser
