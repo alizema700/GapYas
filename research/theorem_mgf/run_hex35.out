@@ -7,3 +7,4 @@ nu=3.5  point hex: T in [9.772342894889, 9.772408884759]
   c20 >= 2.128638  c02 >= 2.128465  |c21| <= 20.2174  |c03| <= 3.9017
   local lemma holds for max(|A|,|B|) <= r_loc = 0.00719
   large-y cut: T(tau) >= y^5.25 * 0.555952 > T(i) for y > Y0 = 1.72638
+DONE nu=3.5: all 363 boxes certified in 333s -> hex lattice is the unique global minimiser

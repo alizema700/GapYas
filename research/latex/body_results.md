@@ -26,7 +26,7 @@ Dazu kommen für endliches ν ein numerisches 2D-Phasendiagramm mit Fehlerbalken
 | 2D: max. kleinstes Dreiecksprodukt P(Λ) ist P\* = 2((1+√17)/8)^{3/4}, nur für das Rechteck mit Seitenverhältnis √((√17−1)/2) | **bewiesen** (Satz 1) |
 | 2D: Minimierer von T_ν → dieses Rechteck für ν → ∞; ebenso das Minimum von C_{s,s,s} für s → ∞ | **bewiesen** (Satz 2) |
 | 3D: max. P(Λ) = 3/2, nur für BCC; Minimierer von T_ν → BCC für ν → ∞ | **computergestützt bewiesen** (Satz 3) |
-| 2D: C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ haben ihr globales Minimum nur bei τ = i (Quadrat); ebenso T_ν für ν = 5, 7 | **computergestützt bewiesen** (Satz 4) |
+| 2D: C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ haben ihr globales Minimum nur bei τ = i (Quadrat); ebenso T_ν für ν = 5, 7; Hexagon ist einziger Minimierer bei ν = 3,5 | **computergestützt bewiesen** (Satz 4) |
 | 2D: Hexagon und Quadrat tauschen bei ν̂ ∈ (3,918364; 3,918366) die Reihenfolge | **zertifiziert** (explizite Fehlerschranken) |
 | 2D: global optimal ist hexagonal für 4/3 < ν < 3,91836, Quadrat bis ν₂ = 8,6063 ± 0,0005, danach Rechteck | numerisch, mit Fehlerbalken (Vermutung) |
 | 2D: beide Gitter lokal stabil für 3,80632 < ν < 4,27848 (Übergang erster Ordnung) | numerisch, Fehler ≤ 6·10⁻⁵ |
@@ -125,6 +125,8 @@ Zusammen mit dem klassischen Fall s = 1 (Minimum beim Hexagon) und Satz 2 ergibt
 | 8 | [1,5524012124; 1,5524012128] | 5,83081 | 0,46080 | 0,0026 | 385 |
 
 Zusätzlich sind so auch ν = 5 und ν = 7 bewiesen (keine modularen Graphfunktionen, da s nicht ganzzahlig). Das Quadrat ist also an fünf Stützstellen ν = 4, 5, 6, 7, 8 nachweislich optimal. Das kleine c₀₂ bei ν = 8 zeigt die Nähe des Übergangs zum Rechteck bei ν₂ ≈ 8,606.
+
+**Auch das Hexagon ist so beweisbar:** Bei ν = 3,5 ist das Hexagonalgitter der einzige Minimierer (T(ρ) ∈ [9,7723429; 9,7724089], Radius des lokalen Lemmas 0,0072, 363 Boxen). Damit ist die Phasenfolge an Stützstellen auf beiden Seiten von ν\* bewiesen: Hexagon bei ν = 2 (klassisch) und 3,5, Quadrat bei ν = 4 bis 8.
 
 **Grenze der Methode:** Der gleiche Beweis für das Hexagon bei ν = 3 ist gescheitert. Nahe ν = d fällt der abgeschnittene Rest nur wie R⁻⁴ ab. Mit R = 40 ist die Fehlerschranke (≈ 10⁻³) größer als der Energieabstand direkt neben dem Hexagon. Dafür bräuchte es deutlich größere Summen oder eine schärfere Schranke für den Rest. **Status:** wie bei Satz 3. Die Rechnung läuft in doppelter Genauigkeit mit expliziten Margen, nicht vollständig in Intervallarithmetik. Skripte: `research/theorem_mgf/`.
 
