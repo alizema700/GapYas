@@ -1,0 +1,10 @@
+3D: lambda_c(fcc->bcc) = (Z_bcc - Z_fcc)/(T_fcc - T_bcc); check that no hcp(c/a) or bct(c/a) point is lower at lambda_c
+  nu=3.5  lambda_c = 0.04921   E(fcc=bcc) = 30.46315017   min(hcp,bct) at lambda_c = 30.46315010  (OTHER STRUCTURE LOWER)
+  nu=4.5  lambda_c = 0.06478   E(fcc=bcc) = 12.86565674   min(hcp,bct) at lambda_c = 12.86565674  (ok)
+  nu=6.0  lambda_c = 0.10347   E(fcc=bcc) = 8.05917412   min(hcp,bct) at lambda_c = 8.05917412  (ok)
+  nu=9.0  lambda_c = 0.28948   E(fcc=bcc) = 5.08642438   min(hcp,bct) at lambda_c = 5.08642438  (ok)
+2D: lambda_c(hex->square), check against all grid points of the fundamental domain
+  nu=3.0: square never beats hex (T_hex <= T_square)
+  nu=4.5  lambda_c = 1.86084   grid minimum at lambda_c 16.61973141 vs E(hex=square) 16.61973141 (ok)
+  nu=6.0  lambda_c = 1.04409   grid minimum at lambda_c 8.05218211 vs E(hex=square) 8.05218211 (ok)
+  nu=9.0  lambda_c = 1.50656   grid minimum at lambda_c 5.82706992 vs E(hex=square) 5.82706992 (ok)

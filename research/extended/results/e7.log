@@ -1,0 +1,21 @@
+square_spinodal R48-128 h=0.001 root 3.806314
+square_spinodal R48-128 h=0.002 root 3.806315
+square_spinodal R48-128 h=0.004 root 3.806321
+square_spinodal R64-192 h=0.001 root 3.806314
+square_spinodal R64-192 h=0.002 root 3.806315
+square_spinodal R64-192 h=0.004 root 3.806321
+==> square_spinodal = 3.80632 +- 0.00000
+hex_spinodal R48-128 h=0.001 root 4.278435
+hex_spinodal R48-128 h=0.002 root 4.278459
+hex_spinodal R48-128 h=0.004 root 4.278552
+hex_spinodal R64-192 h=0.001 root 4.278435
+hex_spinodal R64-192 h=0.002 root 4.278459
+hex_spinodal R64-192 h=0.004 root 4.278552
+==> hex_spinodal = 4.27848 +- 0.00006
+nu2 R48-128 h=0.001 root 8.605908
+nu2 R48-128 h=0.002 root 8.606095
+nu2 R48-128 h=0.004 root 8.606843
+nu2 R64-192 h=0.001 root 8.605908
+nu2 R64-192 h=0.002 root 8.606095
+nu2 R64-192 h=0.004 root 8.606843
+==> nu2 = 8.60628 +- 0.00047
