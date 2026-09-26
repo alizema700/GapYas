@@ -5,3 +5,8 @@ research/latex/*.out
 research/latex/*.toc
 research/latex/*.fls
 research/latex/*.fdb_latexmk
+research/note/*.aux
+research/note/*.log
+research/note/*.out
+research/note/*.fls
+research/note/*.fdb_latexmk

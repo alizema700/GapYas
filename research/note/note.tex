@@ -1,0 +1,173 @@
+\documentclass[11pt,a4paper]{amsart}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{graphicx,booktabs}
+\usepackage[colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Lat}{\Lambda}
+\DeclareMathOperator{\covol}{covol}
+
+\title[Three-body lattice energies in the limit of steep decay]{Which lattice minimises a steep three-body power-law energy?\\ A max--min triangle problem}
+\author{DRAFT}
+\date{\today}
+
+\begin{document}
+\begin{abstract}
+For a lattice $\Lat\subset\R^d$ of unit covolume consider the three-body energy
+$T_\nu(\Lat)=\sum_{x,y\in\Lat\setminus\{0\},\,x\neq y}\bigl(|x|\,|y|\,|x-y|\bigr)^{-\nu}$, i.e.\ the sum over all lattice triangles through the origin of the product of the side lengths to the power $-\nu$.
+In $d=2$ this is, up to normalisation, the two-loop modular graph function $C_{s,s,s}(\tau)$ with $s=\nu/2$.
+We prove that as $\nu\to\infty$ every family of minimisers of $T_\nu$ converges to the rectangular lattice with aspect ratio $\sqrt{(\sqrt{17}-1)/2}$; in particular neither the hexagonal nor the square lattice is optimal for large $\nu$.
+The proof reduces the limit to a max--min problem for the smallest triangle product of a lattice, which we solve exactly.
+We complement this with a numerical phase diagram for finite $\nu$ (hexagonal $\to$ square $\to$ rectangular) and with numerical evidence that in $d=3$ the body-centred cubic lattice solves the corresponding max--min problem.
+\end{abstract}
+\maketitle
+
+\section{Introduction}
+Lattice energy minimisation for \emph{pair} interactions is a classical subject; for completely monotone pair potentials in the plane the hexagonal lattice is optimal \cite{Rankin,Cassels,Ennola,Diananda,Montgomery}, and in higher dimensions universal optimality has been proved in dimensions 8 and 24 \cite{CKMRV}.
+Much less is known for genuine many-body energies. Here we study the simplest one, a product-form three-body power law
+\begin{equation}\label{eq:T}
+T_\nu(\Lat)=\sum_{\substack{x,y\in\Lat\setminus\{0\}\\ x\neq y}}\bigl(|x|\,|y|\,|x-y|\bigr)^{-\nu},
+\end{equation}
+which converges for $\nu>2d/3$. This sum (under the name three-body zeta function $\zeta^{(3)}_\Lat(\nu,\nu,\nu)$) appears as the radial part of the Axilrod--Teller--Muto energy at $\nu=3$ in \cite{RoblesNavarro}, where it was evaluated for selected lattices and along the Bain path; efficient algorithms are given in \cite{BuchheitBusse,BuchheitRupp}.
+We stress that \eqref{eq:T} is a \emph{model} energy: physical three-body dispersion carries an angular factor, and a pure three-body energy at fixed density does not describe a material. The motivation here is mathematical, see Section~\ref{sec:mgf}: in $d=2$, $T_{2s}$ is a modular graph function.
+
+\smallskip\noindent\textbf{What is automatic and what is not.} $T_\nu$ is invariant under isometries, so on the modular surface the hexagonal point $\rho=e^{i\pi/3}$ and the square point $i$ (elliptic fixed points) are always critical points. The content of the results below is \emph{global} minimality and the location of the transitions.
+
+\smallskip\noindent\textbf{Main result.} Let
+\[
+a_*=\Bigl(\tfrac{1+\sqrt{17}}{8}\Bigr)^{1/4},\qquad P_*=2a_*^3=\sqrt{a_*^2+a_*^{-2}}\approx 1.4317345,\qquad y_\infty=a_*^{-2}=\sqrt{\tfrac{\sqrt{17}-1}{2}}\approx1.2496211,
+\]
+and let $\Lat_*=a_*\Z\times a_*^{-1}\Z$ (rectangular, aspect ratio $y_\infty$, unit covolume).
+
+\begin{theorem}\label{thm:main}
+Let $d=2$. For every $\nu>4/3$ the energy $T_\nu$ attains its minimum on the space of unit-covolume lattices. If $\Lat_\nu$ is any minimiser, then $\Lat_\nu\to\Lat_*$ up to isometries as $\nu\to\infty$, and
+$\lim_{\nu\to\infty}\bigl(\min T_\nu\bigr)^{1/\nu}=1/P_*$.
+Equivalently (Section~\ref{sec:mgf}), minimisers $\tau_s$ of the modular graph function $C_{s,s,s}$ on the fundamental domain satisfy $\tau_s\to i\,y_\infty$ as $s\to\infty$.
+\end{theorem}
+
+Theorem~\ref{thm:main} follows from an exact solution of the following max--min problem.
+\begin{definition}
+For a lattice $\Lat$ let $\pi(p,q,r)=|p-q|\,|q-r|\,|r-p|$ and
+$P(\Lat)=\min\{\pi(p,q,r):p,q,r\in\Lat\ \text{pairwise distinct}\}$ (the minimum exists since $\Lat$ is discrete).
+\end{definition}
+\begin{theorem}\label{thm:maxmin}
+For every lattice $\Lat\subset\R^2$ of covolume $1$, $P(\Lat)\le P_*$, with equality if and only if $\Lat$ is isometric to $\Lat_*$.
+\end{theorem}
+
+\section{Proof of Theorem~\ref{thm:maxmin}}
+\begin{lemma}[reduced basis]\label{lem:red}
+After a rotation and a reflection, every unit-covolume $\Lat\subset\R^2$ has a basis $u=(a,0)$, $v=(p,a^{-1})$ with $a=\lambda_1(\Lat)$, $0\le p\le a/2$ and $|v|\ge a$. Moreover $a^4\le 4/3$.
+\end{lemma}
+\begin{proof}
+Lagrange--Gauss reduction; the bound is Hermite's constant $\gamma_2=2/\sqrt3$.
+\end{proof}
+
+\begin{lemma}[upper bound]\label{lem:upper}
+With the notation of Lemma~\ref{lem:red},
+$P(\Lat)\le G(a):=\min\{2a^3,\sqrt{a^2+a^{-2}}\}$, and $\pi(0,u,v)\le\sqrt{a^2+a^{-2}}$ with equality iff $p=0$.
+\end{lemma}
+\begin{proof}
+The collinear triple $(0,u,2u)$ gives $\pi=a\cdot a\cdot2a=2a^3$. For the triple $(0,u,v)$,
+$\pi(0,u,v)^2=a^2\,(p^2+k)\,((a-p)^2+k)$ with $k=a^{-2}$. Put $m=p(a-p)\in[0,a^2/4]$. Since $p^2+(a-p)^2=a^2-2m$,
+\[
+(p^2+k)((a-p)^2+k)=m^2+k(a^2-2m)+k^2=(ka^2+k^2)+m(m-2k).
+\]
+Because $a^4\le4/3<8$ we have $m\le a^2/4<2a^{-2}=2k$, hence $m(m-2k)\le0$ with equality iff $m=0$, i.e.\ $p=0$ (note $p\le a/2<a$). Therefore $\pi(0,u,v)^2\le a^2(ka^2+k^2)=a^2+a^{-2}$.
+\end{proof}
+
+\begin{lemma}\label{lem:G}
+For $0<a\le(4/3)^{1/4}$ we have $G(a)\le P_*$, with equality iff $a=a_*$.
+\end{lemma}
+\begin{proof}
+$a_*$ is the positive root of $4a^8=a^4+1$, equivalently $2a_*^3=\sqrt{a_*^2+a_*^{-2}}$. For $a\le a_*$, $G(a)\le2a^3\le2a_*^3$ with equality iff $a=a_*$. The function $g(a)=a^2+a^{-2}$ is strictly decreasing on $(0,1]$ and increasing on $[1,\infty)$. For $a_*<a\le1$, $G(a)\le\sqrt{g(a)}<\sqrt{g(a_*)}=P_*$. For $1\le a\le(4/3)^{1/4}$, $g(a)\le g((4/3)^{1/4})=\tfrac{2}{\sqrt3}+\tfrac{\sqrt3}{2}=\tfrac{7}{2\sqrt3}$, and $\bigl(\tfrac{7}{2\sqrt3}\bigr)^2=\tfrac{49}{12}<16\bigl(\tfrac{1+\sqrt{17}}{8}\bigr)^3=P_*^4$ (numerically $4.083<4.202$), so again $G(a)<P_*$.
+\end{proof}
+
+\begin{lemma}[the extremal lattice]\label{lem:star}
+$P(\Lat_*)=P_*$.
+\end{lemma}
+\begin{proof}
+Write $u=(a_*,0)$, $v=(0,a_*^{-1})$; note $a_*<1$. The triples $(0,u,2u)$ and $(0,u,v)$ give $\pi=P_*$, so $P(\Lat_*)\le P_*$.
+\emph{Collinear triples.} Three distinct lattice points on a line are $q+j s w,\ q+ksw,\ q+lsw$ with $w$ a unit vector, $s\ge\lambda_1=a_*$ and integers $j<k<l$; then $\pi=s^3(k-j)(l-k)(l-j)\ge2s^3\ge2a_*^3=P_*$.
+\emph{Non-collinear triples.} Let the side lengths be $d_1\le d_2\le d_3$ and $\gamma$ the angle between the sides $d_1,d_2$. The triangle has area $\ge1/2$, so $d_1d_2\ge d_1d_2\sin\gamma=2\,\mathrm{area}\ge1$ and $\pi\ge d_3$.
+We claim $d_3\ge D:=\sqrt{a_*^2+a_*^{-2}}=P_*$. The three side vectors are nonzero, pairwise linearly independent vectors of $\Lat_*$. A vector $(ma_*,na_*^{-1})$ has norm $<D$ only if $(m,n)\in\{(\pm1,0),(0,\pm1)\}$: if $n\neq0$ then $m^2a_*^2<a_*^2+(1-n^2)a_*^{-2}\le a_*^2$ forces $m=0$ and $n^2<1+a_*^4<2$; if $n=0$ then $m^2<1+a_*^{-4}=1+y_\infty^2<4$. These vectors span only two directions, so at most two of the three pairwise independent side vectors can be shorter than $D$. Hence $d_3\ge D$ and $\pi\ge P_*$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:maxmin}]
+By Lemmas~\ref{lem:red}--\ref{lem:G}, $P(\Lat)\le G(a)\le P_*$. If $P(\Lat)=P_*$, then $G(a)=P_*$, so $a=a_*$; moreover $\pi(0,u,v)\ge P(\Lat)=P_*=\sqrt{a_*^2+a_*^{-2}}$, which by Lemma~\ref{lem:upper} forces $p=0$, i.e.\ $\Lat=\Lat_*$. Conversely $P(\Lat_*)=P_*$ by Lemma~\ref{lem:star}.
+\end{proof}
+
+\section{Proof of Theorem~\ref{thm:main}}
+Let $\mathcal L_2$ be the space of unit-covolume lattices modulo isometries, with the topology induced by bases.
+\begin{lemma}\label{lem:basic}
+(a) $T_\nu(\Lat)\ge P(\Lat)^{-\nu}$ for all $\Lat$ and $\nu>4/3$.
+(b) $P$ is continuous on $\mathcal L_2$ and $P(\Lat)\le2\lambda_1(\Lat)^3$.
+(c) $T_\nu$ is lower semicontinuous on $\mathcal L_2$.
+(d) For $\nu\ge\nu_0>4/3$: $T_\nu(\Lat_*)\le C\,P_*^{-\nu}$ with $C=T_{\nu_0}(\Lat_*)\,P_*^{\nu_0}$.
+\end{lemma}
+\begin{proof}
+(a) Translating a minimal triple so that one vertex is $0$ produces a term $P(\Lat)^{-\nu}$ of \eqref{eq:T}.
+(b) The bound is the triple $(0,u,2u)$. Continuity: near a given lattice only triples of points in a fixed ball are relevant, and $\pi$ is continuous in the basis.
+(c) $T_\nu$ is a sum of nonnegative continuous functions of the basis.
+(d) Every term satisfies $\pi\ge P_*$, so $(P_*/\pi)^{\nu}\le(P_*/\pi)^{\nu_0}$.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+\emph{Existence.} By Lemma~\ref{lem:basic}(a),(b), $T_\nu(\Lat)\ge(2\lambda_1^3)^{-\nu}$, so sublevel sets of $T_\nu$ lie in $\{\lambda_1\ge\varepsilon\}$, which is compact by Mahler's criterion; with (c) a minimiser exists.
+\emph{Convergence.} For a minimiser $\Lat_\nu$ and $\nu\ge\nu_0$, Lemma~\ref{lem:basic} gives
+$P(\Lat_\nu)^{-\nu}\le T_\nu(\Lat_\nu)\le T_\nu(\Lat_*)\le CP_*^{-\nu}$, hence $P_*\ge P(\Lat_\nu)\ge C^{-1/\nu}P_*\to P_*$.
+In particular $\lambda_1(\Lat_\nu)$ is bounded below, so $(\Lat_\nu)$ lies in a compact set. Any limit point $\Lat_\infty$ satisfies $P(\Lat_\infty)=P_*$ by continuity, hence $\Lat_\infty\cong\Lat_*$ by Theorem~\ref{thm:maxmin}. The same chain of inequalities gives $(\min T_\nu)^{1/\nu}\to1/P_*$.
+\end{proof}
+
+\section{Relation to modular graph functions}\label{sec:mgf}
+For $\tau$ in the upper half plane the two-loop modular graph function is
+$C_{a,b,c}(\tau)=\sum_{p_1+p_2+p_3=0,\ p_i\neq0}\prod_{i}\bigl(\tfrac{\operatorname{Im}\tau}{\pi|p_i|^2}\bigr)^{a_i}$, $p_i\in\Z+\tau\Z$ \cite{DGV}.
+With $\Lat_\tau=(\Z+\tau\Z)/\sqrt{\operatorname{Im}\tau}$ (unit covolume) one has
+\[
+C_{s,s,s}(\tau)=\pi^{-3s}\,T_{2s}(\Lat_\tau),
+\]
+so Theorem~\ref{thm:main} is a statement about the location of the minimum of $C_{s,s,s}$ on the fundamental domain. At $s=1$, Zagier's identity $C_{1,1,1}=E_3+\zeta(3)$ and the minimality of the Epstein zeta function at $\rho$ \cite{Rankin,Cassels,Ennola,Diananda} show that the minimum is at $\rho$ (hexagonal). Theorem~\ref{thm:main} shows that for large $s$ it is near $i y_\infty$. We are not aware of earlier results on the minima of $C_{s,s,s}$ for $s>1$; see the caveat in Section~\ref{sec:limits}.
+
+\section{Numerical phase diagram for finite \texorpdfstring{$\nu$}{nu}}\label{sec:numerics}
+The following are numerical observations, not theorems. $T_\nu$ was evaluated by cube-truncated direct summation with an FFT convolution and Richardson extrapolation in the cut-off (independent of \cite{BuchheitRupp}); agreement with the library of \cite{BuchheitRupp} is better than $2\cdot10^{-10}$ relative on 55 test cases, and the values at $\nu=3$ reproduce those of \cite{RoblesNavarro} after conversion to unit covolume.
+\begin{itemize}
+\item $2<\nu<\nu^*$: the hexagonal lattice is the global minimiser. At $\nu=2$ this is exact by Section~\ref{sec:mgf}.
+\item $\nu^*=3.9183649026\ldots$: first-order transition to the square lattice; both are local minima for $3.806<\nu<4.278$.
+\item $\nu_2\approx8.606$: the square lattice becomes unstable towards rectangular deformations; the optimal aspect ratio then grows continuously (1.056 at $\nu=9$, 1.100 at $10$, 1.141 at $12$, 1.170 at $15$, 1.194 at $20$, 1.215 at $30$), consistent with the limit $y_\infty=1.2496$ of Theorem~\ref{thm:main}.
+\end{itemize}
+\begin{conjecture}
+For $d=2$ the minimiser of $T_\nu$ is hexagonal for $4/3<\nu<\nu^*$, square for $\nu^*<\nu\le\nu_2$ and rectangular with aspect ratio increasing from $1$ to $y_\infty$ for $\nu>\nu_2$.
+\end{conjecture}
+
+\section{Three dimensions}
+In $d=3$ the collinear triple gives again $P(\Lat)\le2\lambda_1^3$. For the body-centred cubic lattice (unit covolume) one finds $P(\mathrm{BCC})=3/2$, attained by the isosceles triangles formed by two nearest neighbours and a second neighbour, while $P(\mathrm{FCC})=P(\mathrm{SC})=\sqrt2$.
+A numerical maximisation of $P$ over the five-dimensional space of 3D lattices (62 Nelder--Mead runs) never exceeded $3/2$ and returned BCC in the best runs.
+\begin{conjecture}
+For unit-covolume lattices in $\R^3$, $P(\Lat)\le3/2$ with equality only for BCC. Consequently (by the argument of Theorem~\ref{thm:main}) minimisers of $T_\nu$ converge to BCC as $\nu\to\infty$.
+\end{conjecture}
+Numerically, BCC is the best lattice found for all tested $\nu\in[3.2,12]$, and FCC ceases to be a local minimum near $\nu\approx3.75$ (preliminary; error bars pending).
+
+\section{Limitations}\label{sec:limits}
+(i) $T_\nu$ is a model energy; physically relevant three-body dispersion has an angular factor and is always accompanied by pair terms. (ii) Non-Bravais structures such as hcp are not covered by the lattice setting. (iii) Apart from Theorems~\ref{thm:main} and~\ref{thm:maxmin}, all statements are numerical. (iv) Our literature search for prior results on minima of $C_{s,s,s}$ and on minimisers of $T_\nu$ was not exhaustive.
+
+\begin{thebibliography}{99}
+\bibitem{Rankin} R.\,A.~Rankin, A minimum problem for the Epstein zeta-function, Proc. Glasgow Math. Assoc. 1 (1953).
+\bibitem{Cassels} J.\,W.\,S.~Cassels, On a problem of Rankin about the Epstein zeta-function, Proc. Glasgow Math. Assoc. 4 (1959).
+\bibitem{Ennola} V.~Ennola, A lemma about the Epstein zeta-function, Proc. Glasgow Math. Assoc. 6 (1964).
+\bibitem{Diananda} P.\,H.~Diananda, Notes on two lemmas concerning the Epstein zeta-function, Proc. Glasgow Math. Assoc. 6 (1964).
+\bibitem{Montgomery} H.\,L.~Montgomery, Minimal theta functions, Glasgow Math. J. 30 (1988).
+\bibitem{CKMRV} H.~Cohn, A.~Kumar, S.\,D.~Miller, D.~Radchenko, M.~Viazovska, Universal optimality of the $E_8$ and Leech lattices and interpolation formulas, Ann. of Math. 196 (2022).
+\bibitem{RoblesNavarro} A.~Robles-Navarro et al., arXiv:2504.07338, J. Chem. Phys. 163 (2025) 094104.
+\bibitem{BuchheitBusse} A.\,A.~Buchheit, J.\,T.~Busse, arXiv:2504.11989.
+\bibitem{BuchheitRupp} A.\,A.~Buchheit, A.~Rupp, arXiv:2609.18918.
+\bibitem{DGV} E.~D'Hoker, M.\,B.~Green, P.~Vanhove, On the modular structure of the genus-one Type II superstring low energy expansion, JHEP 08 (2015) 041, arXiv:1502.06698.
+\end{thebibliography}
+\end{document}
