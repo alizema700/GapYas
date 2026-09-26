@@ -43,8 +43,16 @@ def triangle_sum_multisite(A, sites, nu, Rs=(16, 24, 32, 40, 48)):
     Mx = np.column_stack([np.ones_like(Rs)] + [Rs ** (-(p + j)) for j in range(len(Rs) - 1)])
     return float(np.linalg.solve(Mx, vals)[0])
 
-def epstein_multisite(A, sites, nu, Rs=(24, 32, 48, 64)):
-    """pair energy per atom: (1/n) sum_i sum_{p != s_i} |p - s_i|^-nu  (no factor 1/2)"""
+def epstein_multisite(A, sites, nu, Rs=None):
+    """pair energy per atom: (1/n) sum_i sum_{p != s_i} |p - s_i|^-nu  (no factor 1/2), via epsteinlib
+    (exact Epstein zeta with shift; the cube sums converge too slowly for nu close to d)."""
+    from epsteinlib import epstein_zeta
+    A = np.asarray(A, float); n = len(sites); d = A.shape[0]
+    return float(sum(epstein_zeta(nu, A, -(np.asarray(sites[j]) - np.asarray(sites[i])), np.zeros(d)).real
+                     for i in range(n) for j in range(n)) / n)
+
+def _epstein_multisite_cube(A, sites, nu, Rs=(24, 32, 48, 64)):
+    """old cube-sum version, kept for reference (biased for nu - d small)"""
     A = np.asarray(A, float); d = A.shape[0]; n = len(sites); p = nu - d
     vals = []
     for R in Rs:

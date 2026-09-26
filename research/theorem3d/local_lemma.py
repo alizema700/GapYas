@@ -79,7 +79,7 @@ def M_of(r):
     return M
 
 res = []
-for r in [0.002, 0.004, 0.006, 0.008, 0.01, 0.015, 0.02]:
+for r in [0.002, 0.004, 0.006, 0.007, 0.008, 0.01, 0.015, 0.02]:
     M = M_of(r)
     ok = np.sqrt(5) * r < 2 * c / M
     res.append(dict(r=r, M=M, radius=2 * c / M, ok=bool(ok)))

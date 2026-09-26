@@ -1,0 +1,10 @@
+active unordered triangles at BCC: 36
+distinct gradients: 6  c = 0.1388730149658827
+r=0.0020  M<=12.8525  2c/M=0.02161  sqrt5*r=0.00447  lemma holds on box: True
+r=0.0040  M<=13.6305  2c/M=0.02038  sqrt5*r=0.00894  lemma holds on box: True
+r=0.0060  M<=14.4709  2c/M=0.01919  sqrt5*r=0.01342  lemma holds on box: True
+r=0.0070  M<=14.9161  2c/M=0.01862  sqrt5*r=0.01565  lemma holds on box: True
+r=0.0080  M<=15.3790  2c/M=0.01806  sqrt5*r=0.01789  lemma holds on box: True
+r=0.0100  M<=16.3612  2c/M=0.01698  sqrt5*r=0.02236  lemma holds on box: False
+r=0.0150  M<=19.1959  2c/M=0.01447  sqrt5*r=0.03354  lemma holds on box: False
+r=0.0200  M<=22.6972  2c/M=0.01224  sqrt5*r=0.04472  lemma holds on box: False

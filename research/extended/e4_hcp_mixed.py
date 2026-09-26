@@ -9,7 +9,10 @@ tabulated on a c/a grid, so that min over the family is available for every lamb
 import json, sys
 import numpy as np
 from multisite import *
-from common import triangle_sum, triangle_sum_box, A_tau, unit_covolume, lll, epstein_direct
+from common import triangle_sum, triangle_sum_box, A_tau, unit_covolume, lll
+from epsteinlib import epstein_zeta
+def epstein_direct(A, nu, Rs=None):
+    return float(epstein_zeta(nu, np.asarray(A, float), np.zeros(len(A)), np.zeros(len(A))).real)
 
 def tab3d(nu, Rt=(8, 10, 12, 14), Rz=(16, 24, 32)):
     rows = {}
