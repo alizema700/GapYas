@@ -198,7 +198,7 @@ $\ell/\ell_0-1\ll\hat\varepsilon:=(A+B+A^2+B^2)/(1-B)$, and every triangle term 
 All coefficients are enclosed rigorously: the summands are evaluated in outward-rounded interval arithmetic (powers in Arb \cite{Arb}), the cube-truncated sums ($R=40$) by direct, non-FFT convolution with a Higham-type bound for the accumulated rounding error, and the omitted terms by an explicit tail bound (Appendix~\ref{app:bnb}). All comparisons are done on the resulting enclosures. Table~\ref{tab:finite} lists the data.
 
 \begin{table}[t]
-\caption{Data of the rigorous computer-assisted proofs of Theorem~\ref{thm:finite}. Draft: the branch-and-bound runs for $\nu=7,8$ are still in progress; an earlier run with safety margins instead of interval arithmetic succeeded with 323 and 385 boxes.}
+\caption{Data of the rigorous computer-assisted proofs of Theorem~\ref{thm:finite}. Draft: the branch-and-bound run for $\nu=7$ is still in progress; an earlier run with safety margins instead of interval arithmetic succeeded with 323 boxes.}
 \label{tab:finite}\centering\footnotesize
 \setlength{\tabcolsep}{3.2pt}
 \begin{tabular}{@{}cccccc@{}}\toprule
@@ -208,7 +208,7 @@ $\nu$ & point & $T_\nu(\tau_0)$ (enclosure) & $c_{20}\ge$ & $r_{\rm loc}$ & boxe
 5 & $i$ & $[4.83802684659,\,4.83802684684]$ & 2.5821 & 0.0069 & 303\\
 6 & $i$ & $[3.24997431242,\,3.24997431246]$ & 4.2719 & 0.0076 & 307\\
 7 & $i$ & $[2.23344617477,\,2.23344617480]$ & 5.3445 & 0.0050 & \emph{running}\\
-8 & $i$ & $[1.55240121256,\,1.55240121259]$ & 5.8308 & 0.0026 & \emph{running}\\\bottomrule
+8 & $i$ & $[1.55240121256,\,1.55240121259]$ & 5.8308 & 0.0026 & 385\\\bottomrule
 \end{tabular}
 \end{table}
 
