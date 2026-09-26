@@ -27,8 +27,12 @@ All certificates use outward-rounded IEEE interval arithmetic (`iv.py`) and Arb 
 | Thm 4: hexagonal minimiser, ν = 3.5 | `python prove_min_rig.py 3.5 hex` | `prove_rig_hex_nu3.5.log` |
 | Thm 4: crossing ν* ∈ (3.918364, 3.918366) | `python certify_crossing_rig.py` | `certify_crossing_rig.log` |
 | Thm 4: ν₂ ∈ (8.604, 8.608) | `python certify_nu2.py` | `certify_nu2.log` |
+| Thm 4: rectangular minimiser, ν = 10,12,…,20 | `python prove_rect_rig.py <nu> <y0>` (y0 from the log) | `prove_rig_rect_nu<nu>.log` |
 
 Run the commands from inside `rigorous/`.
+
+## Large-exponent asymptotics (`largenu/`)
+Balance equation, 1/ν law and figure data (`asym2d.py`, `balance2d.py`, `asym_data.py`), active sets and hull margins (`active_sets.py`), Hessian at BCC (`hess3d.py`), working notes (`largenu.tex`).
 
 ## Formal proof (`lean/`)
 Lean 4 formalisation of the planar max–min theorem (Theorem 1); no `sorry`, standard axioms only.

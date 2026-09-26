@@ -3,3 +3,7 @@ nu=18 rect: T(tau0) in [[0.043438216397947339980513184183423536222 +/- 7.96e-41]
   local lemma (strong convexity + small gradient, |c01| = 1.280e-08) holds for max(|A|,|B|) <= r_loc = 0.00134
   large-y cut: T >= y^27.000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.322565
   boxes 100, queue 5, 364s
+  boxes 200, queue 5, 722s
+  boxes 300, queue 5, 1066s
+  boxes 400, queue 5, 1420s
+DONE nu=18: all 533 boxes certified in 1848s (rigorous arithmetic) -> the unique global minimiser is rectangular, tau = i y with |y - 1.1866126044| <= r_loc y0
