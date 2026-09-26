@@ -9,6 +9,7 @@ rectangular = aqua.  Run from research/paper/.
 import glob, json, os, sys
 import numpy as np
 import matplotlib; matplotlib.use("Agg")
+import matplotlib.ticker
 import matplotlib.pyplot as plt
 from matplotlib.colors import ListedColormap
 
@@ -181,7 +182,35 @@ def fig_mixed():
     ax.set_xlabel(r"exponent $\nu$"); ax.set_ylabel(r"critical ratio $\lambda_c=c_3/c_2$")
     save(fig, "fig_e4_lambda_c")
 
+# ---------------------------------------------------------------- Fig. asymptotics of the rectangular minimiser
+def fig_asym():
+    d = json.load(open(os.path.join(HERE, "..", "largenu", "asym_data.json")))
+    yinf, kap = d["yinf"], d["kappa"]
+    num = np.array(d["num"]); bal = np.array(d["bal"])
+    fig, ax = plt.subplots(figsize=(COL, 2.3))
+    ax.axhline(yinf, color=MUTED, lw=0.6, ls=(0, (2, 2)))
+    ax.text(420, yinf + 0.004, r"$y_\infty$", color=INK2, fontsize=7, va="bottom", ha="right")
+    nn = np.geomspace(9, 400, 200)
+    ax.plot(nn, yinf - kap / nn, color=MUTED, lw=0.9, ls=(0, (4, 2)))
+    ax.plot(bal[:, 0], bal[:, 1], color=AQUA, lw=1.4)
+    ax.plot(num[:, 0], num[:, 1], "o", color=INK, ms=2.8, mec="white", mew=0.4, zorder=5)
+    ax.set_xscale("log"); ax.set_xlim(8.5, 420); ax.set_ylim(1.02, 1.265)
+    ax.set_xlabel(r"exponent $\nu$"); ax.set_ylabel(r"optimal aspect ratio $y_\nu$")
+    ax.text(9.2, 1.236, "balance equation", color=AQUA, fontsize=7, ha="left", va="center")
+    ax.text(40, 1.198, r"$y_\infty-\kappa/\nu$", color=INK2, fontsize=7, ha="left", va="top")
+    ax.text(10.8, 1.058, "numerical minimisers", color=INK, fontsize=7, ha="left", va="center")
+    ins = fig.add_axes([0.60, 0.25, 0.33, 0.30])
+    ins.plot(num[:, 0], num[:, 0] * (yinf - num[:, 1]), "o", color=INK, ms=2.2, mec="white", mew=0.3)
+    ins.plot(bal[:, 0], bal[:, 0] * (yinf - bal[:, 1]), color=AQUA, lw=1.0)
+    ins.axhline(kap, color=MUTED, lw=0.6, ls=(0, (2, 2)))
+    ins.set_xscale("log"); ins.set_xlim(15, 420); ins.set_ylim(0.9, 1.3)
+    ins.set_title(r"$\nu(y_\infty-y_\nu)\to\kappa$", fontsize=6.5, pad=2)
+    ins.tick_params(labelsize=5.5, length=2, which="both"); ins.grid(False)
+    ins.xaxis.set_minor_formatter(matplotlib.ticker.NullFormatter())
+    ins.set_xticks([20, 100]); ins.set_xticklabels(["20", "100"])
+    save(fig, "fig_asym")
+
 if __name__ == "__main__":
     os.makedirs(OUT, exist_ok=True)
-    fig1(); fig_energy(); fig_stability(); fig_landscape(); fig_unequal(); fig_mixed()
+    fig1(); fig_energy(); fig_stability(); fig_landscape(); fig_unequal(); fig_mixed(); fig_asym()
     print("paper figures written")

@@ -51,7 +51,7 @@ Independent researcher, Z\"urich, Switzerland\par}
 }]
 
 \noindent\textbf{Abstract}\enspace
-We study which Bravais lattice of fixed density minimises the three-body energy $T_\nu(\Lambda)=\sum'_{x,y\in\Lambda}(|x|\,|y|\,|x-y|)^{-\nu}$, the sum over all lattice triangles through the origin of the product of their side lengths to the power $-\nu$. In two dimensions $T_{2s}$ coincides, up to a factor, with the two-loop modular graph function $C_{s,s,s}(\tau)$. We prove that in the steep-decay limit $\nu\to\infty$ the minimisers converge to the rectangular lattice with aspect ratio $\sqrt{(\sqrt{17}-1)/2}$ in $d=2$, by solving exactly the associated max--min problem for the smallest triangle product, and to the body-centred cubic lattice in $d=3$, by a computer-assisted argument. For finite exponents we give computer-assisted proofs, carried out in rigorous interval arithmetic, that $C_{2,2,2}$, $C_{3,3,3}$ and $C_{4,4,4}$ attain their minimum only at the square point $\tau=i$ (whereas $C_{1,1,1}$ is minimal at the hexagonal point), that the square lattice is the unique minimiser also for $\nu=5,7$, that the hexagonal lattice is the unique minimiser for $\nu=3.5$, that the hexagonal and square energies cross in $(3.918364,3.918366)$, and that the square lattice loses local minimality at some $\nu_2\in(8.604,8.608)$. The proofs rest on a majorant series that bounds all Taylor coefficients of every summand uniformly in the lattice vectors; the elementary planar results are also formalised in Lean~4. Numerically, the planar minimiser switches discontinuously from hexagonal to square at $\nu^*\approx3.91836$ and bifurcates continuously from square to rectangular at $\nu_2$. In three dimensions BCC is the best lattice found for all tested exponents $3.2\le\nu\le12$, FCC loses local stability at $\nu_c=3.7521\pm0.0001$, and hcp with $c/a\in[1.45,1.85]$ is never optimal at the tested exponents.
+We study which Bravais lattice of fixed density minimises the three-body energy $T_\nu(\Lambda)=\sum'_{x,y\in\Lambda}(|x|\,|y|\,|x-y|)^{-\nu}$, the sum over all lattice triangles through the origin of the product of their side lengths to the power $-\nu$. In two dimensions $T_{2s}$ coincides, up to a factor, with the two-loop modular graph function $C_{s,s,s}(\tau)$. We prove that in the steep-decay limit $\nu\to\infty$ the minimisers converge to the rectangular lattice with aspect ratio $\sqrt{(\sqrt{17}-1)/2}$ in $d=2$, by solving exactly the associated max--min problem for the smallest triangle product, and to the body-centred cubic lattice in $d=3$, by a computer-assisted argument. For finite exponents we give computer-assisted proofs, carried out in rigorous interval arithmetic, that $C_{2,2,2}$, $C_{3,3,3}$ and $C_{4,4,4}$ attain their minimum only at the square point $\tau=i$ (whereas $C_{1,1,1}$ is minimal at the hexagonal point), that the square lattice is the unique minimiser also for $\nu=5,7$, that the hexagonal lattice is the unique minimiser for $\nu=3.5$, that the hexagonal and square energies cross in $(3.918364,3.918366)$, and that the square lattice loses local minimality at some $\nu_2\in(8.604,8.608)$. Beyond the limits, we show that for all sufficiently large exponents the minimiser is \emph{exactly} BCC in $d=3$. In $d=2$ it is the rectangular lattice whose aspect ratio solves $(y\sqrt{1+y^2}/2)^\nu=4(y^2-1)/(3(y^2+1))$ up to an exponentially small error, so that $y_\nu=y_\infty-\kappa/\nu+O(\nu^{-2})$ with an explicit $\kappa\approx0.95489$. This rests on a local uniqueness principle for smoothed max--min problems, a many-body version of Ryshkov's argument for the Epstein zeta function. The computer-assisted proofs rest on a majorant series that bounds all Taylor coefficients of every summand uniformly in the lattice vectors; the elementary planar results are also formalised in Lean~4. Numerically, the planar minimiser switches discontinuously from hexagonal to square at $\nu^*\approx3.91836$ and bifurcates continuously from square to rectangular at $\nu_2$. In three dimensions BCC is the best lattice found for all tested exponents $3.2\le\nu\le12$, FCC loses local stability at $\nu_c=3.7521\pm0.0001$, and hcp with $c/a\in[1.45,1.85]$ is never optimal at the tested exponents.
 
 \medskip
 \noindent\textbf{Keywords}\enspace Lattice energy minimisation $\cdot$ Three-body interactions $\cdot$ Modular graph functions $\cdot$ Computer-assisted proof $\cdot$ Max--min problems $\cdot$ Crystallisation
@@ -71,6 +71,7 @@ Two remarks delimit the content. First, $T_\nu$ is invariant under isometries, s
 \begin{itemize}\setlength\itemsep{1pt}
 \item Theorem~\ref{thm:maxmin} solves exactly the planar max--min problem for the smallest triangle product; Theorem~\ref{thm:limit} deduces that minimisers of $T_\nu$ converge to a rectangular lattice with aspect ratio $y_\infty=\sqrt{(\sqrt{17}-1)/2}$.
 \item Theorem~\ref{thm:3d} (computer-assisted) shows that in $d=3$ the body-centred cubic (BCC) lattice is the unique maximiser of the smallest triangle product; minimisers of $T_\nu$ converge to BCC.
+\item Theorems~\ref{thm:bcc} and~\ref{thm:rect} go beyond the limits. For all sufficiently large $\nu$ the minimiser is exactly BCC in $d=3$. In $d=2$ it is a rectangular lattice whose aspect ratio is given, up to an exponentially small error, by an explicit transcendental equation. Both follow from a general local uniqueness principle (Lemma~\ref{lem:abstract}).
 \item Theorem~\ref{thm:finite} (computer-assisted, rigorous interval arithmetic) establishes the minimiser for the finite exponents $\nu\in\{3.5,4,5,6,7,8\}$; in particular $C_{2,2,2}$, $C_{3,3,3}$, $C_{4,4,4}$ are minimal only at $\tau=i$. It also encloses the crossing $\nu^*$ and the loss of stability $\nu_2$ of the square lattice.
 \item Sections~\ref{sec:numerics} and~\ref{sec:mixed} give the numerical phase diagrams with error bars, including hcp, unequal exponents and mixed pair plus three-body energies.
 \end{itemize}
@@ -177,6 +178,68 @@ For a triangle $t=(0,m,n)$ put $f_t(q)=\sqrt{\ell_m\ell_n\ell_{m-n}/\det G}$ wit
 
 \noindent\emph{Branch and bound.} On a box $B$ of parameters each $\ell_v$ is linear in $q$ and $\det G$ is a cubic polynomial, so
 $Q\le\min_{t\in S}(\prod\max_B\ell)^{1/2}(\min_B\det G)^{-1/2}$ for any set $S$ of candidate triangles; we use all $(0,m,n)$ with $m,n\in\{-1,0,1\}^3$ and the collinear $(0,m,2m)$. Starting from the compact box $[1,\frac83]\times[1,\frac{64}{9}]\times[0,\frac12]^2\times[-\frac43,\frac43]$, boxes are discarded when they violate a constraint of $\mathcal R$, lie in $q_0+[-r,r]^5$, or have upper bound $<3/2$, and bisected otherwise. All bounds are evaluated with directed (outward) rounding, so that each computed upper bound is a true upper bound (Appendix~\ref{app:bnb}). The run terminates after $9\,868\,069$ boxes with every box certified. With Lemmas~\ref{lem:region} and~\ref{lem:local3} this proves $Q\le3/2$ on $\mathcal R$ with equality only at $q_0$. The convergence statement follows as in Theorem~\ref{thm:limit}.
+
+\section{Exact minimisers for large exponents}\label{sec:exact}
+Theorems~\ref{thm:limit} and~\ref{thm:3d} identify the \emph{limits} of the minimisers. We now show that the max--min structure behind them determines the minimisers themselves for all large $\nu$: exactly in $d=3$, and up to an exponentially small error in $d=2$. The mechanism is a local statement about smoothed max--min problems. It extends to many-body energies the classical argument of Ryshkov for the Epstein zeta function at large exponents~\cite{Ryshkov}.
+
+Let $U=B_{\rho_0}(0)\subset\R^n$ and $T_\nu(\delta)=\sum_{t\in I}e^{-\nu h_t(\delta)}$ for a countable family of $C^2$ functions $h_t$ on $U$. Suppose that a finite \emph{active set} $A\subset I$ has $h_t(0)=0$ and:
+\begin{itemize}\setlength\itemsep{1pt}
+\item[(H1)] $\|\nabla^2h_t\|\le M$ on $U$ for $t\in A$;
+\item[(H2)] $\sum_{t\notin A}(1+|\nabla h_t|+|\nabla h_t|^2+\|\nabla^2h_t\|)e^{-\nu h_t}\le C_0e^{-\nu\gamma}$ on $U$ for some $\gamma>0$ and all $\nu\ge\nu_1$;
+\item[(H3)] $0$ is an interior point of $\operatorname{conv}\{a_t:t\in A\}$, $a_t=\nabla h_t(0)$; equivalently $c:=\min_{|V|=1}\max_{t\in A}(-a_t\cdot V)>0$.
+\end{itemize}
+Condition (H3) says that $\min_th_t$ has a strict, conical local maximum at $0$. It is the analogue of Voronoi's perfection and eutaxy.
+
+\begin{lemma}\label{lem:abstract}
+The function $\Phi(\zeta)=\sum_{t\in A}e^{-a_t\cdot\zeta}$ is strictly convex and coercive, with a unique minimiser $\zeta^*$. There are $\rho>0$, $\nu_0$ and $C$ such that for all $\nu\ge\nu_0$, $T_\nu$ has exactly one critical point $\delta_\nu$ in $B_\rho$. It is the unique minimiser of $T_\nu$ on $\overline{B_\rho}$, it is non-degenerate, and $|\nu\delta_\nu-\zeta^*|\le C/\nu$.
+\end{lemma}
+\begin{proof}
+By (H3), $\Phi(\zeta)\ge e^{c|\zeta|}$, and the $a_t$ span $\R^n$, so $\nabla^2\Phi=\sum e^{-a_t\cdot\zeta}a_ta_t^{\mathsf T}$ is positive definite. Choose $\rho$ with $M\rho\le c/4$ and $\rho\max|a_t|+M\rho^2/2\le\gamma/2$.
+
+\emph{Annulus.} Let $\delta=sV$ with $|V|=1$ and $0<s\le\rho$. Let $m=\min_Aa_t\cdot V\le-c$ and $E=e^{-\nu(sm+Ms^2/2)}$. Put $A_1=\{t:a_t\cdot V\le m+c/2\}$. For $t\in A_1$, $\nabla h_t(\delta)\cdot V\le-c/4$, and the minimising index has weight $e^{-\nu h_t}\ge E$. The terms in $A\setminus A_1$ have weight at most $Ee^{-\nu sc/4}$. The inactive terms are at most $C_0e^{-\nu\gamma/2}E$. Hence $\sum_Ie^{-\nu h_t}\nabla h_t\cdot V\le-cE/8<0$, i.e.\ $\partial_sT_\nu(sV)>0$, as soon as $\nu s\ge K:=\frac4c\log\frac{16N(\max|a_t|+M\rho)}c$ and $\nu$ is large; here $N=|A|$.
+
+\emph{Inner ball.} On $|\zeta|\le K_1:=\max(K,|\zeta^*|+1)$, the rescaled function $\Psi_\nu(\zeta)=T_\nu(\zeta/\nu)$ satisfies $\|\nabla^k\Psi_\nu-\nabla^k\Phi\|\le C_k/\nu$ for $k=1,2$, by Taylor expansion of the active $h_t$ and by (H2). Since $\nabla^2\Phi\ge\lambda>0$ there, $\Psi_\nu$ is strongly convex on $B_{K_1}$ for large $\nu$. It therefore has exactly one critical point there, within $O(1/\nu)$ of $\zeta^*$.
+
+Every critical point in $B_\rho$ lies in $B_{K/\nu}$ by the first step. The minimum over $\overline{B_\rho}$ is not attained on the boundary, so it is attained at the unique critical point.
+\end{proof}
+
+\begin{corollary}\label{cor:global}
+Let $E_\nu=\sum_te^{-\nu h_t}$ be a lattice energy. Suppose that its minimisers converge to a lattice $L_0$, and that (H1)--(H3) hold in an orbifold chart at $L_0$. Then for all large $\nu$ the minimiser is unique and equals $\delta_\nu$. If moreover $L_0$ is a critical point of every $E_\nu$, then it is the minimiser.
+\end{corollary}
+
+\begin{theorem}\label{thm:bcc}
+There is $\nu_0$ such that for every $\nu\ge\nu_0$ the body-centred cubic lattice is the unique minimiser of $T_\nu$ among all lattices in $\R^3$ of unit covolume.
+\end{theorem}
+\begin{proof}
+We use $h_t=\log(\pi_t/\frac32)$ for ordered pairs $t=(x,y)$, in the Gram chart of Sect.~\ref{sec:3d}. Convergence holds by Theorem~\ref{thm:3d}. The active set consists of the 72 ordered pairs of the 36 triangles of Lemma~\ref{lem:local3}. (H3) holds with $c\ge\frac23\sqrt{27/1400}$ by that lemma, since $\nabla h_t=\nabla f_t/f_t$. (H2) holds because only finitely many triangles of BCC have product below any given bound, and the 36 triangles of Lemma~\ref{lem:local3} are the only ones with product $\frac32$ (numerically the next value is $\frac32\sqrt2$). The tail sum is controlled as in Theorem~\ref{thm:limit}. Finally, BCC is critical for every $\nu$: its point group fixes no non-zero trace-free quadratic form, whereas the gradient of an invariant function at BCC is such a fixed vector.
+\end{proof}
+
+\begin{theorem}\label{thm:rect}
+There are $\nu_0$ and $c_0>0$ such that for all $\nu\ge\nu_0$ the unique minimiser of $T_\nu$ in $d=2$ is the rectangular lattice $\Lambda_{iy_\nu}$. Here $|y_\nu-\hat y_\nu|\le e^{-c_0\nu}$, where $\hat y_\nu$ is the root near $y_\infty$ of
+\begin{equation}\label{eq:balance}
+\Bigl(\frac{y\sqrt{1+y^2}}{2}\Bigr)^{\nu}=\frac{4(y^2-1)}{3(y^2+1)} .
+\end{equation}
+In particular $y_\nu=y_\infty-\kappa/\nu+O(\nu^{-2})$ with
+\[\kappa=\frac{y_\infty(y_\infty^2+1)}{2y_\infty^2+1}\log\frac{3(y_\infty^2+1)}{4(y_\infty^2-1)}=0.9548949636\ldots,\]
+and the minimiser of $C_{s,s,s}$ is $\tau_s=i\,y_{2s}$ for all large $s$.
+\end{theorem}
+\begin{proof}
+Work in the chart $\tau=x+iy$ at $iy_\infty$; convergence holds by Theorem~\ref{thm:limit}. By Lemma~\ref{lem:star} and its proof, the active set consists of two families. The first is the collinear triples along $u$: 6 ordered pairs with $\pi=2y^{-3/2}$. The second is the 12 right triangles of the four rectangles at $0$: 24 ordered pairs; for $(0,1,\tau)$, $\pi^2=|\tau|^2|\tau-1|^2/y^3$. At $iy_\infty$ their gradients are $(0,-\beta)$ and $(\pm\alpha,\gamma)$ (12 each), with $\beta=\frac3{2y_\infty}$, $\alpha=\frac1{1+y_\infty^2}$ and $\gamma=\frac{y_\infty^2-1}{2y_\infty(1+y_\infty^2)}$, all positive. So (H3) holds. Lemma~\ref{lem:abstract} gives a unique critical point near $iy_\infty$; since $T_\nu(-\bar\tau)=T_\nu(\tau)$, it lies on the imaginary axis. On the axis the active terms in each family coincide, and all other terms are smaller by a factor $e^{-\nu\gamma'}$. Hence $\partial_yT_\nu=0$ reads
+\[6H_1'e^{-\nu H_1}+24H_2'e^{-\nu H_2}=O(e^{-\nu\gamma'})\,e^{-\nu H_1},\]
+with $H_1=\log(2y^{-3/2})$ and $H_2=\frac12\log(y+y^{-1})$. Since $-4H_2'/H_1'=\frac{4(y^2-1)}{3(y^2+1)}$ and $H_2-H_1=\log\frac{y\sqrt{1+y^2}}2$, this is \eqref{eq:balance} up to an exponentially small perturbation. The $y$-derivative of the equation is of order $\nu$, which gives the bound on $y_\nu-\hat y_\nu$. Linearising at $y_\infty$, where $y\sqrt{1+y^2}=2$, gives $\kappa$; it is also $-\zeta^*_y$ for $\Phi(\zeta)=6e^{\beta\zeta_y}+12e^{-\alpha\zeta_x-\gamma\zeta_y}+12e^{\alpha\zeta_x-\gamma\zeta_y}$.
+\end{proof}
+
+Numerically, the root of \eqref{eq:balance} agrees with the minimiser computed by direct summation to $6\cdot10^{-7}$ at $\nu=20$ and to better than $10^{-9}$ for $\nu\ge50$. A fit gives $y_\nu=y_\infty-0.95489/\nu-2.319/\nu^2+\dots$ (Fig.~\ref{fig:asym}). Neither theorem gives an explicit $\nu_0$; the constants produced by the proof are astronomically large. For finite exponents the rectangular regime is covered rigorously at individual exponents in Sect.~\ref{sec:finite}.
+
+\begin{figure}[t]
+\centering\includegraphics[width=\columnwidth]{figures/fig_asym.pdf}
+\caption{Optimal aspect ratio $y_\nu$ in the rectangular regime: numerical minimisers (dots), the root of the balance equation \eqref{eq:balance} (line) and the first-order law $y_\infty-\kappa/\nu$ (dashed). Inset: $\nu(y_\infty-y_\nu)\to\kappa$.}
+\label{fig:asym}
+\end{figure}
+
+\begin{remark}
+Lemma~\ref{lem:abstract} and Corollary~\ref{cor:global} apply verbatim to the lattice theta function $\theta(L,\alpha)=\sum_{v\in L}e^{-\pi\alpha|v|^2}$ as $\alpha\to\infty$, with $h_v=|v|^2-\lambda_1(L_0)^2$. Here (H3) is exactly Voronoi's condition that the densest lattice $L_0$ is perfect and eutactic. In dimensions $4\le d\le7$ the densest lattices $D_4,D_5,E_6,E_7$ are unique, perfect and eutactic, and each of their shells is a spherical 2-design, which makes them critical for every $\alpha$. So each of them is the unique minimiser of $\theta(\cdot,\alpha)$ among lattices of its dimension for all sufficiently large $\alpha$. By Poisson summation, their duals are the unique minimisers for all sufficiently small $\alpha$. The Epstein analogue is due to Ryshkov~\cite{Ryshkov}. We did not find the theta version in the literature, but it may well be known to experts.
+\end{remark}
 
 \section{Finite exponents: computer-assisted proofs}\label{sec:finite}
 \begin{theorem}[computer-assisted]\label{thm:finite}
@@ -287,7 +350,7 @@ The numerical values of $\lambda_c$ depend on the normalisation of the two terms
 \section{Discussion}\label{sec:discussion}
 A purely three-body repulsion of product type selects different lattices than pair repulsion does. In the plane it penalises the equilateral triangles of the hexagonal lattice once the decay is steep enough. In space it favours BCC, whose smallest triangles are isosceles with one second-neighbour side, over the close-packed FCC and hcp. The steep-decay limits reduce to max--min problems for triangles. The planar one has the closed-form answer of Theorem~\ref{thm:maxmin}; the spatial one we solved by a computer-assisted argument. Through \eqref{eq:mgf} the planar results translate into statements on the minima of the modular graph functions $C_{s,s,s}$.
 
-Several questions remain open. (i) A proof of the full planar phase diagram, in particular hexagonal optimality for all $\nu<\nu^*$, would require the finite-$\nu$ method on continua of exponents (Sect.~\ref{sec:finite}) and sharper tail bounds near $\nu=d$, for instance via the Epstein-zeta representation of \cite{BuchheitBusse}. (ii) An analytic proof of Theorem~\ref{thm:3d} is missing. (iii) Physically relevant three-body energies include the angular ATM factor; the mixed energies of Sect.~\ref{sec:mixed} are only a first step. (iv) The rectangular regime suggests that, for $\nu>\nu_2$, the minimiser lies on the imaginary axis for all larger $\nu$; this is supported numerically but unproven.
+Several questions remain open. (i) A proof of the full planar phase diagram, in particular hexagonal optimality for all $\nu<\nu^*$, would require the finite-$\nu$ method on continua of exponents (Sect.~\ref{sec:finite}) and sharper tail bounds near $\nu=d$, for instance via the Epstein-zeta representation of \cite{BuchheitBusse}. (ii) An analytic proof of Theorem~\ref{thm:3d} is missing, and so are explicit values of $\nu_0$ in Theorems~\ref{thm:bcc} and~\ref{thm:rect}; the latter would combine with the finite-$\nu$ proofs into a complete description of the steep-decay regime. (iii) Physically relevant three-body energies include the angular ATM factor; the mixed energies of Sect.~\ref{sec:mixed} are only a first step. (iv) Theorem~\ref{thm:rect} and the finite-$\nu$ proofs locate the minimiser on the imaginary axis for large $\nu$ and at individual exponents; that this holds for every $\nu>\nu_2$ is supported numerically but unproven.
 
 \section*{Declarations}
 \noindent\textbf{Affiliation}\enspace The author is a student at ETH Z\"urich; this work was carried out independently of any course or research group.
@@ -360,5 +423,6 @@ For $\tau_0=\rho$ the value used in step 4 is an upper bound of $T$ at the doubl
 \bibitem{BFS} L. B\'etermin, M. Friedrich, U. Stefanelli, Lattice ground states for embedded-atom models in 2D and 3D. Lett. Math. Phys. \textbf{111}, 107 (2021). \url{https://doi.org/10.1007/s11005-021-01446-6}. arXiv:2101.05602
 \bibitem{Arb} F. Johansson, Arb: efficient arbitrary-precision midpoint-radius interval arithmetic. IEEE Trans. Comput. \textbf{66}, 1281--1292 (2017). \url{https://doi.org/10.1109/TC.2017.2690633}
 \bibitem{Higham} N.J. Higham, Accuracy and Stability of Numerical Algorithms, 2nd edn. SIAM, Philadelphia (2002). \url{https://doi.org/10.1137/1.9780898718027}
+\bibitem{Ryshkov} S.S. Ryshkov, On the question of final $\zeta$-optimality of lattices providing the closest lattice packing of $n$-dimensional spheres. Sib. Math. J. \textbf{14}, 743--750 (1973). \url{https://doi.org/10.1007/BF00969911}
 \end{thebibliography}
 \end{document}

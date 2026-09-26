@@ -1,0 +1,80 @@
+\documentclass[11pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathptmx}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\theoremstyle{remark}\newtheorem{remark}[theorem]{Remark}
+\newcommand{\R}{\mathbb R}\newcommand{\Z}{\mathbb Z}
+\title{Exact minimisers for large exponents: working notes}
+\date{}
+\begin{document}\maketitle
+
+\section{An abstract local-uniqueness lemma}
+Let $U=B_{\rho_0}(0)\subset\R^n$ and let $(h_t)_{t\in I}$ be a countable family of $C^2$ functions on $U$. Put
+\[T_\nu(\delta)=\sum_{t\in I}e^{-\nu h_t(\delta)} .\]
+Assume there is a finite \emph{active set} $A\subset I$, $|A|=N$, with $h_t(0)=0$ for $t\in A$, and
+\begin{itemize}
+\item[(H1)] $\|\nabla^2h_t\|\le M$ on $U$ for $t\in A$;
+\item[(H2)] there are $\gamma>0$, $\nu_1$, $C_0$ with $\sum_{t\notin A}\bigl(1+|\nabla h_t|+|\nabla h_t|^2+\|\nabla^2h_t\|\bigr)e^{-\nu h_t}\le C_0e^{-\nu\gamma}$ on $U$ for $\nu\ge\nu_1$;
+\item[(H3)] with $a_t=\nabla h_t(0)$: \ $c:=\min_{|V|=1}\max_{t\in A}(-a_t\cdot V)>0$, i.e.\ $0$ is an interior point of $\operatorname{conv}\{a_t:t\in A\}$.
+\end{itemize}
+Let $\Phi(\zeta)=\sum_{t\in A}e^{-a_t\cdot\zeta}$ on $\R^n$.
+
+\begin{lemma}\label{lem:abstract}
+(i) $\Phi$ is strictly convex and coercive and has a unique minimiser $\zeta^*$.
+(ii) There are $\rho\in(0,\rho_0]$, $\nu_0$ and $C$ such that for every $\nu\ge\nu_0$: $T_\nu$ has exactly one critical point $\delta_\nu$ in $B_\rho$; $\delta_\nu$ is the unique minimiser of $T_\nu$ on $\overline{B_\rho}$, its Hessian is positive definite, and $|\nu\delta_\nu-\zeta^*|\le C/\nu$. Moreover $\partial_sT_\nu(sV)>0$ for $|V|=1$ and $K/\nu\le s\le\rho$, with $K=\frac4c\log\frac{16N(A_{\max}+M\rho)}{c}$, $A_{\max}=\max_A|a_t|$.
+\end{lemma}
+
+\begin{proof}
+(i) By (H3), for every $\zeta\ne0$ some $t$ has $-a_t\cdot\zeta\ge c|\zeta|$, so $\Phi(\zeta)\ge e^{c|\zeta|}$. (H3) also forces the $a_t$ to span $\R^n$ (a vector orthogonal to all of them would give $\max_t(-a_t\cdot V)=0$), so $\nabla^2\Phi=\sum_Ae^{-a_t\cdot\zeta}a_ta_t^{\mathsf T}$ is positive definite.
+
+(ii) Choose $\rho\le\rho_0$ with $M\rho\le c/4$ and $\rho A_{\max}+M\rho^2/2\le\gamma/2$, and write $A'=A_{\max}+M\rho$.
+
+\emph{Step A (annulus).} Let $\delta=sV$, $|V|=1$, $0<s\le\rho$, and $S:=\sum_Ie^{-\nu h_t(\delta)}\nabla h_t(\delta)\cdot V$, so that $\partial_sT_\nu(sV)=-\nu S$. For $t\in A$, Taylor's theorem gives $h_t(sV)=s\,a_t\cdot V+r_t$, $|r_t|\le Ms^2/2$, and $\nabla h_t(sV)\cdot V=a_t\cdot V+r_t'$, $|r_t'|\le Ms$. Let $m=\min_Aa_t\cdot V\le-c$, attained at $t_0$, and split $A=A_1\cup A_2$ with $A_1=\{a_t\cdot V\le m+c/2\}$. For $t\in A_1$, $\nabla h_t\cdot V\le-c/2+Ms\le-c/4$; hence, with $E:=e^{-\nu(sm+Ms^2/2)}\le e^{-\nu h_{t_0}}$,
+\[\textstyle\sum_{A_1}e^{-\nu h_t}\nabla h_t\cdot V\le-\frac c4E .\]
+For $t\in A_2$, $|\nabla h_t\cdot V|\le A'$ and $e^{-\nu h_t}\le e^{-\nu(s(m+c/2)-Ms^2/2)}=Ee^{-\nu(sc/2-Ms^2)}\le Ee^{-\nu sc/4}$, so $|\sum_{A_2}|\le NA'Ee^{-\nu sc/4}\le\frac c{16}E$ once $\nu s\ge K$. The inactive terms contribute at most $C_0e^{-\nu\gamma}\le C_0e^{-\nu\gamma/2}E\le\frac c{16}E$ for $\nu\ge\nu_2:=\max\{\nu_1,\frac2\gamma\log\frac{16C_0}c\}$, because $E\ge e^{-\nu(\rho A_{\max}+M\rho^2/2)}\ge e^{-\nu\gamma/2}$. Altogether $S\le-\frac c8E<0$.
+
+\emph{Step B (inner ball).} Put $K_1=\max\{K,|\zeta^*|+1\}$ and $\Psi_\nu(\zeta)=T_\nu(\zeta/\nu)$ on $B_{K_1}$ (for $\nu\ge K_1/\rho$). Then
+$\nabla\Psi_\nu=-\sum_Ie^{-\nu h_t(\zeta/\nu)}\nabla h_t(\zeta/\nu)$ and $\nabla^2\Psi_\nu=\sum_Ie^{-\nu h_t(\zeta/\nu)}\bigl(\nabla h_t\nabla h_t^{\mathsf T}-\nu^{-1}\nabla^2h_t\bigr)(\zeta/\nu)$. For $t\in A$, $|\nu h_t(\zeta/\nu)-a_t\cdot\zeta|\le MK_1^2/(2\nu)$ and $|\nabla h_t(\zeta/\nu)-a_t|\le MK_1/\nu$; together with (H2) this yields constants $C_1,C_2$ (depending on $K_1,M,N,A_{\max},C_0$) with
+\[\sup_{B_{K_1}}|\nabla\Psi_\nu-\nabla\Phi|\le C_1/\nu,\qquad\sup_{B_{K_1}}\|\nabla^2\Psi_\nu-\nabla^2\Phi\|\le C_2/\nu .\]
+On $B_{K_1}$, $\nabla^2\Phi\ge\lambda:=e^{-A_{\max}K_1}\lambda_{\min}\bigl(\sum_Aa_ta_t^{\mathsf T}\bigr)>0$. Hence for $\nu\ge2C_2/\lambda$, $\Psi_\nu$ is $\lambda/2$-strongly convex on $B_{K_1}$ and has at most one critical point there. Since $\nabla\Phi(\zeta^*)=0$, $|\nabla\Psi_\nu(\zeta^*)|\le C_1/\nu$, and strong convexity gives a critical point $\zeta_\nu$ with $|\zeta_\nu-\zeta^*|\le2C_1/(\lambda\nu)<1$ for $\nu$ large.
+
+\emph{Conclusion.} By Step A every critical point in $B_\rho$ has $|\nu\delta|<K\le K_1$, so $\delta_\nu=\zeta_\nu/\nu$ is the only one. $T_\nu$ attains its minimum on $\overline{B_\rho}$; by Step A it is not attained on $|\delta|=\rho$, so it is attained at an interior critical point, i.e.\ at $\delta_\nu$. Finally $\nabla^2T_\nu(\delta_\nu)=\nu^2\nabla^2\Psi_\nu(\zeta_\nu)\ge\nu^2\lambda/2$.
+\end{proof}
+
+\begin{remark}
+Condition (H3) is a strict max--min (``extremality'') condition: $\min_t h_t$ has a strict local maximum at $0$ with a conical, not quadratic, profile. Lemma~\ref{lem:abstract} says that the smoothed max--min problem $\min T_\nu$ then has, for large $\nu$, a single critical point in a \emph{fixed} neighbourhood, located at $\zeta^*/\nu+O(\nu^{-2})$, where $\zeta^*$ solves the log-sum-exp problem for the active gradients. The fixed size of the neighbourhood is what allows a passage from convergence of minimisers to exact identification.
+\end{remark}
+
+\begin{corollary}\label{cor:global}
+Let $\mathcal X$ be a space of lattices and $E_\nu=\sum_te^{-\nu h_t}$ an energy on $\mathcal X$ such that (a) for all large $\nu$ minimisers exist and every choice of minimisers converges to $L_0$ as $\nu\to\infty$; (b) in an orbifold chart around $L_0$ the hypotheses (H1)--(H3) hold. Then for all large $\nu$ the minimiser $L_\nu$ is unique and corresponds to $\delta_\nu$. If in addition $L_0$ is a critical point of $E_\nu$ for all $\nu$, then $L_\nu=L_0$.
+\end{corollary}
+\begin{proof}
+By (a), $L_\nu$ lies in the chart ball $B_\rho$ for $\nu$ large; it is a critical point there (a finite stabiliser acting on the chart does not create spurious critical points of the invariant function), hence $L_\nu=\delta_\nu$ by the lemma. If $L_0$ is critical, $0$ is a critical point in $B_\rho$, hence $\delta_\nu=0$.
+\end{proof}
+
+\section{Applications to the three-body energy}
+Here $h_t=\log(\pi_t/P_{\max})$ for ordered pairs $t=(x,y)$ of distinct non-zero lattice vectors, $\pi_t=|x||y||x-y|$ at unit covolume, and $T_\nu=P_{\max}^{-\nu}\sum_te^{-\nu h_t}$.
+
+\begin{theorem}[BCC for large exponents]\label{thm:bcc}
+There is $\nu_0$ such that for every $\nu\ge\nu_0$ the body-centred cubic lattice is the unique minimiser of $T_\nu$ among all three-dimensional lattices of unit covolume.
+\end{theorem}
+\begin{proof}
+(a) holds by Theorem~3 of the paper. Chart: Gram matrices $G$ near $G_0$ with $g_{11}=1$, parameters $q=(g_{22},g_{33},g_{12},g_{13},g_{23})$ near $q_0=(1,1,\frac13,\frac13,-\frac13)$; $h_t=\frac12\log(\ell_x\ell_y\ell_{x-y}/\det G)-\log\frac32$ is scale invariant. The active set consists of the 72 ordered pairs belonging to the 36 triangles of Lemma~7 of the paper, (H1) is clear, and (H2) holds with $\gamma=\log\sqrt2-o(1)$ since all other triangle products at $q_0$ are $\ge\frac32\sqrt2$ and $\ell_v(G)\ge(1-\varepsilon)\ell_v(G_0)$ uniformly in $v$ near $q_0$. (H3) is the local lemma of the paper ($\nabla h_t=\nabla f_t/f_t$ with $f_t(q_0)=\frac32$, hull margin $c\ge\frac23\sqrt{27/1400}$ for $f$). Finally BCC is a critical point of $T_\nu$ for every $\nu$: its point group acts on the tangent space $\{X=X^{\mathsf T}:\operatorname{tr}(G_0^{-1}X)=0\}$ of unit-covolume forms without non-zero fixed vectors (the only cubic-invariant quadratic forms are multiples of the identity), and the gradient of the invariant function $T_\nu$ is a fixed vector. Corollary~\ref{cor:global} applies.
+\end{proof}
+
+\begin{theorem}[planar minimisers for large exponents]\label{thm:2d}
+Let $y_\infty=\sqrt{(\sqrt{17}-1)/2}$. There are $\nu_0$ and $c_0>0$ such that for $\nu\ge\nu_0$ the minimiser of $T_\nu$ is unique and is the rectangular lattice $\Lambda_{iy_\nu}$, where
+\[\Bigl|y_\nu-\hat y_\nu\Bigr|\le e^{-c_0\nu},\qquad \Bigl(\tfrac{\hat y_\nu\sqrt{1+\hat y_\nu^2}}2\Bigr)^{\nu}=\frac{4(\hat y_\nu^2-1)}{3(\hat y_\nu^2+1)},\]
+with $\hat y_\nu$ the root near $y_\infty$. In particular
+\[y_\nu=y_\infty-\frac\kappa\nu+O(\nu^{-2}),\qquad\kappa=\frac{y_\infty(y_\infty^2+1)}{2y_\infty^2+1}\,\log\frac{3(y_\infty^2+1)}{4(y_\infty^2-1)}=0.954894963\ldots\]
+Equivalently, the minimiser of $C_{s,s,s}$ is $\tau_s=i\,y_{2s}$.
+\end{theorem}
+\begin{proof}
+(a) is Theorem~2. Chart $\tau=x+iy$ near $iy_\infty$. The active set (Lemma~4 of the paper) consists of the collinear triples along $u$ (6 ordered pairs, $h=\log(2y^{-3/2}/P_*)$) and the 12 right triangles of the four rectangles at $0$ (24 ordered pairs). Their gradients at $iy_\infty$ are $(0,-\beta)$ and $(\pm\alpha,\gamma)$, 12 each, with $\beta=\frac3{2y_\infty}$, $\alpha=\frac1{1+y_\infty^2}$, $\gamma=\frac{y_\infty^2-1}{2y_\infty(y_\infty^2+1)}$; e.g.\ for $(0,1,\tau)$, $\pi^2=|\tau|^2|\tau-1|^2/y^3$. Since $\alpha,\beta,\gamma>0$, $0$ is interior to the hull, so (H3) holds; (H1), (H2) are as before. The lemma gives a unique critical point near $iy_\infty$; as $T_\nu(-\bar\tau)=T_\nu(\tau)$ it lies on the imaginary axis. On the axis all 24 right-triangle terms and all 6 collinear terms coincide, and every other term is smaller by a factor $e^{-\nu\gamma'}$, $\gamma'>0$; so $\partial_yT_\nu=0$ reads $6H_1'e^{-\nu H_1}+24H_2'e^{-\nu H_2}=O(e^{-\nu\gamma'}E)$ with $H_1=\log(2y^{-3/2})$, $H_2=\frac12\log(y+y^{-1})$. Dividing, $\nu(H_2-H_1)=\log(-4H_2'/H_1')+O(e^{-\nu\gamma'})$, which is the displayed equation up to an exponentially small perturbation; as the left side has $y$-derivative of order $\nu$, the root moves by $O(e^{-c_0\nu})$. The expansion follows by linearising at $y_\infty$, where $\frac{y\sqrt{1+y^2}}2=1$.
+\end{proof}
+
+\section{Numerical confirmation}
+The root $\hat y_\nu$ agrees with the numerically computed minimiser of $T_\nu$ (direct summation) to $6\cdot10^{-7}$ at $\nu=20$ and to $10^{-9}$ for $\nu\ge50$; $\nu(y_\infty-y_\nu)=1.109,\,1.006,\,0.975,\,0.963$ at $\nu=20,50,120,300$, and a fit gives $y_\nu=y_\infty-0.95489/\nu-2.319/\nu^2+\dots$ In three dimensions the Hessian of $T_\nu$ at BCC (chart $q$) is positive definite for all tested $\nu\in[4,50]$, with smallest eigenvalue$/T_\nu$ equal to $0.24,0.58,1.66,7.7,55$ at $\nu=4,6,10,20,50$.
+\end{document}
