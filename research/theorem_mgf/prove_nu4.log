@@ -1,0 +1,9 @@
+nu=4  T(i) in [7.582669772074, 7.582670024708]
+  symmetric-zero coefficient c10 enclosure: -7.240e-16 +- 7.579e-07 (set to 0 by symmetry)
+  symmetric-zero coefficient c01 enclosure: -2.039e-14 +- 7.579e-07 (set to 0 by symmetry)
+  symmetric-zero coefficient c11 enclosure: 1.504e-15 +- 6.063e-06 (set to 0 by symmetry)
+  symmetric-zero coefficient c30 enclosure: 2.495e-15 +- 1.238e-05 (set to 0 by symmetry)
+  symmetric-zero coefficient c12 enclosure: -3.673e-15 +- 3.790e-05 (set to 0 by symmetry)
+  c20 >= 0.436880  c02 >= 9.757837  |c21| <= 8.8841  |c03| <= 9.7579
+  local lemma holds for max(|A|,|B|) <= r_loc = 0.00309
+  large-y cut: T(tau) >= y^6 * 0.385044 > T(i) for y > Y0 = 1.64331
