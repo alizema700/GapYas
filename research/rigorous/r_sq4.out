@@ -6,3 +6,4 @@ nu=4 square: T(tau0) in [[7.5826697727982435015547935108770616353 +/- 4.42e-38],
   boxes 200, queue 5, 846s
   boxes 300, queue 5, 1244s
   boxes 400, queue 7, 1630s
+  boxes 500, queue 7, 2010s
