@@ -2,3 +2,4 @@ nu=14 rect: T(tau0) in [[0.18192478571157616270097381666256963761 +/- 4.42e-39],
   coefficients: c20=[2.8338505851 +/- 4.14e-11] c02=[1.410434185 +/- 5.66e-10] c21=[-10.624456202 +/- 4.06e-10] c03=[12.545256253 +/- 7.03e-10] (symmetric ones contain 0)
   local lemma (strong convexity + small gradient, |c01| = 1.616e-08) holds for max(|A|,|B|) <= r_loc = 0.00150
   large-y cut: T >= y^21.000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.343967
+  boxes 100, queue 5, 371s

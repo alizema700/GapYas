@@ -4,3 +4,5 @@ nu=20 rect: T(tau0) in [[0.021213331430070609603482310043850306291 +/- 4.47e-40]
   large-y cut: T >= y^30.000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.315130
   boxes 100, queue 7, 394s
   boxes 400, queue 5, 1490s
+  boxes 500, queue 5, 1850s
+DONE nu=20: all 579 boxes certified in 2101s (rigorous arithmetic) -> the unique global minimiser is rectangular, tau = i y with |y - 1.1941481813| <= r_loc y0
