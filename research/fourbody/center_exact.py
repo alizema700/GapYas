@@ -28,7 +28,13 @@ def run(G, k, target2, label, R=12):
     # completeness: a set containing p has squared product >= q(p) * lam2^(k(k-1)/2 - 1); all points with
     # q(p) <= target2 / lam2^(...) must be in the list (q >= (3/4) max(|m|,|n|)^2 * min eigen-ish, checked crudely)
     bound = target2 / lam2 ** (k * (k - 1) // 2 - 1)
-    outside_min = min(q(v) for v in itertools.product(range(-R - 1, R + 2), repeat=2) if max(abs(v[0]), abs(v[1])) == R + 1)
+    # real minimum of q on the max-norm sphere of radius R+1 (q homogeneous of degree 2): four edges, one-variable minimisers
+    from fractions import Fraction as Fr
+    cand = []
+    for s in (-1, 1):
+        t = max(min(Fr(-s * G[0][1], G[1][1]), 1), -1); cand.append(G[0][0] + 2 * G[0][1] * s * t + G[1][1] * t * t)   # m = s
+        t = max(min(Fr(-s * G[0][1], G[0][0]), 1), -1); cand.append(G[0][0] * t * t + 2 * G[0][1] * s * t + G[1][1])   # n = s
+    outside_min = (R + 1) ** 2 * min(cand)
     assert outside_min > bound, ("enumeration radius too small", outside_min, bound)
     print("%s: min squared product = %s (target %s), attained by %d sets" % (label, best[0], target2, best[1]))
 # hexagonal: Gram [[2,1],[1,2]] has covolume^2 = 3; unit covolume scaling of squared lengths by 1/sqrt(3)

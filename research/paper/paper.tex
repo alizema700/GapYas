@@ -364,6 +364,40 @@ The numerical values of $\lambda_c$ depend on the normalisation of the two terms
 \label{fig:mixed}
 \end{figure}
 
+\section{More bodies and dimension four}\label{sec:kbody}
+The steep-decay mechanism is not special to three bodies. For $k\ge2$ let
+\[E_{k,\nu}(L)=\sum_{p_1,\dots,p_{k-1}}\ \prod_{0\le i<j\le k-1}|p_i-p_j|^{-\nu},\qquad p_0=0,\]
+where the sum runs over $(k-1)$-tuples of distinct non-zero lattice points. Let $Q_k(L)$ be the smallest product of the $\binom k2$ mutual distances of $k$ distinct lattice points. As in Theorem~\ref{thm:limit}, the minimisers of $E_{k,\nu}$ converge to the maximisers of $Q_k$. By Corollary~\ref{cor:global}, they coincide with them for all large $\nu$ whenever the maximiser is unique, satisfies (H3) and is critical by symmetry. For $k=2$ this is the classical packing problem (hexagonal lattice); for $k=3$ it is Theorem~\ref{thm:maxmin}.
+
+\begin{theorem}[computer-assisted]\label{thm:kbody}
+Among planar lattices of unit covolume:
+\begin{itemize}\setlength\itemsep{1pt}
+\item[(a)] $Q_4\le\frac83$, with equality only for the hexagonal lattice;
+\item[(b)] $Q_5\le4\sqrt{10}$, with equality only for the square lattice;
+\item[(c)] $Q_6\le2^{19/2}3^{-7/4}$, with equality only for the hexagonal lattice;
+\item[(d)] every maximiser of $Q_7$ lies in the box $|x-x_7|,|y-y_7|\le10^{-4}$ around $\tau_7=x_7+iy_7=0.194050097+1.248035038\,i$. This box meets none of the symmetry lines $x=0$, $x=\frac12$, $|\tau|=1$ of the fundamental domain, so the maximiser is an oblique lattice.
+\end{itemize}
+Consequently, for all sufficiently large $\nu$ the unique minimiser of $E_{4,\nu}$ and of $E_{6,\nu}$ is the hexagonal lattice, and that of $E_{5,\nu}$ is the square lattice.
+\end{theorem}
+
+\begin{proof}
+For (a)--(c), the collinear $k$-tuple along the shortest vector gives $Q_k\le c_ky^{-k(k-1)/4}$ with $c_k=\prod_{i<j}(j-i)$, which bounds $y$. The rest of the half fundamental domain is covered by a branch and bound in outward-rounded interval arithmetic. It uses, as candidates, all $k$-sets built from the 13--14 shortest vectors, and a local lemma at the centre. The active sets there have gradients whose convex hull contains $0$ with margin $c=1/\sqrt3$, $0.9$ and $1/\sqrt3$, and an interval Hessian bound gives $Q_k<Q_k^*$ in a punctured neighbourhood. This takes 225, 263 and 871 boxes. The value at the centre, $Q_k^*$, is obtained by exhaustive enumeration in exact integer arithmetic, pruned by a rigorous completeness bound: 12, 40 and 36 extremal sets.
+
+For (d) the same branch and bound compares with a rigorous lower bound for $Q_7(\tau_7)$. That bound is obtained by exhaustive enumeration, made complete by a recursive bound: a set containing $p$ has squared product at least $|p|^2\lambda_1^{2(j-2)}$ times the minimum for $j-1$ points.
+
+The consequences follow from Corollary~\ref{cor:global}. (H3) holds at the three centres, since their point groups act absolutely irreducibly (so the sum of the active gradients vanishes) and the active gradients span the tangent space; this rank condition was checked exactly for $k=4$ and numerically, with the margins above, for $k=5,6$.
+\end{proof}
+
+Numerically the maximiser of $Q_7$ is a non-degenerate vertex of the max--min problem: three distinct active gradients surround $0$, with angular gaps below $\pi$. So (H3) holds there, and for large $\nu$ the minimiser of $E_{7,\nu}$ is an oblique lattice close to $\Lambda_{\tau_7}$. For $k=8$ the numerical maximiser is the rhombic lattice $\tau\approx\frac12+1.3067\,i$. The resulting sequence of steep-decay lattices for $k=2,\dots,8$ is
+\[\text{hexagonal},\ \text{rectangular},\ \text{hexagonal},\ \text{square},\ \text{hexagonal},\ \text{oblique},\ \text{rhombic}.\]
+It shows that the pair case is not representative: already for moderate $k$ the optimal lattice need not have any symmetry beyond $\pm1$.
+
+\smallskip\noindent\textbf{Dimension four.} A search for the maximiser of $P=Q_3$ among four-dimensional lattices (sequential linear programming, 80 random starts) returned $D_4$ as the best lattice, with $P(D_4)=2^{3/4}$; the other local maxima have $P=1.6487$ and $1.6358$. At $D_4$ exactly 96 triangles are active, namely the equilateral triangles of roots. An exact rational computation shows that their gradients span the 9-dimensional tangent space. Since $W(D_4)$ acts absolutely irreducibly, (H3) holds. By Lemma~\ref{lem:abstract}, for all large $\nu$ the lattice $D_4$ is therefore a strict local minimiser of $T_\nu$ and the only critical point in a fixed neighbourhood.
+\begin{conjecture}
+$D_4$ is the unique maximiser of $P$ among four-dimensional lattices, and hence the unique minimiser of $T_\nu$ for all large $\nu$.
+\end{conjecture}
+So in dimension four the three-body problem selects the densest lattice, unlike in dimensions two and three. Since $D_4$ is similar to its dual, it is also the four-dimensional analogue of BCC$\,=D_3^*$.
+
 \section{Discussion}\label{sec:discussion}
 A purely three-body repulsion of product type selects different lattices than pair repulsion does. In the plane it penalises the equilateral triangles of the hexagonal lattice once the decay is steep enough. In space it favours BCC, whose smallest triangles are isosceles with one second-neighbour side, over the close-packed FCC and hcp. The steep-decay limits reduce to max--min problems for triangles. The planar one has the closed-form answer of Theorem~\ref{thm:maxmin}; the spatial one we solved by a computer-assisted argument. Through \eqref{eq:mgf} the planar results translate into statements on the minima of the modular graph functions $C_{s,s,s}$.
 

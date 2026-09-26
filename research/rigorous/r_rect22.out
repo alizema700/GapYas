@@ -3,3 +3,5 @@ nu=22 rect: T(tau0) in [[0.010357285335564338741169454109021172417 +/- 4.18e-40]
   local lemma (strong convexity + small gradient, |c01| = 3.229e-09) holds for max(|A|,|B|) <= r_loc = 0.00124
   large-y cut: T >= y^33.000000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.309068
   boxes 100, queue 5, 348s
+  boxes 200, queue 5, 702s
+  boxes 300, queue 5, 1042s
