@@ -1,0 +1,9 @@
+nu=3.5  point hex: T in [9.772342894889, 9.772408884759]
+  symmetric-zero coefficient c10 enclosure: -1.939e-07 +- 1.732e-04 (set to 0 by symmetry)
+  symmetric-zero coefficient c01 enclosure: 1.119e-07 +- 1.732e-04 (set to 0 by symmetry)
+  symmetric-zero coefficient c11 enclosure: -1.210e-07 +- 1.256e-03 (set to 0 by symmetry)
+  symmetric-zero coefficient c30 enclosure: -3.865e-07 +- 2.391e-03 (set to 0 by symmetry)
+  symmetric-zero coefficient c12 enclosure: 4.928e-08 +- 7.346e-03 (set to 0 by symmetry)
+  c20 >= 2.128638  c02 >= 2.128465  |c21| <= 20.2174  |c03| <= 3.9017
+  local lemma holds for max(|A|,|B|) <= r_loc = 0.00719
+  large-y cut: T(tau) >= y^5.25 * 0.555952 > T(i) for y > Y0 = 1.72638
