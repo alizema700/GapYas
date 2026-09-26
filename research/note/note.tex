@@ -29,7 +29,7 @@ In $d=2$ this is, up to normalisation, the two-loop modular graph function $C_{s
 We prove that as $\nu\to\infty$ every family of minimisers of $T_\nu$ converges to the rectangular lattice with aspect ratio $\sqrt{(\sqrt{17}-1)/2}$; in particular neither the hexagonal nor the square lattice is optimal for large $\nu$.
 The proof reduces the limit to a max--min problem for the smallest triangle product of a lattice, which we solve exactly.
 In $d=3$ we prove, by a computer-assisted argument (branch and bound over Minkowski-reduced Gram matrices plus an interval-arithmetic local lemma), that the body-centred cubic lattice is the unique maximiser of the smallest triangle product, so that minimisers of $T_\nu$ converge to BCC.
-We complement this with a numerical phase diagram for finite $\nu$ (hexagonal $\to$ square $\to$ rectangular in $d=2$, with a certified enclosure of the first transition) and with numerical results on hcp and on mixed pair plus three-body energies.
+For finite exponents we prove, again computer-assisted, that $C_{2,2,2}$, $C_{3,3,3}$ and $C_{4,4,4}$ attain their minimum only at $\tau=i$ (square lattice), whereas $C_{1,1,1}$ is minimal at $e^{i\pi/3}$. We complement this with a numerical phase diagram for finite $\nu$ (hexagonal $\to$ square $\to$ rectangular in $d=2$, with a certified enclosure of the first transition) and with numerical results on hcp and on mixed pair plus three-body energies.
 \end{abstract}
 \maketitle
 
@@ -138,6 +138,29 @@ C_{s,s,s}(\tau)=\pi^{-3s}\,T_{2s}(\Lat_\tau),
 \]
 so Theorem~\ref{thm:main} is a statement about the location of the minimum of $C_{s,s,s}$ on the fundamental domain. At $s=1$, Zagier's identity $C_{1,1,1}=E_3+\zeta(3)$ and the minimality of the Epstein zeta function at $\rho$ \cite{Rankin,Cassels,Ennola,Diananda} show that the minimum is at $\rho$ (hexagonal). Theorem~\ref{thm:main} shows that for large $s$ it is near $i y_\infty$. We are not aware of earlier results on the minima of $C_{s,s,s}$ for $s>1$; see the caveat in Section~\ref{sec:limits}.
 
+\section{Finite \texorpdfstring{$\nu$}{nu}: the minimum of \texorpdfstring{$C_{s,s,s}$}{C_sss} for \texorpdfstring{$s=2,3,4$}{s=2,3,4}}\label{sec:finite}
+\begin{theorem}[computer-assisted]\label{thm:sss}
+For $s\in\{2,3,4\}$ the modular graph function $C_{s,s,s}$ attains its minimum over the fundamental domain only at $\tau=i$. Equivalently, for $\nu\in\{4,6,8\}$ the square lattice is the unique minimiser of $T_\nu$ among unit-covolume lattices in $\R^2$. Together with the case $s=1$ (minimum at $\rho$, Section~\ref{sec:mgf}) and Theorem~\ref{thm:main}, the minimiser of $C_{s,s,s}$ is $\rho$ for $s=1$, $i$ for $s=2,3,4$, and tends to $i\,y_\infty$ as $s\to\infty$.
+\end{theorem}
+\noindent\emph{A universal majorant.} Write $\tau=x+iy$, $\ell_v=|m+n\tau|^2/y$ for $v=(m,n)$, so that $T_\nu=\sum\prod_{\text{sides}}\ell^{-s}$. Around $(x_0,y_0)$ put $A=a/y_0$, $B=b/y_0$. A short computation gives
+\[
+\frac{\ell_v(x_0+a,y_0+b)}{\ell_v(x_0,y_0)}=1+\frac{(2\alpha^2-1)B+2\alpha\beta A+\alpha^2(A^2+B^2)}{1+B},
+\]
+with $\alpha^2+\beta^2=1$ depending on $v$. Hence, coefficientwise, $\ell/\ell_0-1\ll\hat\varepsilon:=(A+B+A^2+B^2)/(1-B)$ and every triangle term $t$ satisfies $t/t_0\ll(1-\hat\varepsilon)^{-3s}$, \emph{uniformly in the lattice vectors}. Consequently all Taylor coefficients of $T_\nu$ at $\tau_0$ are bounded by $T_\nu(\tau_0)$ times the coefficients $\hat G_{ij}$ of $(1-\hat\varepsilon)^{-3s}$; this yields explicit remainder bounds and explicit bounds for the contribution of the terms omitted by a finite truncation.
+
+\noindent\emph{Proof outline.} (1) For $y>Y_0$ the collinear triples along the vector $1$ give $T_\nu(\tau)\ge y^{3s}\sum_{j\ne k}(|j||k||j-k|)^{-2s}>T_\nu(i)$. (2) Local lemma: the symmetries $x\mapsto-x$ and $\tau\mapsto1/\bar\tau$ fix $i$ and force $c_{10}=c_{01}=c_{11}=c_{30}=c_{12}=0$ in the Taylor expansion at $i$; with rigorous enclosures of $c_{20},c_{02},c_{21},c_{03}$ and the majorant remainder, $T(i+\delta)-T(i)>0$ for $0<\max(|A|,|B|)\le r_{\rm loc}$. (3) The rest of $[0,\tfrac12]\times[0.8,Y_0]$ is covered by boxes on which the second-order Taylor polynomial at the centre (with rigorous coefficient enclosures) minus the majorant remainder exceeds an upper bound for $T(i)$. Coefficients are computed from cube-truncated sums by direct (non-FFT) convolution with an explicit tail bound and a rounding margin.
+
+\noindent\emph{Data of the three runs} (scripts \texttt{theorem\_mgf/prove\_square\_min.py}): 
+\begin{center}\small
+\begin{tabular}{cccccc}\toprule
+$\nu$ & $T_\nu(i)$ (enclosure) & $c_{20}\ge$ & $c_{02}\ge$ & $r_{\rm loc}$ & boxes\\\midrule
+4 & $[7.5826697721,\,7.5826700248]$ & 0.43688 & 9.75784 & 0.00309 & 531\\
+6 & $[3.2499743121,\,3.2499743128]$ & 4.27194 & 3.57092 & 0.00755 & 307\\
+8 & $[1.5524012124,\,1.5524012128]$ & 5.83081 & 0.46080 & 0.00260 & 385\\\bottomrule
+\end{tabular}\end{center}
+The small coefficient $c_{02}$ at $\nu=8$ reflects the nearby loss of stability of the square lattice at $\nu_2\approx8.606$.
+The status of the floating-point parts is the same as in Remark after Theorem~\ref{thm:3d}: sums are sequential double-precision sums with explicit margins, not interval arithmetic.
+
 \section{Numerical phase diagram for finite \texorpdfstring{$\nu$}{nu}}\label{sec:numerics}
 The following are numerical observations, not theorems. $T_\nu$ was evaluated by cube-truncated direct summation with an FFT convolution and Richardson extrapolation in the cut-off (independent of \cite{BuchheitRupp}); agreement with the library of \cite{BuchheitRupp} is better than $2\cdot10^{-10}$ relative on 55 test cases, and the values at $\nu=3$ reproduce those of \cite{RoblesNavarro} after conversion to unit covolume.
 \begin{itemize}
@@ -184,7 +207,7 @@ BCC is the best lattice found by a global search over all Bravais lattices for e
 For mixed energies $E_\lambda=Z_\nu+\lambda T_\nu$ (pair Riesz energy $Z_\nu=\sum_{x\ne0}|x|^{-\nu}$ plus three-body term, unit density) the optimum among FCC, BCC, hcp$(c/a)$ and the Bain family jumps directly from FCC to BCC at a critical ratio $\lambda_c(\nu)$ (e.g.\ $\lambda_c\approx0.05$, $0.07$, $0.11$, $0.32$ for $\nu=3.5,4.5,6,9$); hcp is never optimal.
 
 \section{Limitations}\label{sec:limits}
-(i) $T_\nu$ is a model energy; physically relevant three-body dispersion has an angular factor and is always accompanied by pair terms. (ii) The theorems concern Bravais lattices; hcp was only compared numerically. (iii) Apart from Theorems~\ref{thm:main}, \ref{thm:maxmin}, \ref{thm:3d} and the certified enclosure of $\nu^*$, all statements are numerical; in particular the finite-$\nu$ phase diagrams are conjectural. (iv) Our literature search for prior results on minima of $C_{s,s,s}$ and on minimisers of $T_\nu$ was not exhaustive.
+(i) $T_\nu$ is a model energy; physically relevant three-body dispersion has an angular factor and is always accompanied by pair terms. (ii) The theorems concern Bravais lattices; hcp was only compared numerically. (iii) Apart from Theorems~\ref{thm:main}, \ref{thm:maxmin}, \ref{thm:3d}, \ref{thm:sss} and the certified enclosure of $\nu^*$, all statements are numerical; in particular the finite-$\nu$ phase diagrams are conjectural. (iv) The computer-assisted parts use double precision with explicit safety margins rather than interval arithmetic throughout. (v) Our literature search for prior results on minima of $C_{s,s,s}$ and on minimisers of $T_\nu$ was not exhaustive.
 
 \begin{thebibliography}{99}
 \bibitem{Rankin} R.\,A.~Rankin, A minimum problem for the Epstein zeta-function, Proc. Glasgow Math. Assoc. 1 (1953).

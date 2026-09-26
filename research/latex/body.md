@@ -1,7 +1,9 @@
 
-**Kurzfazit.** Die stärkste neue Idee lässt sich mit der heutigen GZL sofort starten: ein **Atlas optimaler Gitter für Mehrkörper-Potenzgesetzenergien**. Die Dreikörper-Riesz-Energie eines Gitters ist exakt eine Dreiecks-Graph-Zetafunktion. Eigene Rechnungen, inzwischen mit einer von GZL unabhängigen Referenzimplementierung nachgeprüft (Abschnitt 7), zeigen: In 2D springt das Optimum bei **ν\* = 3,9183649026 in einem Übergang erster Ordnung vom Hexagonal- zum Quadratgitter** und geht bei **ν₂ ≈ 8,606 kontinuierlich in ein Rechteckgitter** über. In 3D ist **BCC bei allen untersuchten ν das beste gefundene Gitter**, und FCC wird ab ν ≈ 3,752 instabil. Eine gezielte Literaturprüfung hat für den 2D-Phasenverlauf, die Minima der zugehörigen modularen Graphfunktionen und das globale 3D-Ergebnis **keine Vorarbeit gefunden** (Abschnitt 7.6). Das ist die Gegenrichtung zum gerade beanspruchten Beweis, dass für Zweikörperenergien FCC optimal ist. Den größten wissenschaftlichen Hebel hat eine **deterministische Hochtemperaturreihe für klassische langreichweitige Ising-, O(n)- und Perkolationsmodelle**. Deren Einbettungssummen sind genau die Objekte, die GZL berechnet. Im laufenden Streit um die Sak-Grenze (σ\* = 2 oder 2 − η) wäre sie die erste Stimme, die nicht auf Monte Carlo beruht. Am nächsten am Experiment liegt eine **Simulator-Material-Zwillingsstudie**: Dispersion, Gap und kritischer Punkt im thermodynamischen Limes, mit vollem van-der-Waals- bzw. Dipolschwanz, für die 256-Qubit-Simulation von TmMgGaO₄ und für NaTmSe₂. Hier ist das Scoop-Risiko hoch, weil die GZL-Autoren Rydberg-Arrays selbst als Ziel nennen. Die überraschendste Brücke: **Planare modulare Graphfunktionen der Stringtheorie sind exakt GZL-Graph-Zetas des dualen Graphen.** Das ist an der Zagier-Identität und an C₂,₂,₁ numerisch auf 10⁻¹⁴ bis 10⁻¹⁵ bestätigt (Abschnitt 7).
+> **Hinweis zur Einordnung (Stand 26.09.2026).** Dies ist der breite Recherchebericht, der die Ideen gesammelt hat. Die weitergeführte Forschung zu Idee 1 steht in einem eigenen, fokussierten Dokument (`research/reports/Dreikörper-Gitterenergie – Ergebnisse.pdf`) und in einer englischen Note (`research/note/`). Nach einer externen Kritik wurden hier Überverkaufungen korrigiert. Die 19 Ideen sind Rohmaterial und nicht gleichwertig geprüft.
 
-Kennzeichnung im ganzen Bericht: **[belegt]** heißt, es steht in einer zitierten Quelle. **[abgeleitet]** ist eine Schlussfolgerung aus belegten Fakten. **[spekulativ]** muss erst geprüft werden. **[Pilot]** markiert eigene, **nicht begutachtete** Rechnungen eines Recherche-Agenten mit GZL 1.0.0 und epsteinlib 0.6.2. **[nachgeprüft]** heißt: mit zwei unabhängigen Verfahren übereinstimmend berechnet (Abschnitt 7, Skripte in `research/verification/`). Die zugehörigen Skripte liegen unter `/home/user/GapYas/research/pilots/` (`mgf_test.py`, `mgf_test2.py`, `opt_test.py`, `opt2.py`, `opt3.py`). `mgf_test2.py` lädt `mgf_test.py` über einen relativen Pfad und muss deshalb aus diesem Verzeichnis gestartet werden.
+**Kurzfazit (korrigiert).** Die tragfähigste Idee ist Idee 1: die Frage, welches Gitter eine **reine Dreikörper-Potenzgesetzenergie** T_ν = Σ'|x|^{−ν}|y|^{−ν}|x−y|^{−ν} bei fester Dichte minimiert. Das ist eine **Modellenergie**, kein Material: Echte Dreikörperkräfte (ATM) haben einen Winkelfaktor und treten immer zusammen mit Paarkräften auf. Die Aussage „BCC schlägt FCC“ gilt daher nur für dieses Modell und steht **nicht** im Widerspruch zu Sätzen über Paarenergien. Numerisch, und nachgeprüft (Abschnitt 7), durchläuft das 2D-Optimum hexagonal → Quadrat (ν\* = 3,9183649026) → Rechteck (ν₂ ≈ 8,606). Im Limes ν → ∞ ist inzwischen **bewiesen**, dass das Optimum gegen das Rechteck mit Seitenverhältnis √((√17 − 1)/2) läuft. Dass Hexagon und Quadrat kritische Punkte sind, ist dagegen geschenkt (Symmetrie-Fixpunkte). Dass die 2D-Summe eine modulare Graphfunktion C_{s,s,s} ist, ist **per Konstruktion bekannt** und kein Befund; neu ist nur die Frage nach ihrem Minimum. Die Neuheit ist durch Literaturprüfungen gestützt, aber nicht garantiert. Das **Scoop-Risiko ist hoch**, weil die Gruppe Buchheit/Schwerdtfeger genau diese Funktion definiert hat und Arbeit zur Mehrkörper-Stabilität von Kristallgittern ankündigt. Die übrigen Ideen (Reihenentwicklungen, Quantensimulatoren u. a.) sind unverändert Vorschläge.
+
+Kennzeichnung im ganzen Bericht: **[belegt]** heißt, es steht in einer zitierten Quelle. **[abgeleitet]** ist eine Schlussfolgerung aus belegten Fakten. **[spekulativ]** muss erst geprüft werden. **[Pilot]** markiert eigene, **nicht begutachtete** Rechnungen eines Recherche-Agenten mit GZL 1.0.0 und epsteinlib 0.6.2. **[nachgeprüft]** heißt: mit zwei unabhängigen Verfahren übereinstimmend berechnet (Abschnitt 7, Skripte in `research/verification/`). Die zugehörigen Skripte liegen unter `research/pilots/` (`mgf_test.py`, `mgf_test2.py`, `opt_test.py`, `opt2.py`, `opt3.py`). `mgf_test2.py` lädt `mgf_test.py` über einen relativen Pfad und muss deshalb aus diesem Verzeichnis gestartet werden.
 
 ---
 
@@ -59,7 +61,7 @@ Im Umfeld der Autoren liegen allerdings ATM-Energien entlang des Bain-Pfads ([ar
 
 | # | Idee | Spur | Neuheit | Passung | Hebel | Machbarkeit | Wow | Anschluss | Σ | Scoop |
 |---|---|---|---|---|---|---|---|---|---|---|
-| 1 | Optimale Gitter für Mehrkörper-Potenzgesetzenergien | B | 5 | 5 | 4 | 5 | 5 | 4 | **28** | mittel |
+| 1 | Optimale Gitter für Mehrkörper-Potenzgesetzenergien | B | 5 | 5 | 4 | 5 | 5 | 4 | **28** | **hoch** |
 | 2 | Klassische LR-Hochtemperatur- und Perkolationsreihen gegen den Sak-Streit | B | 4 | 3 | 4 | 2 | 3 | 5 | **21** | mittel |
 | 3 | Modulare Graphfunktionen als duale Graph-Zetas | B | 5 | 3 | 2 | 4 | 4 | 3 | **21** | gering |
 | 4 | Simulator-Material-Zwillinge: Rydberg-vdW und Tm-Dreiecksmagnete | A | 3 | 4 | 4 | 4 | 5 | 4 | **24** | **hoch** |
@@ -135,7 +137,7 @@ In 3D (nur FCC, BCC und SC verglichen, ~28 s pro Satz) liegt **BCC bei allen get
 3. ATM enthält pro Kante Exponenten ν ∈ {5, 3, 1, −1}, also ν ≤ d. **Das lehnt GZL 1.0.0 für Nicht-Brücken ab.** Die Fortsetzung existiert für Zyklen im Buchheit-Busse-Verfahren, ist in GZL aber nicht freigelegt.
 4. Die Zahlen sind inzwischen unabhängig nachgerechnet (Abschnitt 7), aber nicht begutachtet. Die 3D-Suche mit 16 Starts ist kein Beweis des globalen Minimums.
 
-**Scoop-Risiko: mittel.** Die GZL-Roadmap nennt Gitteroptimierung nicht, aber der Autorenkreis arbeitet an ATM-Energien auf dem Bain-Pfad. Eine frühe Kontaktaufnahme mit Buchheit und Schwerdtfeger könnte aus dem Risiko eine Kooperation machen.
+**Scoop-Risiko: hoch (korrigiert).** Die GZL-Roadmap nennt Gitteroptimierung nicht, aber der Autorenkreis hat genau diese Funktion definiert, arbeitet an ATM-Energien auf dem Bain-Pfad und kündigt Arbeit zur Mehrkörper-Stabilität an. Eine frühe Kontaktaufnahme mit Buchheit und Schwerdtfeger könnte aus dem Risiko eine Kooperation machen.
 
 **Schlüsselpapers.**
 
@@ -538,7 +540,7 @@ Zwei aktuelle Arbeiten liefern schließlich die **Theorie dafür, warum der voll
 
 Idee 2 ist der natürliche zweite, langfristige Strang mit dem größten Hebel. Die Infrastruktur für Graphenenumeration und Reihenanalyse, die man dafür baut, nützt später auch den Ideen 4 und 5.
 
-**Schritt 1: Piloten härten (Woche 1–2). Erledigt, siehe Abschnitt 7.** In `/home/user/GapYas/research/pilots/` `opt_test.py`, `opt2.py` und `opt3.py` erneut laufen lassen (`mgf_test2.py` nur aus diesem Verzeichnis). Dann ν\* ≈ 3,91836 und die Barriere bei ~72° mit variiertem n_points, mit `evaluate_graph` statt `zeta_circle` und mit Brute-Force-Summen bei drei ν-Werten absichern. Die Fundamentaldomäne bis Im τ ≈ 5 und mit dichteren Starts absuchen. Ergebnis: eine belastbare 2D-Karte E₃(τ; ν).
+**Schritt 1: Piloten härten (Woche 1–2). Erledigt, siehe Abschnitt 7.** In `research/pilots/` `opt_test.py`, `opt2.py` und `opt3.py` erneut laufen lassen (`mgf_test2.py` nur aus diesem Verzeichnis). Dann ν\* ≈ 3,91836 und die Barriere bei ~72° mit variiertem n_points, mit `evaluate_graph` statt `zeta_circle` und mit Brute-Force-Summen bei drei ν-Werten absichern. Die Fundamentaldomäne bis Im τ ≈ 5 und mit dichteren Starts absuchen. Ergebnis: eine belastbare 2D-Karte E₃(τ; ν).
 
 **Schritt 2: globale 3D-Suche (Woche 3–8).** Die 3D-Gitter mit Einheitsvolumen über reduzierte Gram-Matrizen parametrisieren (5 Parameter) und die Dreiecks-Zeta für ν ∈ [3,2; 12] global minimieren. Ziel ist, festzustellen, ob BCC das globale Minimum ist oder ob ein anderes Gitter gewinnt. Parallel C_{s,s,s}(τ) für reelle s gegen die Laplace-Gleichungen der ganzzahligen Fälle prüfen (Brücke zu Idee 3).
 
@@ -658,7 +660,7 @@ Zwei unabhängige Such-Agenten haben die Mathematik- und die Physik/Chemie-Liter
 
 **Software und Dokumentation**: [GZL GitHub (README)](https://github.com/graph-zeta/gzl), [DOCUMENTATION.md](https://github.com/graph-zeta/gzl/blob/main/DOCUMENTATION.md), [gzl auf PyPI](https://pypi.org/project/gzl/), [epsteinlib auf PyPI](https://pypi.org/project/epsteinlib/).
 
-**Eigene Pilotrechnungen (nicht begutachtet)**: `/home/user/GapYas/research/pilots/`:
+**Eigene Pilotrechnungen (nicht begutachtet)**: `research/pilots/`:
 
 - `mgf_test.py`: C₂,₂,₁- und Zagier-Test mit ε-Verschiebung;
 - `mgf_test2.py`: Richardson-Extrapolation und tetraedrische K₄-MGF;

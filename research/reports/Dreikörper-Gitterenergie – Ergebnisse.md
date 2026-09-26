@@ -8,6 +8,8 @@ bei fester Dichte minimiert. Das ist eine **mathematische Modellenergie** und be
 - In 2D laufen die Minimierer gegen ein Rechteckgitter mit Seitenverhältnis √((√17 − 1)/2) ≈ 1,2496. Der Beweis ist vollständig und von Hand.
 - In 3D laufen sie gegen BCC. Der Beweis ist computergestützt.
 
+Außerdem ist für **endliches ν computergestützt bewiesen**, dass C₂,₂,₂, C₃,₃,₃ und C₄,₄,₄ ihr Minimum genau beim Quadratgitter τ = i haben (ν = 4, 6, 8). C₁,₁,₁ ist dagegen beim Hexagon minimal (klassisch).
+
 Dazu kommen für endliches ν ein numerisches 2D-Phasendiagramm mit Fehlerbalken (hexagonal → Quadrat → Rechteck) und ein zertifizierter Einschluss des ersten Übergangs. Außerdem gibt es numerische Ergebnisse zu hcp, zu gemischten Energien aus Paar- und Dreikörperterm und zu ungleichen Exponenten.
 
 ## 1. Einordnung: Was dieses Dokument behauptet und was nicht
@@ -24,6 +26,7 @@ Dazu kommen für endliches ν ein numerisches 2D-Phasendiagramm mit Fehlerbalken
 | 2D: max. kleinstes Dreiecksprodukt P(Λ) ist P\* = 2((1+√17)/8)^{3/4}, nur für das Rechteck mit Seitenverhältnis √((√17−1)/2) | **bewiesen** (Satz 1) |
 | 2D: Minimierer von T_ν → dieses Rechteck für ν → ∞; ebenso das Minimum von C_{s,s,s} für s → ∞ | **bewiesen** (Satz 2) |
 | 3D: max. P(Λ) = 3/2, nur für BCC; Minimierer von T_ν → BCC für ν → ∞ | **computergestützt bewiesen** (Satz 3) |
+| 2D: C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ haben ihr globales Minimum nur bei τ = i (Quadrat) | **computergestützt bewiesen** (Satz 4) |
 | 2D: Hexagon und Quadrat tauschen bei ν̂ ∈ (3,918364; 3,918366) die Reihenfolge | **zertifiziert** (explizite Fehlerschranken) |
 | 2D: global optimal ist hexagonal für 4/3 < ν < 3,91836, Quadrat bis ν₂ = 8,6063 ± 0,0005, danach Rechteck | numerisch, mit Fehlerbalken (Vermutung) |
 | 2D: beide Gitter lokal stabil für 3,80632 < ν < 4,27848 (Übergang erster Ordnung) | numerisch, Fehler ≤ 6·10⁻⁵ |
@@ -86,7 +89,34 @@ Zum Vergleich: P(FCC) = P(SC) = P(hcp) = √2 ≈ 1,414.
 - In 1200 Stichproben lagen die Box-Schranken nie unter dem echten Wert.
 - Mit dem falschen Ziel 1,49 scheitert der Beweiser wie erwartet.
 
-## 5. Endliches ν in 2D (Numerik mit Fehlerangaben)
+## 5. Satz 4: endliches ν – das Minimum von C₂,₂,₂, C₃,₃,₃, C₄,₄,₄
+
+**Satz 4.** Für s = 2, 3, 4 nimmt die modulare Graphfunktion C_{s,s,s}(τ) ihr Minimum auf der Fundamentaldomäne nur bei τ = i an. Gleichwertig: Für ν = 4, 6, 8 ist das Quadratgitter der einzige Minimierer von T_ν.
+
+Zusammen mit dem klassischen Fall s = 1 (Minimum beim Hexagon) und Satz 2 ergibt sich:
+- s = 1: Minimum beim Hexagon;
+- s = 2, 3, 4: Minimum beim Quadrat;
+- s → ∞: Minimum gegen das Rechteck mit Seitenverhältnis 1,2496.
+
+**Die Idee, die den Beweis handhabbar macht: eine universelle Majorante.**
+- Schreibt man die quadrierte Seitenlänge eines Gittervektors in τ-Koordinaten, dann ist ihre relative Änderung koeffizientenweise durch eine einzige Reihe ε̂(A,B) = (A + B + A² + B²)/(1 − B) beschränkt, für **jeden** Gittervektor.
+- Daher sind alle Taylor-Koeffizienten von T durch T(τ₀) mal den Koeffizienten von (1 − ε̂)^{−3s} beschränkt.
+- Das liefert explizite Restglieder und explizite Schranken für die abgeschnittenen Summanden.
+
+**Beweisaufbau.**
+1. **Großes Im τ:** Für Im τ > Y₀ ist T schon wegen der kollinearen Tripel größer als T(i).
+2. **Lokales Lemma bei i:** Die Symmetrien x ↦ −x und τ ↦ 1/τ̄ lassen i fest und erzwingen, dass die Taylor-Koeffizienten c₁₀, c₀₁, c₁₁, c₃₀, c₁₂ verschwinden. Mit streng eingeschlossenen c₂₀, c₀₂, c₂₁, c₀₃ und der Majorante folgt T > T(i) in einer Box um i.
+3. **Branch-and-Bound über den Rest:** Taylor-Entwicklung zweiter Ordnung am Boxmittelpunkt mit streng eingeschlossenen Koeffizienten, minus Majoranten-Restglied, liegt über T(i). Die Koeffizienten stammen aus direkten Faltungen ohne FFT, mit expliziter Schranke für den abgeschnittenen Rest und Rundungsmarge.
+
+| ν | T(i) eingeschlossen in | c₂₀ ≥ | c₀₂ ≥ | Radius lokales Lemma | Boxen |
+|---|---|---|---|---|---|
+| 4 | [7,5826697721; 7,5826700248] | 0,43688 | 9,75784 | 0,0031 | 531 |
+| 6 | [3,2499743121; 3,2499743128] | 4,27194 | 3,57092 | 0,0076 | 307 |
+| 8 | [1,5524012124; 1,5524012128] | 5,83081 | 0,46080 | 0,0026 | 385 |
+
+Das kleine c₀₂ bei ν = 8 zeigt die Nähe des Übergangs zum Rechteck bei ν₂ ≈ 8,606. **Status:** wie bei Satz 3. Die Rechnung läuft in doppelter Genauigkeit mit expliziten Margen, nicht vollständig in Intervallarithmetik. Skripte: `research/theorem_mgf/`.
+
+## 6. Endliches ν in 2D (Numerik mit Fehlerangaben)
 
 Die Rechnungen verwenden eine eigene Referenzsumme ohne GZL-Code. Die Übereinstimmung mit GZL liegt bei 55 Testfällen unter 2·10⁻¹⁰, und die Werte bei ν = 3 stimmen mit arXiv:2504.07338 überein.
 
@@ -107,14 +137,14 @@ Die Rechnungen verwenden eine eigene Referenzsumme ohne GZL-Code. Die Übereinst
 
 **Vermutung.** In 2D ist der Minimierer hexagonal für 4/3 < ν < ν\*, quadratisch für ν\* < ν ≤ ν₂ und rechteckig mit wachsendem Seitenverhältnis für ν > ν₂.
 
-## 6. Endliches ν in 3D (Numerik)
+## 7. Endliches ν in 3D (Numerik)
 
-- **Globale Suche über alle Bravais-Gitter:** 67 Starts pro ν, siehe `research/extended/`. Ergebnisse in Abschnitt 9.
+- **Globale Suche über alle Bravais-Gitter:** 67 Starts pro ν (FCC, BCC, SC und 64 zufällige), Nelder-Mead mit genauer Nachberechnung (`research/extended/e1_3d_search.py`). Für ν = 3,2; 3,5; 4; 4,5; 6 ist das beste gefundene Gitter jedes Mal BCC, auf 10⁻⁹ relativ. 87–100 % aller Starts laufen nach BCC. Weitere ν-Werte laufen noch; sie werden in `research/extended/results/` ergänzt.
 - **Kleine ν (2,2 bis 2,8):** BCC < FCC < SC, stabil über zwei Abschneide-Sätze.
 - **FCC-Instabilität:** Die Krümmung entlang des Bain-Pfads wechselt bei ν_c = 3,7521 ± 0,0001 das Vorzeichen. Der Fehlerbalken ist die Streuung über drei Schrittweiten und zwei Abschneide-Sätze. Die instabile Richtung zeigt zu BCC.
 - **hcp:** Über c/a ∈ [1,45; 1,85] optimiert liegt hcp bei allen getesteten ν knapp über FCC, zum Beispiel 17,9724 gegenüber 17,9624 bei ν = 4,5, mit BCC bei 17,7406.
 
-## 7. Gemischte Energien: Paar- plus Dreikörperterm
+## 8. Gemischte Energien: Paar- plus Dreikörperterm
 
 E_λ = Z_ν + λ · T_ν mit der Paarenergie Z_ν = Σ'|x|^{−ν} (gleicher Abfall pro Bindung) bei fester Dichte. Z_ν wurde exakt mit epsteinlib berechnet.
 
@@ -130,7 +160,7 @@ E_λ = Z_ν + λ · T_ν mit der Paarenergie Z_ν = Σ'|x|^{−ν} (gleicher Abf
 - In 2D gab es auf dem Gitter der Fundamentaldomäne kein Zwischengitter.
 - Die Kandidatenmenge in 3D ist FCC, BCC, hcp(c/a) und die Bain-Familie. Eine globale Suche für gemischte Energien steht noch aus.
 
-## 8. Ungleiche Exponenten C_{a,a,b}
+## 9. Ungleiche Exponenten C_{a,a,b}
 
 Gesucht wurde der globale Minimierer von Σ' |x|^{−ν}|y|^{−ν}|x−y|^{−μ} über der ganzen Fundamentaldomäne, auf einem Gitter ν, μ ∈ [2,5; 12] mit Schrittweite 0,5. Das ist bis auf Normierung C_{ν/2, ν/2, μ/2}. Aus der Kurve im Fall gleicher Exponenten wird damit eine Phasenfläche:
 - **Hexagonal** ist optimal, wenn alle Exponenten klein sind (ν ≲ 3,5) oder wenn einer deutlich kleiner ist als die anderen.
@@ -144,10 +174,6 @@ Die Auflösung ist 0,5 in beiden Richtungen; die Grenzen sind entsprechend grob.
 
 ![Kritisches Verhältnis λ_c = c₃/c₂ für Paar- plus Dreikörperenergie.](../extended/figures/fig_e4_lambda_c.png)
 
-## 9. Ergänzende Läufe
-
-ERGAENZUNG_PLATZHALTER
-
 ## 10. Neuheit
 
 Drei Literaturprüfungen liefen über KI-Agenten: nach Stichworten, als Volltextsuche und Autor für Autor (Bétermin, Petrache, Faulhuber, Stefanelli/Friedrich/Kreutz, Luo–Wei, Cohn, Bilyk, Buchheit/Schwerdtfeger). Keine fand die Sätze 1–3 oder das Phasendiagramm. Am nächsten liegen:
@@ -159,7 +185,7 @@ Die Einschätzung der Agenten ist 85–90 % für Satz 1/2 und etwa 65 % für die
 
 ## 11. Grenzen und nächste Schritte
 
-- Für endliches ν gibt es **keinen Satz** außer dem zertifizierten Einschluss von ν\*. Ein Beweis, dass C_{2,2,2}, C_{3,3,3} und C_{4,4,4} ihr Minimum bei τ = i haben, wäre der nächste echte Schritt. Das ginge etwa über einen Branch-and-Bound wie in 3D, dann mit Fehlerschranken für die unendlichen Summen.
+- Für endliches ν sind jetzt die Fälle ν = 4, 6, 8 bewiesen (Satz 4) und ν\* ist zertifiziert eingeschlossen. Offen bleibt das vollständige Phasendiagramm, etwa dass das Hexagon für **alle** ν < ν\* optimal ist. Mit demselben Verfahren lassen sich weitere einzelne ν-Werte beweisen, ein Kontinuum aber nur mit zusätzlicher Arbeit.
 - Der Branch-and-Bound in 3D sollte noch vollständig in Intervallarithmetik laufen.
 - Die physikalisch relevante Frage mit Winkelfaktor (ATM) ist nicht behandelt.
 
@@ -168,6 +194,7 @@ Die Einschätzung der Agenten ist 85–90 % für Satz 1/2 und etwa 65 % für die
 Alle Pfade sind relativ zum Repository:
 - `research/verification/`: Referenzsumme und Nachprüfung
 - `research/theorem/`: 2D-Satz und zertifiziertes ν\*
-- `research/theorem3d/`: lokales Lemma, Branch-and-Bound und Tests
+- `research/theorem3d/`: lokales Lemma, Branch-and-Bound und Tests (Satz 3)
+- `research/theorem_mgf/`: Majorante, Taylor-Jets und Beweis für C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ (Satz 4)
 - `research/extended/`: 3D-Suche, Fehlerbalken, hcp, gemischte Energien, ungleiche Exponenten, kleine ν
 - `research/note/`: englische Note mit allen Beweisen

@@ -12,6 +12,8 @@ bei fester Dichte minimiert. Das ist eine \textbf{mathematische Modellenergie} u
   In 3D laufen sie gegen BCC. Der Beweis ist computergestützt.
 \end{itemize}
 
+Außerdem ist für \textbf{endliches ν computergestützt bewiesen}, dass C₂,₂,₂, C₃,₃,₃ und C₄,₄,₄ ihr Minimum genau beim Quadratgitter τ = i haben (ν = 4, 6, 8). C₁,₁,₁ ist dagegen beim Hexagon minimal (klassisch).
+
 Dazu kommen für endliches ν ein numerisches 2D-Phasendiagramm mit Fehlerbalken (hexagonal → Quadrat → Rechteck) und ein zertifizierter Einschluss des ersten Übergangs. Außerdem gibt es numerische Ergebnisse zu hcp, zu gemischten Energien aus Paar- und Dreikörperterm und zu ungleichen Exponenten.
 
 \section{Einordnung: Was dieses Dokument behauptet und was nicht}
@@ -46,6 +48,7 @@ Status
 2D: max. kleinstes Dreiecksprodukt P(Λ) ist P* = 2((1+√17)/8)\textsuperscript{3/4}, nur für das Rechteck mit Seitenverhältnis √((√17−1)/2) & \textbf{bewiesen} (Satz 1) \\
 2D: Minimierer von T\_ν → dieses Rechteck für ν → ∞; ebenso das Minimum von C\textsubscript{s,s,s} für s → ∞ & \textbf{bewiesen} (Satz 2) \\
 3D: max. P(Λ) = 3/2, nur für BCC; Minimierer von T\_ν → BCC für ν → ∞ & \textbf{computergestützt bewiesen} (Satz 3) \\
+2D: C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ haben ihr globales Minimum nur bei τ = i (Quadrat) & \textbf{computergestützt bewiesen} (Satz 4) \\
 2D: Hexagon und Quadrat tauschen bei ν̂ ∈ (3,918364; 3,918366) die Reihenfolge & \textbf{zertifiziert} (explizite Fehlerschranken) \\
 2D: global optimal ist hexagonal für 4/3 \textless{} ν \textless{} 3,91836, Quadrat bis ν₂ = 8,6063 ± 0,0005, danach Rechteck & numerisch, mit Fehlerbalken (Vermutung) \\
 2D: beide Gitter lokal stabil für 3,80632 \textless{} ν \textless{} 4,27848 (Übergang erster Ordnung) & numerisch, Fehler ≤ 6·10⁻⁵ \\
@@ -177,6 +180,79 @@ Zum Vergleich: P(FCC) = P(SC) = P(hcp) = √2 ≈ 1,414.
   Mit dem falschen Ziel 1,49 scheitert der Beweiser wie erwartet.
 \end{itemize}
 
+\section{Satz 4: endliches ν -- das Minimum von C₂,₂,₂, C₃,₃,₃, C₄,₄,₄}
+
+\textbf{Satz 4.} Für s = 2, 3, 4 nimmt die modulare Graphfunktion C\textsubscript{s,s,s}(τ) ihr Minimum auf der Fundamentaldomäne nur bei τ = i an. Gleichwertig: Für ν = 4, 6, 8 ist das Quadratgitter der einzige Minimierer von T\_ν.
+
+Zusammen mit dem klassischen Fall s = 1 (Minimum beim Hexagon) und Satz 2 ergibt sich:
+
+\begin{itemize}
+\tightlist
+\item
+  s = 1: Minimum beim Hexagon;
+\item
+  s = 2, 3, 4: Minimum beim Quadrat;
+\item
+  s → ∞: Minimum gegen das Rechteck mit Seitenverhältnis 1,2496.
+\end{itemize}
+
+\textbf{Die Idee, die den Beweis handhabbar macht: eine universelle Majorante.}
+
+\begin{itemize}
+\tightlist
+\item
+  Schreibt man die quadrierte Seitenlänge eines Gittervektors in τ-Koordinaten, dann ist ihre relative Änderung koeffizientenweise durch eine einzige Reihe ε̂(A,B) = (A + B + A² + B²)/(1 − B) beschränkt, für \textbf{jeden} Gittervektor.
+\item
+  Daher sind alle Taylor-Koeffizienten von T durch T(τ₀) mal den Koeffizienten von (1 − ε̂)\textsuperscript{−3s} beschränkt.
+\item
+  Das liefert explizite Restglieder und explizite Schranken für die abgeschnittenen Summanden.
+\end{itemize}
+
+\textbf{Beweisaufbau.}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Großes Im τ:} Für Im τ \textgreater{} Y₀ ist T schon wegen der kollinearen Tripel größer als T(i).
+\item
+  \textbf{Lokales Lemma bei i:} Die Symmetrien x ↦ −x und τ ↦ 1/τ̄ lassen i fest und erzwingen, dass die Taylor-Koeffizienten c₁₀, c₀₁, c₁₁, c₃₀, c₁₂ verschwinden. Mit streng eingeschlossenen c₂₀, c₀₂, c₂₁, c₀₃ und der Majorante folgt T \textgreater{} T(i) in einer Box um i.
+\item
+  \textbf{Branch-and-Bound über den Rest:} Taylor-Entwicklung zweiter Ordnung am Boxmittelpunkt mit streng eingeschlossenen Koeffizienten, minus Majoranten-Restglied, liegt über T(i). Die Koeffizienten stammen aus direkten Faltungen ohne FFT, mit expliziter Schranke für den abgeschnittenen Rest und Rundungsmarge.
+\end{enumerate}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+ν
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+T(i) eingeschlossen in
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+c₂₀ ≥
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+c₀₂ ≥
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Radius lokales Lemma
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Boxen
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+4 & {[}7,5826697721; 7,5826700248{]} & 0,43688 & 9,75784 & 0,0031 & 531 \\
+6 & {[}3,2499743121; 3,2499743128{]} & 4,27194 & 3,57092 & 0,0076 & 307 \\
+8 & {[}1,5524012124; 1,5524012128{]} & 5,83081 & 0,46080 & 0,0026 & 385 \\
+\end{longtable}
+
+Das kleine c₀₂ bei ν = 8 zeigt die Nähe des Übergangs zum Rechteck bei ν₂ ≈ 8,606. \textbf{Status:} wie bei Satz 3. Die Rechnung läuft in doppelter Genauigkeit mit expliziten Margen, nicht vollständig in Intervallarithmetik. Skripte: \texttt{research/theorem\_mgf/}.
+
 \section{Endliches ν in 2D (Numerik mit Fehlerangaben)}
 
 Die Rechnungen verwenden eine eigene Referenzsumme ohne GZL-Code. Die Übereinstimmung mit GZL liegt bei 55 Testfällen unter 2·10⁻¹⁰, und die Werte bei ν = 3 stimmen mit arXiv:2504.07338 überein.
@@ -234,7 +310,7 @@ Die Rechnungen verwenden eine eigene Referenzsumme ohne GZL-Code. Die Übereinst
 \begin{itemize}
 \tightlist
 \item
-  \textbf{Globale Suche über alle Bravais-Gitter:} 67 Starts pro ν, siehe \texttt{research/extended/}. Ergebnisse in Abschnitt 9.
+  \textbf{Globale Suche über alle Bravais-Gitter:} 67 Starts pro ν (FCC, BCC, SC und 64 zufällige), Nelder-Mead mit genauer Nachberechnung (\texttt{research/extended/e1\_3d\_search.py}). Für ν = 3,2; 3,5; 4; 4,5; 6 ist das beste gefundene Gitter jedes Mal BCC, auf 10⁻⁹ relativ. 87--100 \% aller Starts laufen nach BCC. Weitere ν-Werte laufen noch; sie werden in \texttt{research/extended/results/} ergänzt.
 \item
   \textbf{Kleine ν (2,2 bis 2,8):} BCC \textless{} FCC \textless{} SC, stabil über zwei Abschneide-Sätze.
 \item
@@ -273,11 +349,33 @@ E\_λ = Z\_ν + λ · T\_ν mit der Paarenergie Z\_ν = Σ'\textbar x\textbar{}\
 
 \section{\texorpdfstring{Ungleiche Exponenten C\textsubscript{a,a,b}}{Ungleiche Exponenten Ca,a,b}}
 
-Gesucht wurde der globale Minimierer von Σ' \textbar x\textbar{}\textsuperscript{\{−ν\}\textbar y\textbar{}}\{−ν\}\textbar x−y\textbar{}\textsuperscript{−μ} über der ganzen Fundamentaldomäne, auf einem Gitter ν, μ ∈ {[}2,5; 12{]}. Das ist bis auf Normierung C\_\{ν/2, ν/2, μ/2\}. Ergebnisse und Phasenkarte stehen in Abschnitt 9.
+Gesucht wurde der globale Minimierer von Σ' \textbar x\textbar{}\textsuperscript{\{−ν\}\textbar y\textbar{}}\{−ν\}\textbar x−y\textbar{}\textsuperscript{−μ} über der ganzen Fundamentaldomäne, auf einem Gitter ν, μ ∈ {[}2,5; 12{]} mit Schrittweite 0,5. Das ist bis auf Normierung C\_\{ν/2, ν/2, μ/2\}. Aus der Kurve im Fall gleicher Exponenten wird damit eine Phasenfläche:
 
-\section{Ergänzende Läufe}
+\begin{itemize}
+\tightlist
+\item
+  \textbf{Hexagonal} ist optimal, wenn alle Exponenten klein sind (ν ≲ 3,5) oder wenn einer deutlich kleiner ist als die anderen.
+\item
+  \textbf{Quadrat} ist in einem breiten Band um die Diagonale optimal. Für 4 ≤ ν ≤ 5,5 kehrt bei großem μ das \textbf{Hexagon zurück}; das Quadratfenster schließt sich also nach oben.
+\item
+  \textbf{Rechteck} tritt nur für ν ≳ 9 in einem Fenster 8,5 ≲ μ ≲ 11 auf. Diese Phase gehört zum Übergang bei ν₂ auf der Diagonale.
+\item
+  Andere Gittertypen (rhombisch, schief) wurden nirgends gefunden.
+\end{itemize}
 
-ERGAENZUNG\_PLATZHALTER
+Die Auflösung ist 0,5 in beiden Richtungen; die Grenzen sind entsprechend grob.
+
+\begin{figure}
+\centering
+\includegraphics{../extended/figures/fig_e3_phase_map.pdf}
+\caption{Optimales Gitter für die Exponenten (ν, ν, μ). Gestrichelt: gleiche Exponenten.}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics{../extended/figures/fig_e4_lambda_c.pdf}
+\caption{Kritisches Verhältnis λ\textsubscript{c} = c₃/c₂ für Paar- plus Dreikörperenergie.}
+\end{figure}
 
 \section{Neuheit}
 
@@ -300,7 +398,7 @@ Die Einschätzung der Agenten ist 85--90 \% für Satz 1/2 und etwa 65 \% für di
 \begin{itemize}
 \tightlist
 \item
-  Für endliches ν gibt es \textbf{keinen Satz} außer dem zertifizierten Einschluss von ν*. Ein Beweis, dass C\textsubscript{2,2,2}, C\textsubscript{3,3,3} und C\textsubscript{4,4,4} ihr Minimum bei τ = i haben, wäre der nächste echte Schritt. Das ginge etwa über einen Branch-and-Bound wie in 3D, dann mit Fehlerschranken für die unendlichen Summen.
+  Für endliches ν sind jetzt die Fälle ν = 4, 6, 8 bewiesen (Satz 4) und ν* ist zertifiziert eingeschlossen. Offen bleibt das vollständige Phasendiagramm, etwa dass das Hexagon für \textbf{alle} ν \textless{} ν* optimal ist. Mit demselben Verfahren lassen sich weitere einzelne ν-Werte beweisen, ein Kontinuum aber nur mit zusätzlicher Arbeit.
 \item
   Der Branch-and-Bound in 3D sollte noch vollständig in Intervallarithmetik laufen.
 \item
@@ -318,7 +416,9 @@ Alle Pfade sind relativ zum Repository:
 \item
   \texttt{research/theorem/}: 2D-Satz und zertifiziertes ν*
 \item
-  \texttt{research/theorem3d/}: lokales Lemma, Branch-and-Bound und Tests
+  \texttt{research/theorem3d/}: lokales Lemma, Branch-and-Bound und Tests (Satz 3)
+\item
+  \texttt{research/theorem\_mgf/}: Majorante, Taylor-Jets und Beweis für C₂,₂,₂, C₃,₃,₃, C₄,₄,₄ (Satz 4)
 \item
   \texttt{research/extended/}: 3D-Suche, Fehlerbalken, hcp, gemischte Energien, ungleiche Exponenten, kleine ν
 \item

@@ -1,0 +1,10 @@
+nu=8  T(i) in [1.552401212421, 1.552401212731]
+  symmetric-zero coefficient c10 enclosure: -5.345e-16 +- 1.863e-09 (set to 0 by symmetry)
+  symmetric-zero coefficient c01 enclosure: 2.010e-15 +- 1.863e-09 (set to 0 by symmetry)
+  symmetric-zero coefficient c11 enclosure: -4.173e-17 +- 2.608e-08 (set to 0 by symmetry)
+  symmetric-zero coefficient c30 enclosure: -1.546e-15 +- 8.072e-08 (set to 0 by symmetry)
+  symmetric-zero coefficient c12 enclosure: -3.198e-15 +- 2.440e-07 (set to 0 by symmetry)
+  c20 >= 5.830807  c02 >= 0.460804  |c21| <= 11.2008  |c03| <= 0.4608
+  local lemma holds for max(|A|,|B|) <= r_loc = 0.00260
+  large-y cut: T(tau) >= y^12 * 0.023445 > T(i) for y > Y0 = 1.41823
+DONE nu=8: all 385 boxes certified in 367s -> square lattice is the unique global minimiser
