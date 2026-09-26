@@ -7,3 +7,5 @@ nu=5  point square: T in [4.838026846130, 4.838026847296]
   c20 >= 2.582180  c02 >= 6.303938  |c21| <= 1.1396  |c03| <= 6.3039
   local lemma holds for max(|A|,|B|) <= r_loc = 0.00701
   large-y cut: T(tau) >= y^7.5 * 0.189102 > T(i) for y > Y0 = 1.54074
+  boxes 200, queue 5, 196s
+DONE nu=5: all 303 boxes certified in 285s -> square lattice is the unique global minimiser

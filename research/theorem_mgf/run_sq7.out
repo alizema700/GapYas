@@ -1,0 +1,9 @@
+nu=7  point square: T in [2.233446174563, 2.233446175010]
+  symmetric-zero coefficient c10 enclosure: 6.045e-16 +- 2.345e-09 (set to 0 by symmetry)
+  symmetric-zero coefficient c01 enclosure: 3.498e-15 +- 2.345e-09 (set to 0 by symmetry)
+  symmetric-zero coefficient c11 enclosure: -8.471e-16 +- 2.931e-08 (set to 0 by symmetry)
+  symmetric-zero coefficient c30 enclosure: -6.055e-16 +- 8.315e-08 (set to 0 by symmetry)
+  symmetric-zero coefficient c12 enclosure: 8.656e-15 +- 2.518e-07 (set to 0 by symmetry)
+  c20 >= 5.344519  c02 >= 1.661685  |c21| <= 9.0274  |c03| <= 1.6617
+  local lemma holds for max(|A|,|B|) <= r_loc = 0.00495
+  large-y cut: T(tau) >= y^10.5 * 0.046918 > T(i) for y > Y0 = 1.44469
