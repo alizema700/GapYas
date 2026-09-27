@@ -109,13 +109,14 @@ def side_jets(x0, y0, s, R, K):
 _ZSQ = {}
 def zsq_upper(nu, R=200):
     """rigorous upper bound of sum_{m in Z^2, m != 0} |m|^-nu"""
-    if nu in _ZSQ: return _ZSQ[nu]
+    key = (str(arb(nu).mid()), str(arb(nu).rad()))      # arb balls are not hashable
+    if key in _ZSQ: return _ZSQ[key]
     ax = np.arange(-R, R + 1, dtype=float); M1, M2 = np.meshgrid(ax, ax, indexing="ij")
     r2 = IV.exact(M1 * M1 + M2 * M2); r2.lo[R, R] = r2.hi[R, R] = 1.0
     f = pow_neg_arb(r2, arb(nu) / 2); f.lo[R, R] = f.hi[R, R] = 0.0
     N = f.hi.size
     S = arb(float(np.sum(f.hi))) * (1 + arb(float(gamma(N)))) + 8 * arb(R) ** (2 - arb(nu)) / (arb(nu) - 2)
-    _ZSQ[nu] = S; return S
+    _ZSQ[key] = S; return S
 
 def tail_bound(x0, y0, nu, R):
     x0, y0, nu = arb(x0), arb(y0), arb(nu)

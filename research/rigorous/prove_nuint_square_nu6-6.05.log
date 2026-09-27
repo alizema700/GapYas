@@ -1,0 +1,4 @@
+  local region certified for nu in [6.000000, 6.050000]: r_loc = 0.00588, ring boxes 99  (79s)
+(L) local region |x|, |y-1| <= 0.06 certified on 1 nu-slices
+(Y) large-y cut: T > T(i) for all nu in the interval when y > Y0 = 1.488148
+  outer boxes 50, queue 11, 181s
