@@ -29,3 +29,16 @@
 22:45 start rect 9 1.0559715996536272
 22:49 end square 8.5: DONE nu=8.5: all 499 boxes certified in 1708s (rigorous arithmetic) -> square la
 22:49 start rect 9.5 1.0821441273716073
+22:59 end hex 3.75: DONE nu=3.75: all 445 boxes certified in 1452s (rigorous arithmetic) -> hex latt
+22:59 start rect 11 1.1240076632329745
+23:15 end rect 9 1.0559715996536272: DONE nu=9: all 525 boxes certified in 1807s (rigorous arithmetic) -> the unique 
+23:15 start rect 13 1.152835828030984
+23:16 end rect 9.5 1.0821441273716073: DONE nu=9.5: all 475 boxes certified in 1639s (rigorous arithmetic) -> the uniqu
+23:16 start rect 15 1.1701707320944634
+23:25 end rect 11 1.1240076632329745: DONE nu=11: all 447 boxes certified in 1549s (rigorous arithmetic) -> the unique
+23:25 start rect 17 1.1819830554394781
+23:41 end rect 13 1.152835828030984: DONE nu=13: all 465 boxes certified in 1523s (rigorous arithmetic) -> the unique
+23:41 start rect 19 1.1906282390647671
+23:43 end rect 15 1.1701707320944634: DONE nu=15: all 497 boxes certified in 1604s (rigorous arithmetic) -> the unique
+23:53 end rect 17 1.1819830554394781: DONE nu=17: all 513 boxes certified in 1644s (rigorous arithmetic) -> the unique
+00:10 end rect 19 1.1906282390647671: DONE nu=19: all 549 boxes certified in 1764s (rigorous arithmetic) -> the unique

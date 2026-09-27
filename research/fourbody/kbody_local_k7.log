@@ -3,3 +3,6 @@
   j=4: min squared product in [4.43435166169, 4.43435166169]  (7 sets)
   j=5: min squared product in [77.7634156534, 77.7634156534]  (11 sets)
   j=6: min squared product in [3115.09441788, 3115.09441788]  (8 sets)
+  j=7: min squared product in [2976875.26179, 2976875.26179]  (35 sets)
+k=7, tau0 = 0.194050097056 + 1.248035038062 i: Q(tau0)^2 in [2976875.261793270707, 2976875.261793378741]
+DONE k=7: all 5723 boxes certified (166s). Every maximiser of Q lies in |x-0.194050097|,|y-1.248035038| <= 0.0001; box avoids all symmetry lines: True

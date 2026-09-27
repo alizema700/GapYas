@@ -3,3 +3,6 @@ nu=3.75 hex: T(tau0) in [[8.5685379399998016225481478613801300526 +/- 3.35e-38],
   local lemma (convexity) holds for max(|A|,|B|) <= r_loc = 0.00145
   large-y cut: T >= y^5.6250000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.680647
   boxes 200, queue 11, 699s
+  boxes 300, queue 3, 987s
+  boxes 400, queue 3, 1326s
+DONE nu=3.75: all 445 boxes certified in 1452s (rigorous arithmetic) -> hex lattice is the unique global minimiser

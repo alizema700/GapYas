@@ -1,0 +1,8 @@
+nu=11 rect: T(tau0) in [[0.53163544710182485171314262749342471892 +/- 7.79e-40], [0.53163544710649514262089062634208946889 +/- 2.03e-39]]   tail bound [8.3914096418638405658556994087311114908e-28 +/- 1.64e-66]
+  coefficients: c20=[4.6337423784 +/- 7.42e-11] c02=[1.527509167 +/- 2.71e-10] c21=[-15.52381779 +/- 5.12e-9] c03=[14.225296170 +/- 7.25e-10] (symmetric ones contain 0)
+  local lemma (strong convexity + small gradient, |c01| = 2.717e-09) holds for max(|A|,|B|) <= r_loc = 0.00145
+  large-y cut: T >= y^16.500000000000000000000000000000000000 K_s > T(tau0) for y > Y0 = 1.370554
+  boxes 200, queue 5, 713s
+  boxes 300, queue 5, 1061s
+  boxes 400, queue 7, 1399s
+DONE nu=11: all 447 boxes certified in 1549s (rigorous arithmetic) -> the unique global minimiser is rectangular, tau = i y with |y - 1.1240076632| <= r_loc y0
