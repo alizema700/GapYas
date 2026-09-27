@@ -2,3 +2,30 @@
 (L) local region |x|, |y-1| <= 0.06 certified on 1 nu-slices
 (Y) large-y cut: T > T(i) for all nu in the interval when y > Y0 = 1.488148
   outer boxes 50, queue 11, 181s
+  outer boxes 150, queue 9, 602s
+  outer boxes 200, queue 5, 806s
+  outer boxes 250, queue 7, 840s
+  outer boxes 300, queue 5, 868s
+  outer boxes 350, queue 9, 931s
+  outer boxes 500, queue 5, 1012s
+  outer boxes 550, queue 5, 1036s
+  outer boxes 600, queue 5, 1060s
+  outer boxes 950, queue 7, 1251s
+  outer boxes 1000, queue 5, 1279s
+  outer boxes 1050, queue 7, 1306s
+  outer boxes 1150, queue 11, 1656s
+  outer boxes 1400, queue 9, 2331s
+  outer boxes 1500, queue 9, 2671s
+  outer boxes 1550, queue 7, 2860s
+  outer boxes 1600, queue 9, 3048s
+  outer boxes 2000, queue 9, 4603s
+  outer boxes 2050, queue 7, 4812s
+  outer boxes 2100, queue 5, 5008s
+  outer boxes 2150, queue 7, 5142s
+  outer boxes 2300, queue 5, 5228s
+  outer boxes 2350, queue 7, 5256s
+  outer boxes 2450, queue 11, 5314s
+  outer boxes 2600, queue 9, 5400s
+  outer boxes 2800, queue 9, 5830s
+  outer boxes 2900, queue 9, 6080s
+  outer boxes 2950, queue 11, 6198s
