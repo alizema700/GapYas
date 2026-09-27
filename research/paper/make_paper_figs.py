@@ -69,15 +69,16 @@ def fig1():
 
     ax = fig.add_axes([0.38, 0.22, 0.61, 0.62])
     ax.grid(False); ax.spines["left"].set_visible(False); ax.set_yticks([])
-    x0, x1 = 4 / 3, 21.5
+    x0, x1 = 4 / 3, 31.0
     segs = [(x0, NUSTAR, "hex", "hexagonal"), (NUSTAR, NU2, "square", "square"), (NU2, x1, "rect", r"rectangular $\rightarrow y_\infty$")]
     for s0, s1, key, lab in segs:
         ax.add_patch(plt.Rectangle((s0, 0.62), s1 - s0 - 0.06, 0.16, color=PHASE[key], lw=0, alpha=0.9))
         ax.text((s0 + s1) / 2, 0.86, lab, ha="center", va="bottom", color=INK, fontsize=7.5)
     ax.plot([x0, x1], [0.30, 0.30], color=GRID, lw=0.8, zorder=0)
-    ax.plot([2, 3.5], [0.30, 0.30], "v", color=BLUE, ms=6, zorder=3)
-    ax.plot([4, 5, 6, 7, 8], [0.30] * 5, "s", color=ORANGE, ms=5, zorder=3)
-    ax.plot([10, 12, 14, 16, 18, 20], [0.30] * 6, "D", color=AQUA, ms=4.2, zorder=3)
+    ax.plot([2, 3.25, 3.5, 3.75], [0.30] * 4, "v", color=BLUE, ms=5, zorder=3)
+    ax.plot([4, 4.25, 4.5, 4.75, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.25, 8.5], [0.30] * 13, "s", color=ORANGE, ms=3.6, zorder=3)
+    rx = [9, 9.5] + list(range(10, 21)) + [22, 24, 26, 28, 30]
+    ax.plot(rx, [0.30] * len(rx), "D", color=AQUA, ms=3.4, zorder=3)
     ax.text(x1, 0.40, "markers: proved unique minimiser", color=INK2, fontsize=7, va="bottom", ha="right")
     for xv, lab, yl in [(NUSTAR, r"$\nu^*\in(3.918364,\,3.918366)$", 0.02), (NU2, r"$\nu_2\in(8.604,\,8.608)$", 0.14)]:
         ax.plot([xv, xv], [yl, 0.60], color=INK2, lw=0.6, ls=(0, (2, 2)))
